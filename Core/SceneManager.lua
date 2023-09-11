@@ -1,12 +1,12 @@
 local Scene = {debug=false,current=""}
 
-local listScene = {}
+Scene.listScene = {}
 
 local currentScene = nil
 
 function Scene.newScene(pSceneTable, pSceneName)
   if type(pSceneTable) == "table" and type(pSceneName) == "string" then
-    table.insert(listScene, {table=pSceneTable, name=pSceneName})
+    table.insert(Scene.listScene, {table=pSceneTable, name=pSceneName})
   else
     print("newScene introuvable")
     love.event.quit()
@@ -16,7 +16,7 @@ end
 
 function Scene.setScene(pScene, pLoad)
   local get = false
-  for k, scene in ipairs(listScene) do
+  for k, scene in ipairs(Scene.listScene) do
     if scene.table == pScene then
       currentScene = pScene
       Scene.current = scene.name

@@ -7,8 +7,8 @@ love.graphics.setDefaultFilter( 'nearest', 'nearest' )
 -- requires Core modules
 require("Core/loader")
 
--- Many Scenes used (Intro/Menu/Game/etc.) :
-require("Game/Game")
+-- Many Globals Scenes used (Intro/Menu/Game/etc.) :
+Game = require("Game/Game")
 
 function love.load()
   Core.Scene.newScene(Game, "Game")

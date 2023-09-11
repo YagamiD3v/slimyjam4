@@ -39,4 +39,3 @@ end
 function love.mousepressed(x,y,button)
   Core.Scene.mousepressed(x,y,button)
 end
---

@@ -9,10 +9,12 @@ require("Core/loader")
 
 -- Many Globals Scenes used (Intro/Menu/Game/etc.) :
 Game = require("Game/Game")
+SandBox = require("SandBox/SandBox")
 
 function love.load()
   Core.Scene.newScene(Game, "Game")
-  Core.Scene.setScene(Game)
+  Core.Scene.newScene(SandBox, "SandBox")
+  Core.Scene.setScene(SandBox)
   --
   Core.Scene.loadScene()
 end

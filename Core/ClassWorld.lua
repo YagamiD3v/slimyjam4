@@ -1,4 +1,4 @@
-local World = {meter=16}
+local World = {meter=30}
 World.__index = World
 
 love.physics.setMeter(World.meter) -- la hauteur d'un mètre est 16px dans ce monde
@@ -8,7 +8,7 @@ local listWorlds = {}
 local eventsList = {}
 
 function World.new()
-  local new = love.physics.newWorld(0, 0, true) -- pas de gravité dans ce monde
+  local new = love.physics.newWorld(0, 300, true) -- pas de gravité dans ce monde
   new:setCallbacks(World.beginContact)
   --
   table.insert(listWorlds, new)

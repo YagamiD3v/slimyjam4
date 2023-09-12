@@ -20,6 +20,11 @@ function Loader:load()
   Core.ImageManager = require(dirpath.."ImageManager")
   Core.TiledManager = require(dirpath.."TiledManager")
   Core.ClassAnim = require(dirpath.."ClassAnim")
+  Core.ClassWorld = require(dirpath.."ClassWorld")
+  --
+  local ClassMap = require(dirpath.."ClassMapManager")
+  Core.MapManager = ClassMap.newMapManager()
+  --
 
   --
   for _, Module in pairs(Core) do

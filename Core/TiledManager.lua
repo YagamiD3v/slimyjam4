@@ -1,4 +1,4 @@
-local TiledManager = {debug=false, db_layer=false}
+local TiledManager = {debug=true, db_layer=false}
 
 local TileSheet = {}
 
@@ -29,7 +29,7 @@ function TiledManager.newMap(pfile)
           end
         end
       end
-      --
+      -- Debug :
       if lockz then
         love.graphics.print(map[lockz].name, 10, 10)
       elseif TiledManager.debug then
@@ -50,6 +50,7 @@ function TiledManager.newMap(pfile)
         end
         love.graphics.setColor(1,1,1,1)
       end
+      
     end
     --
     if TiledManager.debug then
@@ -57,17 +58,15 @@ function TiledManager.newMap(pfile)
     end
   end
   
-  MapManager:addNewMapTiled(map)
-  
   return map
 end
 --
 
 function TiledManager.importMapTiled(pfile)
-  local mload = require("Ressources/Tiled/"..pfile)
+  local mload = require("Assets/Tiled/"..pfile)
   local map = TiledManager.newMap(pfile)
   --
-  map.world = Core.World.new()
+  map.world = Core.ClassWorld.new()
   --
   map.x=0
   map.y=0
@@ -100,7 +99,7 @@ function TiledManager.importMapTiled(pfile)
       end
     end
     if  tileset.image then
-      local file = "Ressources/"..string.sub(tileset.image,4)
+      local file = "Assets/Tiled/"..tileset.image
       local sheet = Core.ImageManager.newImageSheet( file, 16, 16)
       for n=1, #sheet do
         table.insert(map.TileSheet, sheet[n])

@@ -1,5 +1,5 @@
 
-local Loader = {debug=false}
+local Loader = {debug=true}
 --
 local dirpath = "Core/"
 local filesTable = love.filesystem.getDirectoryItems(dirpath)

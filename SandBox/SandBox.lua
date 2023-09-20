@@ -6,46 +6,79 @@ MapManager:addNewMapTiled(maptiled)
 MapManager:setMap(maptiled)
 
 Player = {}
+Player.id = "player"
+Player.isOnGround = true
+Player.maxSpeed = 100
+Player.x =  20
+Player.y = 550
+Player.w, Player.h = 10, 10
+Player.vy = 0
+Player.vx = 0
+
 
 function SandBox.load()
   -- force, gravity, positions x/y, etc :
-  Player.body = love.physics.newBody(MapManager.current.world, 400, 300, "dynamic")
-
+  Player.body = love.physics.newBody(MapManager.current.world, Player.x, Player.y, "dynamic")
+  -- mass defaut = 4
+  --Player.body:setMass(3)
+  Player.body:setInertia(math.huge) -- Empêche la rotation du joueur
+  
   -- la forme de l objet et les collisions qui en decoulent :
-  Player.shape = love.physics.newRectangleShape( 32, 32 )
+  Player.shape = love.physics.newRectangleShape( Player.w, Player.h )
 
   -- on indique au monde de l'object quel body est attaché avec quelle fixture(s) :
-  Player.fixture = love.physics.newFixture(Player.body, Player.shape)
+  Player.fixture = love.physics.newFixture(Player.body, Player.shape, 1)
+  Player.fixture:setFriction(.2) -- 0 verglas, 1 concrete
+  Player.fixture:setUserData(Player)
 
-  -- mass defaut = 4
-  --Player.body:setMass(50)
-  Player.body:setAngle(math.rad(47))
+  
 end
 --
 
-
-function SandBox.update(dt)
+function SandBox.update(dt) 
   MapManager.current:update(dt)
   MapManager.current.world:update(dt)
-
+  Player.body:setAngle(0)
+  
+  Player.vx, Player.vy = Player.body:getLinearVelocity()
+  
   -- move
   if love.keyboard.isDown("left") then
-    Player.body:applyForce( -600, 0 )
+    if Player.vx > -Player.maxSpeed then
+      Player.body:applyForce( -30, 0 )
+    end
   elseif love.keyboard.isDown("right") then
-    Player.body:applyForce( 600, 0 )
+    if Player.vx < Player.maxSpeed then
+      Player.body:applyForce( 30, 0 )
+    end
   end
-  if love.keyboard.isDown("up") then
-    Player.body:applyLinearImpulse( 0, -50 )
-  elseif love.keyboard.isDown("down") then
-    Player.body:applyForce( 0, 50 )
+
+  -- Si la touche de déplacement n'est pas enfoncée, arrêtez le deplacement
+  if not (love.keyboard.isDown("right") or love.keyboard.isDown("left")) then
+    local x, y = Player.body:getLinearVelocity()
+    Player.body:setLinearVelocity(x/1.01, y)
   end
+
+
+  if love.keyboard.isDown("up") and Player.isOnGround then
+    if math.floor(Player.vy) == 0 then
+      Player.body:applyLinearImpulse( 0, -15 )
+      Player.isOnGround = false
+    end
+  end
+ 
+
+
 end
 --
 
 
 function SandBox.draw()
   MapManager.current.draw()
-
+  love.graphics.setColor( 1,0,0 )
+  love.graphics.print("isOnGround : " .. tostring(Player.isOnGround), 10,10)
+  love.graphics.print("Velocity Y : " .. tostring(math.floor(Player.vy)), 10,30)
+  love.graphics.setColor( 1,1,1 )
   -- les 4 points du rectangle
   local points = {Player.shape:getPoints()}
   for n=1, #points, 2 do
@@ -57,6 +90,7 @@ end
 
 
 function SandBox.keypressed(k)
+  
 end
 --
 

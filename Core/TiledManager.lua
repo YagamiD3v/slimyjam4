@@ -1,4 +1,4 @@
-local TiledManager = {debug=true, db_layer=false}
+local TiledManager = {debug=false, db_layer=false}
 
 local TileSheet = {}
 
@@ -91,10 +91,11 @@ function TiledManager.importMapTiled(pfile)
   map.shapesTypes = {}
 
   for n=1, #mload.tilesets do
-    local tileset = mload.tilesets[n]
+    local tilesetProps = mload.tilesets[n]
+    local tileset = require("Assets/Tiled/".. tilesetProps.name )
     if tileset.properties.isCollider then
       for n=1, tileset.tilecount do
-        local tileColliderID = tileset.firstgid+(n-1)
+        local tileColliderID = tilesetProps.firstgid+(n-1)
         table.insert( map.shapesTypes, tileColliderID)
       end
     end
@@ -113,7 +114,7 @@ function TiledManager.importMapTiled(pfile)
   map.objects = {}
   for z=1, #mload.layers do
     local layer = mload.layers[z]
-    if layer.type == "tilelayer" then
+    if layer.type == "tilelayer" or (layer.type == "objectgroup" and  layer.properties.isCollider) then
       if layer.properties.isCollider then
         table.insert(map.colliderLayers, layer)
       else
@@ -186,115 +187,151 @@ function TiledManager.loadMapColliders(map)
   oy=h/2
   cellID=1
   for z=1, #map.colliderLayers do
-    map.collidersMap[z] = {}
-    for l=1, map.ligs do
-      map.collidersMap[z][l]={}
-      for c=1, map.cols do
-        local id = map.colliderLayers[z].data[cellID]
-        map.collidersMap[z][l][c] = {x=x, y=y ,w=w, h=h, id=id, isCollider=false}
-        local cell = map.collidersMap[z][l][c]
-        --
-        if id >= map.shapesTypes[1] and id <= map.shapesTypes[#map.shapesTypes] then -- 8305
-          cell.isCollider = true
-          local block = {x=x, y=y ,w=w, h=h, ox=ox, oy=oy, id=id, isCollider=true}
-          block.body = love.physics.newBody(map.world, x+ox, y+oy, "static") -- x,y is center of Forme
+    if map.colliderLayers[z].type == "tilelayer" then
+      map.collidersMap[z] = {}
+      for l=1, map.ligs do
+        map.collidersMap[z][l]={}
+        for c=1, map.cols do
+          local id = map.colliderLayers[z].data[cellID]
+          map.collidersMap[z][l][c] = {x=x, y=y ,w=w, h=h, id=id, isCollider=false}
+          local cell = map.collidersMap[z][l][c]
           --
-          local posx, posy = 0, 0
-          --
-          if id == map.shapesTypes[1] then -- rectangle
-            block.shape = love.physics.newRectangleShape(w,h)
-          elseif id == map.shapesTypes[2] then
-            block.shape = love.physics.newPolygonShape( 
-              posx-ox, posy-oy,
-              posx+ox, posy+oy,
-              posx-ox, posy+oy
-            )
-          elseif id == map.shapesTypes[3] then
-            block.shape = love.physics.newPolygonShape(
-              posx+ox, posy-oy,
-              posx+ox, posy+oy,
-              posx-ox, posy+oy
-            )
-          elseif id == map.shapesTypes[4] then
-            block.shape = love.physics.newPolygonShape( 
-              posx-ox, posy-oy,
-              posx+ox, posy-oy,
-              posx-ox, posy+oy
-            )
-          elseif id == map.shapesTypes[5] then
-            block.shape = love.physics.newPolygonShape( 
-              posx-ox, posy-oy,
-              posx+ox, posy-oy,
-              posx+ox, posy+oy
-            )
-          elseif id == map.shapesTypes[6] then
-            block.shape = love.physics.newPolygonShape( 
-              posx-ox, posy,
-              posx+ox, posy,
-              posx+ox, posy+oy,
-              posx-ox, posy+oy
-            )
-          elseif id == map.shapesTypes[7] then
-            block.shape = love.physics.newPolygonShape( 
-              posx-ox, posy-oy,
-              posx+ox, posy-oy,
-              posx+ox, posy,
-              posx-ox, posy
-            )
-          elseif id == map.shapesTypes[8] then
-            block.shape = love.physics.newPolygonShape( 
-              posx-ox, posy,
-              posx, posy,
-              posx, posy+oy,
-              posx-ox, posy+oy
-            )
-          elseif id == map.shapesTypes[9] then
-            block.shape = love.physics.newPolygonShape( 
-              posx, posy-oy,
-              posx+ox, posy-oy,
-              posx+ox, posy,
-              posx, posy
-            )
-          elseif id == map.shapesTypes[10] then
-            block.shape = love.physics.newPolygonShape( 
-              posx, posy,
-              posx+ox, posy,
-              posx+ox, posy+oy,
-              posx, posy+oy
-            )
-          elseif id == map.shapesTypes[11] then
-            block.shape = love.physics.newPolygonShape( 
-              posx-ox, posy-oy,
-              posx, posy-oy,
-              posx, posy,
-              posx-ox, posy
-            )
-          elseif id == map.shapesTypes[12] then
-            block.shape = love.physics.newPolygonShape( 
-              posx, posy-oy,
-              posx+ox, posy-oy,
-              posx+ox, posy+oy,
-              posx, posy+oy
-            )
-          elseif id == map.shapesTypes[13] then
-            block.shape = love.physics.newPolygonShape( 
-              posx-ox, posy-oy,
-              posx, posy-oy,
-              posx, posy+oy,
-              posx-ox, posy+oy
-            )
-          else
-            block.shape = love.physics.newRectangleShape(2,2)
+          if id >= map.shapesTypes[1] and id <= map.shapesTypes[#map.shapesTypes] then -- 8305
+            cell.isCollider = true
+            local block = {x=x, y=y ,w=w, h=h, ox=ox, oy=oy, id=id, isCollider=true}
+            block.body = love.physics.newBody(map.world, x+ox, y+oy, "static") -- x,y is center of Forme
+            --
+            local posx, posy = 0, 0
+            --
+            if id == map.shapesTypes[1] then -- rectangle
+              block.shape = love.physics.newRectangleShape(w,h)
+            elseif id == map.shapesTypes[2] then
+              block.shape = love.physics.newPolygonShape( 
+                posx-ox, posy-oy,
+                posx+ox, posy+oy,
+                posx-ox, posy+oy
+              )
+            elseif id == map.shapesTypes[3] then
+              block.shape = love.physics.newPolygonShape(
+                posx+ox, posy-oy,
+                posx+ox, posy+oy,
+                posx-ox, posy+oy
+              )
+            elseif id == map.shapesTypes[4] then
+              block.shape = love.physics.newPolygonShape( 
+                posx-ox, posy-oy,
+                posx+ox, posy-oy,
+                posx-ox, posy+oy
+              )
+            elseif id == map.shapesTypes[5] then
+              block.shape = love.physics.newPolygonShape( 
+                posx-ox, posy-oy,
+                posx+ox, posy-oy,
+                posx+ox, posy+oy
+              )
+            elseif id == map.shapesTypes[6] then
+              block.shape = love.physics.newPolygonShape( 
+                posx-ox, posy,
+                posx+ox, posy,
+                posx+ox, posy+oy,
+                posx-ox, posy+oy
+              )
+            elseif id == map.shapesTypes[7] then
+              block.shape = love.physics.newPolygonShape( 
+                posx-ox, posy-oy,
+                posx+ox, posy-oy,
+                posx+ox, posy,
+                posx-ox, posy
+              )
+            elseif id == map.shapesTypes[8] then
+              block.shape = love.physics.newPolygonShape( 
+                posx-ox, posy,
+                posx, posy,
+                posx, posy+oy,
+                posx-ox, posy+oy
+              )
+            elseif id == map.shapesTypes[9] then
+              block.shape = love.physics.newPolygonShape( 
+                posx, posy-oy,
+                posx+ox, posy-oy,
+                posx+ox, posy,
+                posx, posy
+              )
+            elseif id == map.shapesTypes[10] then
+              block.shape = love.physics.newPolygonShape( 
+                posx, posy,
+                posx+ox, posy,
+                posx+ox, posy+oy,
+                posx, posy+oy
+              )
+            elseif id == map.shapesTypes[11] then
+              block.shape = love.physics.newPolygonShape( 
+                posx-ox, posy-oy,
+                posx, posy-oy,
+                posx, posy,
+                posx-ox, posy
+              )
+            elseif id == map.shapesTypes[12] then
+              block.shape = love.physics.newPolygonShape( 
+                posx, posy-oy,
+                posx+ox, posy-oy,
+                posx+ox, posy+oy,
+                posx, posy+oy
+              )
+            elseif id == map.shapesTypes[13] then
+              block.shape = love.physics.newPolygonShape( 
+                posx-ox, posy-oy,
+                posx, posy-oy,
+                posx, posy+oy,
+                posx-ox, posy+oy
+              )
+            else
+              block.shape = love.physics.newRectangleShape(16,16)
+            end
+            block.fixture = love.physics.newFixture(block.body, block.shape)
+            table.insert(map.listColliders, block)
           end
-          block.fixture = love.physics.newFixture(block.body, block.shape)
-          table.insert(map.listColliders, block)
+          --
+          cellID = cellID + 1
+          x=x+w
         end
-        --
-        cellID = cellID + 1
-        x=x+w
+        x=0
+        y=y+h
       end
-      x=0
-      y=y+h
+    end
+    
+    if map.colliderLayers[z].type == "objectgroup" then
+       local objects = map.colliderLayers[z].objects
+       for _, object in pairs(objects) do
+          if object.shape == "rectangle" then
+            local block = {
+              id = "ground",
+              x=object.x, y=object.y,
+              w=object.width, h=object.height,
+              isCollider=true,
+              isGround = object.properties['isGround'],
+              friction = object.properties['friction']
+            }
+            
+            -- x,y is center of the shape
+            local ox, oy = block.w / 2, block.h/2
+            block.body = love.physics.newBody(map.world, block.x+ox, block.y+oy, "static")
+            block.shape = love.physics.newRectangleShape(object.width, object.height)
+            block.fixture = love.physics.newFixture(block.body, block.shape)
+
+            if block.isGround then
+              block.fixture:setUserData(block)
+              block.fixture:setFriction(block.friction)
+              
+              -- Créez un capteur pour détecter le sol 
+              --[[block.sensorShape = love.physics.newRectangleShape(block.x+ox+1, block.y+oy, object.height, object.width-2)
+              block.sensorFixture = love.physics.newFixture(block.body, block.sensorShape)
+              block.sensorFixture:setSensor(true)]]
+            end
+            table.insert(map.listColliders, block)
+
+          end
+       end
     end
   end
   cellID = 1
@@ -302,6 +339,9 @@ function TiledManager.loadMapColliders(map)
   y=0
   --
 
+  for z=1, #map.colliderLayers do
+
+  end
 
   local function newMapLimit(centerX,centerY,w,h)
     local limit = {x=centerX, y=centerY ,w=w, h=h, ox=w/2, oy=h/2, isCollider=true}
@@ -405,6 +445,7 @@ end
 function TiledManager.draw(map)
   if TiledManager.debug then
     love.graphics.setColor(1,0,0,0.5)
+    
     for n=1, #map.listColliders do
       local block = map.listColliders[n]
       local shapetype = block.shape:getType()

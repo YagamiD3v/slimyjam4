@@ -19,7 +19,7 @@ function World:update(dt) -- met à jour le monde physique
   --MapManager.current.world:update(dt)
   for n=1, #listWorlds do
     local world = listWorlds[n]
-      world:update(dt)
+    world:update(dt)
   end
   for n=1, #eventsList do
     if eventsList[n] ~= nil then
@@ -32,7 +32,7 @@ end
 
 function World:beginContact(_fixture, Contact)
   -- Vous pouvez gérer ce qui se passe lorsqu'il y a contact ici
-  print("beginContact")
+  --print("beginContact")
   local fixture_a, fixture_b = Contact:getFixtures()
   local map = MapManager.current
   local player = false
@@ -40,7 +40,7 @@ function World:beginContact(_fixture, Contact)
   local event = nil
 
   --print("SELF : " .. self:getUserData())
-  
+
   -- Event witch Player
   if fixture_a:getUserData() ~= nil and fixture_a:getUserData().id == "player" then
     player = fixture_a
@@ -49,7 +49,7 @@ function World:beginContact(_fixture, Contact)
     player = fixture_b
     other = fixture_a
   end
-  
+
   if player then
     -- On récupère "l'instance" du joueur
     local iPlayer = player:getUserData()
@@ -58,40 +58,42 @@ function World:beginContact(_fixture, Contact)
     --[[if other:isSensor() then
       iPlayer.isOnGround = true
     end]]
-    
+
     if other:getUserData() ~= nil and other:getUserData().id == "ground" then
-      
+
       -- Récupère la position du "ground"
-      local osx, osy, owidth, oheight = other:getShape():computeAABB(
+      local os_x1, os_y1, os_x2, os_y2 = other:getShape():computeAABB(
         other:getBody():getX(), 
         other:getBody():getY(),
         other:getBody():getAngle()
       )
-      osx, osy, owidth, oheight = applyFunc(math.ceil, osx, osy, owidth, oheight)
-      print( other:getUserData().id .. " position : " ..osx .. "," .. osy)
-      
+      os_x1, os_y1, os_x2, os_y2 = applyFunc(math.ceil, os_x1, os_y1, os_x2, os_y2)
+      --print( other:getUserData().id .. " position : " ..os_x1 .. "," .. os_y1)
+
       -- Récupère la position du player
-      local psx, psy, pwidth, pheight = player:getShape():computeAABB(
-        player:getBody():getX(), 
+      local p_x1, py_1, p_x2, p_y2 = player:getShape():computeAABB(
+        player:getBody():getX(),
         player:getBody():getY(),
         player:getBody():getAngle()
       )
-      psx, psy, pwidth, pheight = applyFunc(math.ceil, psx, psy, pwidth, pheight)
-      print( player:getUserData().id .. " position : " .. psx .. "," .. psy .. " w:" .. pwidth .. " h:" .. pheight) 
-      
-      
+      p_x1, py_1, p_x2, p_y2 = applyFunc(math.ceil, p_x1, py_1, p_x2, p_y2)
+      --print( player:getUserData().id .. " position : " .. p_x1 .. "," .. py_1 .. " w:" .. p_x2 .. " h:" .. p_y2) 
+
+
       -- Récupère les points de contacts
       local x1, y1, x2, y2 = Contact:getPositions()
       x1, y1, x2, y2 = applyFunc(math.ceil, x1, y1, x2, y2)
-      print("player touche ground (" .. tostring(x1) .. "," .. tostring(y1) .. ") (" ..tostring(x2) .. "," ..tostring(y2) .. ")")
+      --print("player touche ground (" .. tostring(x1) .. "," .. tostring(y1) .. ") (" ..tostring(x2) .. "," ..tostring(y2) .. ")")
 
-      print("Friction: " ..tostring(Contact:getFriction()))
-      
-      if psy+pheight >= osy then
-          Player.isOnGround = true
+      --print("Friction: " ..tostring(Contact:getFriction()))
+
+      --## GROUND ##
+      if p_y2 >= os_y1 and p_x1 < os_x2 and p_x2 > os_x1 then -- path fixed double jump
+        Player.isOnGround = true
+        Player.vy = 0
       end
-      
-      
+
+
     end
 
 
@@ -115,7 +117,7 @@ end
 --
 
 function World:endContact(_fixture, Contact)
-  print("endContact")
+  --print("endContact")
   --[[local fixture_a, fixture_b = Contact:getFixtures()
     -- Event witch Player
     if fixture_a:getUserData() ~= nil and fixture_a:getUserData() == "player" then

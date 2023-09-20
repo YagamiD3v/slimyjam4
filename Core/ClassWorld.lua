@@ -1,15 +1,13 @@
-local World = {meter=30}
+local World = { meter=32, canBodySleep=true}
 World.__index = World
-
 love.physics.setMeter(World.meter) -- la hauteur d'un mètre est 16px dans ce monde
 
 local listWorlds = {}
-
 local eventsList = {}
 
 function World.new()
-  local new = love.physics.newWorld(0, 300, true) -- pas de gravité dans ce monde
-  new:setCallbacks(World.beginContact)
+  local new = love.physics.newWorld(0, 9.81*World.meter, World.canBodySleep)
+  new:setCallbacks(World.beginContact, World.endContact)
   --
   table.insert(listWorlds, new)
   --
@@ -32,26 +30,71 @@ function World:update(dt) -- met à jour le monde physique
 end
 --
 
-function World:beginContact(_fixture, contact)
+function World:beginContact(_fixture, Contact)
   -- Vous pouvez gérer ce qui se passe lorsqu'il y a contact ici
-  --print("beginContact")
-  local fixture_a, fixture_b = contact:getFixtures()
+  print("beginContact")
+  local fixture_a, fixture_b = Contact:getFixtures()
   local map = MapManager.current
   local player = false
   local other = nil
   local event = nil
 
+  --print("SELF : " .. self:getUserData())
+  
   -- Event witch Player
-  if fixture_a == Player.fixture or fixture_b == Player.fixture then
-    if fixture_a == Player.fixture then
-      player = fixture_a
-      other = fixture_b
-    else
-      player = fixture_b
-      other = fixture_a
-    end
+  if fixture_a:getUserData() ~= nil and fixture_a:getUserData().id == "player" then
+    player = fixture_a
+    other = fixture_b
+  elseif fixture_b:getUserData() ~= nil and  fixture_b:getUserData().id == "player" then
+    player = fixture_b
+    other = fixture_a
   end
+  
   if player then
+    -- On récupère "l'instance" du joueur
+    local iPlayer = player:getUserData()
+
+    -- Vérifiez si le rectangle touche le sol
+    --[[if other:isSensor() then
+      iPlayer.isOnGround = true
+    end]]
+    
+    if other:getUserData() ~= nil and other:getUserData().id == "ground" then
+      
+      -- Récupère la position du "ground"
+      local osx, osy, owidth, oheight = other:getShape():computeAABB(
+        other:getBody():getX(), 
+        other:getBody():getY(),
+        other:getBody():getAngle()
+      )
+      osx, osy, owidth, oheight = applyFunc(math.ceil, osx, osy, owidth, oheight)
+      print( other:getUserData().id .. " position : " ..osx .. "," .. osy)
+      
+      -- Récupère la position du player
+      local psx, psy, pwidth, pheight = player:getShape():computeAABB(
+        player:getBody():getX(), 
+        player:getBody():getY(),
+        player:getBody():getAngle()
+      )
+      psx, psy, pwidth, pheight = applyFunc(math.ceil, psx, psy, pwidth, pheight)
+      print( player:getUserData().id .. " position : " .. psx .. "," .. psy .. " w:" .. pwidth .. " h:" .. pheight) 
+      
+      
+      -- Récupère les points de contacts
+      local x1, y1, x2, y2 = Contact:getPositions()
+      x1, y1, x2, y2 = applyFunc(math.ceil, x1, y1, x2, y2)
+      print("player touche ground (" .. tostring(x1) .. "," .. tostring(y1) .. ") (" ..tostring(x2) .. "," ..tostring(y2) .. ")")
+
+      print("Friction: " ..tostring(Contact:getFriction()))
+      
+      if psy+pheight >= osy then
+          Player.isOnGround = true
+      end
+      
+      
+    end
+
+
     for n=1, #map.listEvents do
       local lookMe = map.listEvents[n]
       if other == lookMe.fixture then
@@ -68,6 +111,31 @@ function World:beginContact(_fixture, contact)
 
   --other:
 
+end
+--
+
+function World:endContact(_fixture, Contact)
+  print("endContact")
+  --[[local fixture_a, fixture_b = Contact:getFixtures()
+    -- Event witch Player
+    if fixture_a:getUserData() ~= nil and fixture_a:getUserData() == "player" then
+      player = fixture_a
+      other = fixture_b
+    elseif fixture_b:getUserData() ~= nil and  fixture_b:getUserData().id == "player" then
+      player = fixture_b
+      other = fixture_a
+    end
+
+    if player then
+      -- On récupère "l'instance" du joueur
+      local iPlayer = player:getUserData()
+  
+      -- Vérifiez si le rectangle touche le sol
+      if other:isSensor() then
+        iPlayer.isOnGround = false
+      end
+    end
+    ]]
 end
 --
 

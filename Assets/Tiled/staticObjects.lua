@@ -2,16 +2,16 @@ return {
   version = "1.10",
   luaversion = "5.1",
   tiledversion = "1.10.2",
-  name = "winter",
+  name = "staticObjects",
   class = "",
   tilewidth = 16,
   tileheight = 16,
   spacing = 0,
   margin = 0,
-  columns = 14,
-  image = "midground/winter.png",
-  imagewidth = 224,
-  imageheight = 320,
+  columns = 18,
+  image = "object/staticObjects.png",
+  imagewidth = 288,
+  imageheight = 144,
   objectalignment = "unspecified",
   tilerendersize = "tile",
   fillmode = "stretch",
@@ -24,10 +24,8 @@ return {
     width = 16,
     height = 16
   },
-  properties = {
-    ["isCollider"] = true
-  },
+  properties = {},
   wangsets = {},
-  tilecount = 280,
+  tilecount = 162,
   tiles = {}
 }

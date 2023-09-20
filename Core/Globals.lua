@@ -43,6 +43,16 @@ function CheckCollision(x1,y1,w1,h1, x2,y2,w2,h2)
 end
 --
 
+function applyFunc(func, ...)
+  local args = {...}
+  for i,v in ipairs(args) do
+    args[i] = func(v)
+  end
+
+  return unpack(args)
+end
+
+
 -- Averages an arbitrary number of angles (in radians).
 function math.averageAngles(...)
   local x,y = 0,0

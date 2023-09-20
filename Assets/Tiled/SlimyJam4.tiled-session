@@ -8,25 +8,45 @@
         "."
     ],
     "fileStates": {
+        "Collider.tsx": {
+            "scaleInDock": 3,
+            "scaleInEditor": 1
+        },
+        "coin.tsx": {
+            "scaleInDock": 3,
+            "scaleInEditor": 1
+        },
+        "ground.tsx": {
+            "scaleInDock": 4,
+            "scaleInEditor": 1
+        },
+        "player-idle.tsx": {
+            "scaleInDock": 4,
+            "scaleInEditor": 1
+        },
         "sand_box.tmx": {
-            "scale": 1.394125,
-            "selectedLayer": 0,
+            "scale": 1.5,
+            "selectedLayer": 4,
             "viewCenter": {
-                "x": 397.38187034878507,
-                "y": 302.6988254281359
+                "x": 360,
+                "y": 299.66666666666663
             }
         },
         "sky.tsx": {
-            "scaleInDock": 1,
+            "scaleInDock": 3,
+            "scaleInEditor": 1
+        },
+        "staticObjects.tsx": {
+            "scaleInDock": 2,
             "scaleInEditor": 1
         },
         "winter.tsx": {
-            "scaleInDock": 1,
+            "scaleInDock": 3,
             "scaleInEditor": 1
         }
     },
-    "last.exportedFilePath": "F:/_Github_/slimyjam4/Assets/Tiled",
-    "last.imagePath": "F:/_Github_/slimyjam4/Assets/Tiled/background",
+    "last.exportedFilePath": "D:/Developpement/MiniProjetJeux/GameJam/SlimyJam4/src/Assets/Tiled",
+    "last.imagePath": "D:/Developpement/MiniProjetJeux/GameJam/SlimyJam4/src/Assets/Tiled/sprite/Player",
     "lastUsedTilesetExportFilter": "Fichiers Lua (*.lua)",
     "map.height": 38,
     "map.lastUsedExportFilter": "Fichiers Lua (*.lua)",
@@ -38,10 +58,21 @@
     "openFiles": [
         "sand_box.tmx",
         "winter.tsx",
-        "sky.tsx"
+        "sky.tsx",
+        "Collider.tsx",
+        "staticObjects.tsx",
+        "coin.tsx",
+        "ground.tsx",
+        "player-idle.tsx"
     ],
     "project": "SlimyJam4.tiled-project",
+    "property.type": "bool",
     "recentFiles": [
+        "player-idle.tsx",
+        "ground.tsx",
+        "coin.tsx",
+        "staticObjects.tsx",
+        "Collider.tsx",
         "sky.tsx",
         "winter.tsx",
         "sand_box.tmx"

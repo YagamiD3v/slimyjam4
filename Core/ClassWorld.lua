@@ -7,7 +7,7 @@ local eventsList = {}
 
 function World.new()
   local new = love.physics.newWorld(0, 9.81*World.meter, World.canBodySleep)
-  new:setCallbacks(World.beginContact, World.endContact)
+  new:setCallbacks(World.beginContact)
   --
   table.insert(listWorlds, new)
   --
@@ -21,31 +21,22 @@ function World:update(dt) -- met à jour le monde physique
     local world = listWorlds[n]
     world:update(dt)
   end
-  for n=1, #eventsList do
-    if eventsList[n] ~= nil then
-      eventsList[n]()
-    end
-    table.remove(eventsList, n)
-  end
 end
 --
 
 function World:beginContact(_fixture, Contact)
   -- Vous pouvez gérer ce qui se passe lorsqu'il y a contact ici
-  --print("beginContact")
   local fixture_a, fixture_b = Contact:getFixtures()
   local map = MapManager.current
   local player = false
   local other = nil
   local event = nil
 
-  --print("SELF : " .. self:getUserData())
-
   -- Event witch Player
-  if fixture_a:getUserData() ~= nil and fixture_a:getUserData().id == "player" then
+  if fixture_a:getUserData() ~= nil and fixture_a:getUserData().name == "player" then
     player = fixture_a
     other = fixture_b
-  elseif fixture_b:getUserData() ~= nil and  fixture_b:getUserData().id == "player" then
+  elseif fixture_b:getUserData() ~= nil and  fixture_b:getUserData().name == "player" then
     player = fixture_b
     other = fixture_a
   end
@@ -54,12 +45,7 @@ function World:beginContact(_fixture, Contact)
     -- On récupère "l'instance" du joueur
     local iPlayer = player:getUserData()
 
-    -- Vérifiez si le rectangle touche le sol
-    --[[if other:isSensor() then
-      iPlayer.isOnGround = true
-    end]]
-
-    if other:getUserData() ~= nil and other:getUserData().id == "ground" then
+    if other:getUserData() ~= nil and other:getUserData().name == "ground" then
 
       -- Récupère la position du "ground"
       local os_x1, os_y1, os_x2, os_y2 = other:getShape():computeAABB(
@@ -89,10 +75,39 @@ function World:beginContact(_fixture, Contact)
 
       --## GROUND ##
       if p_y2 >= os_y1 and p_x1 < os_x2 and p_x2 > os_x1 then -- path fixed double jump
-        Player.isOnGround = true
-        Player.vy = 0
+        iPlayer.isOnGround = true
+        iPlayer.vy = 0
       end
 
+
+    end
+
+    if other:getUserData() ~= nil and other:getUserData().name == "coin" then
+      iPlayer.score = iPlayer.score + other:getUserData().scorePoints
+      other:getUserData().visible = false
+      other:getBody():destroy()
+    end
+
+    if other:getUserData() ~= nil and other:getUserData().name == "mushroom" then
+      iPlayer.score = iPlayer.score + other:getUserData().scorePoints
+      table.insert(iPlayer.inventory,other:getUserData())
+      other:getUserData().visible = false
+      other:getBody():destroy()
+    end 
+
+    if other:getUserData() ~= nil and other:getUserData().name == "pot" then
+      if not other:getUserData().isDone then
+        local dep = other:getUserData().dependency
+
+        for i=#iPlayer.inventory, 1, -1 do
+          local inv = iPlayer.inventory[i]
+          if inv.id == dep.id then
+            other:getUserData().isDone = true
+            table.remove(iPlayer.inventory, i)
+            break
+          end
+        end
+      end
 
     end
 
@@ -113,31 +128,6 @@ function World:beginContact(_fixture, Contact)
 
   --other:
 
-end
---
-
-function World:endContact(_fixture, Contact)
-  --print("endContact")
-  --[[local fixture_a, fixture_b = Contact:getFixtures()
-    -- Event witch Player
-    if fixture_a:getUserData() ~= nil and fixture_a:getUserData() == "player" then
-      player = fixture_a
-      other = fixture_b
-    elseif fixture_b:getUserData() ~= nil and  fixture_b:getUserData().id == "player" then
-      player = fixture_b
-      other = fixture_a
-    end
-
-    if player then
-      -- On récupère "l'instance" du joueur
-      local iPlayer = player:getUserData()
-  
-      -- Vérifiez si le rectangle touche le sol
-      if other:isSensor() then
-        iPlayer.isOnGround = false
-      end
-    end
-    ]]
 end
 --
 

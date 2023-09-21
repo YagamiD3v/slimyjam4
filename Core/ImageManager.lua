@@ -28,7 +28,13 @@ function ImageManager.newImg(pfile, px, py)
     return image
   end
   --
-  local new = {imgdata=lg.newImage(pfile), file=pfile}--, x=px or 0, y=py or 0}
+  local new = {
+    imgdata=lg.newImage(pfile), 
+    file=pfile,
+    
+  }--, x=px or 0, y=py or 0}
+
+
   function new.getDimensions()
     new.w, new.h = new.imgdata:getDimensions()
   end
@@ -73,6 +79,8 @@ function ImageManager.newImageSheet(pfile, pSizeW, pSizeH)
     x = startx
     y = y + newSheet.sizeH
   end
+
+
   --
   function newSheet.drawTileQuad()
     local startx=0

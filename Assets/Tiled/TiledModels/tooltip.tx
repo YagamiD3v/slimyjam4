@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+ <object name="tooltip" width="53" height="33">
+  <properties>
+   <property name="duration" type="float" value="10"/>
+   <property name="enable" type="bool" value="true"/>
+   <property name="text" value="Trouve les champi et met les dans le bon pot"/>
+  </properties>
+ </object>
+</template>

@@ -5,9 +5,13 @@
     },
     "activeFile": "sand_box.tmx",
     "expandedProjectPaths": [
+        "TiledModels",
         "."
     ],
     "fileStates": {
+        "": {
+            "scaleInDock": 1
+        },
         "Collider.tsx": {
             "scaleInDock": 3,
             "scaleInEditor": 1
@@ -25,11 +29,11 @@
             "scaleInEditor": 1
         },
         "sand_box.tmx": {
-            "scale": 1.5,
-            "selectedLayer": 4,
+            "scale": 2,
+            "selectedLayer": 7,
             "viewCenter": {
-                "x": 360,
-                "y": 299.66666666666663
+                "x": 391.25,
+                "y": 308.75
             }
         },
         "sky.tsx": {
@@ -41,12 +45,14 @@
             "scaleInEditor": 1
         },
         "winter.tsx": {
-            "scaleInDock": 3,
+            "scaleInDock": 2,
             "scaleInEditor": 1
         }
     },
     "last.exportedFilePath": "D:/Developpement/MiniProjetJeux/GameJam/SlimyJam4/src/Assets/Tiled",
-    "last.imagePath": "D:/Developpement/MiniProjetJeux/GameJam/SlimyJam4/src/Assets/Tiled/sprite/Player",
+    "last.externalTilesetPath": "D:/Developpement/MiniProjetJeux/GameJam/SlimyJam4/src/Assets/Tiled",
+    "last.imagePath": "D:/Developpement/MiniProjetJeux/GameJam/SlimyJam4/src/Assets/Tiled/object",
+    "last.objectTemplatePath": "D:/Developpement/MiniProjetJeux/GameJam/SlimyJam4/src/Assets/Tiled/TiledModels",
     "lastUsedTilesetExportFilter": "Fichiers Lua (*.lua)",
     "map.height": 38,
     "map.lastUsedExportFilter": "Fichiers Lua (*.lua)",
@@ -56,27 +62,21 @@
     "map.tileWidth": 16,
     "map.width": 50,
     "openFiles": [
-        "sand_box.tmx",
-        "winter.tsx",
-        "sky.tsx",
-        "Collider.tsx",
-        "staticObjects.tsx",
-        "coin.tsx",
-        "ground.tsx",
-        "player-idle.tsx"
+        "sand_box.tmx"
     ],
     "project": "SlimyJam4.tiled-project",
     "property.type": "bool",
     "recentFiles": [
+        "sand_box.tmx",
+        "staticObjects.tsx",
+        "coin.tsx",
         "player-idle.tsx",
         "ground.tsx",
-        "coin.tsx",
-        "staticObjects.tsx",
         "Collider.tsx",
         "sky.tsx",
-        "winter.tsx",
-        "sand_box.tmx"
+        "winter.tsx"
     ],
+    "tileset.lastUsedFilter": "Fichiers de jeu de tuiles Tiled (*.tsx *.xml)",
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
         "height": 16,

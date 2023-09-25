@@ -8,10 +8,31 @@ function TiledManager.newMap(pfile)
   map.debugEvent = false
 
   map.listDropItems = {}
-
+  map.listItems = {}
   map.listEvents = {}
 
+  
   function map:update(dt)
+
+    for i=#self.listItems, 1, -1 do 
+      local item = self.listItems[i]
+      if not item.visible then
+        table.remove(self.listItems, i)
+        goto continue -- simulate continue
+      end
+
+      if type(self.Animations[item.name]) == "table" then
+        item.frameTimer = item.frameTimer + dt
+        if item.frameTimer >= self.Animations[item.name][item.currentFrame].duration/1000 then
+          item.currentFrame = item.currentFrame % #self.Animations[item.name] + 1
+          item.frameTimer = 0
+        end
+      end
+
+      ::continue::
+    end
+
+
   end
 
   function map.draw(pLayer)
@@ -29,30 +50,53 @@ function TiledManager.newMap(pfile)
           end
         end
       end
+
       -- Debug :
       if lockz then
         love.graphics.print(map[lockz].name, 10, 10)
       elseif TiledManager.debug then
         love.graphics.print("All Layers", 10, 10)
       end
-      --
-      if map.debugEvent then
-        for n=1, #map.listEvents do
-          local event = map.listEvents[n]
-          love.graphics.setColor(1,0,0,0.05)
-          if event.shapetype == "polygon" then
-            love.graphics.polygon("line", event.polygon_points)
-          else
-            love.graphics.rectangle("line", event.x, event.y, event.width, event.height)
-          end
-          love.graphics.setColor(1,0,1,1)
-          love.graphics.print(event.name, event.x, event.y)
-        end
-        love.graphics.setColor(1,1,1,1)
-      end
-      
     end
-    --
+    
+    -- Affichage des items
+    for _, item in pairs(map.listItems) do 
+      --local item = map.listItems[i]
+      if item.shapeType == "rectangle" and item.visible then
+        if type(map.Animations[item.name]) == "table" then
+          love.graphics.draw(
+            map.TileSheet[map.Animations[item.name][item.currentFrame].tileid].imgdata,
+            map.TileSheet[map.Animations[item.name][item.currentFrame].tileid].quad,
+            item.x,
+            item.y
+          )
+        else
+          if (item.isDone) then
+            love.graphics.print("done", item.x, item.y-10)
+          end
+          love.graphics.draw(map.TileSheet[item.gid].imgdata,  map.TileSheet[item.gid].quad, item.x, item.y)
+        end
+      end
+    end
+
+    --love.graphics.line(0,544,600,544)
+
+    if map.debugEvent then
+      for n=1, #map.listEvents do
+        local event = map.listEvents[n]
+        love.graphics.setColor(1,0,0,0.05)
+        if event.shapetype == "polygon" then
+          love.graphics.polygon("line", event.polygon_points)
+        else
+          love.graphics.rectangle("line", event.x, event.y, event.width, event.height)
+        end
+        love.graphics.setColor(1,0,1,1)
+        love.graphics.print(event.name, event.x, event.y)
+      end
+      love.graphics.setColor(1,1,1,1)
+    end
+    
+
     if TiledManager.debug then
       TiledManager.draw(map)
     end
@@ -88,8 +132,10 @@ function TiledManager.importMapTiled(pfile)
 
   -- Ajoute les SpriteSheet a la Map
   map.TileSheet = {}
+  map.TileCollider = {}
+  map.Animations = {}
   map.shapesTypes = {}
-
+  
   for n=1, #mload.tilesets do
     local tilesetProps = mload.tilesets[n]
     local tileset = require("Assets/Tiled/".. tilesetProps.name )
@@ -99,14 +145,41 @@ function TiledManager.importMapTiled(pfile)
         table.insert( map.shapesTypes, tileColliderID)
       end
     end
-    if  tileset.image then
+    
+    -- Stock le nombre de quad avant d'en ajouter d'autres
+    -- Cela servira d'offset pour déterminer les ids d'animation
+    local nbQuad =  #map.TileSheet
+    if tileset.image then
       local file = "Assets/Tiled/"..tileset.image
       local sheet = Core.ImageManager.newImageSheet( file, 16, 16)
       for n=1, #sheet do
         table.insert(map.TileSheet, sheet[n])
       end
+
+      if type(tileset.tiles) == 'table' then
+        for _, tile in ipairs(tileset.tiles) do
+          if type(tile.objectGroup) == 'table' and type(tile.objectGroup.objects) == 'table' then
+            for _,obj in ipairs(tile.objectGroup.objects) do
+              if obj.properties['isCollider'] then
+                map.TileCollider[tileset.name] = obj
+              end
+            end
+          end
+          if type(tile.animation) == 'table' then
+            local t = { id = tile.id } 
+            t.animation = {}
+            for __, anim in ipairs(tile.animation) do
+              anim.tileid = anim.tileid + nbQuad + 1
+              table.insert(t.animation, anim)
+            end
+            map.Animations[tileset.name] = t.animation
+          end
+        end
+      end
     end
   end
+    
+    
 
   -- Trie les layers entre layer/collisions/objects :
   local layers = {}
@@ -114,20 +187,27 @@ function TiledManager.importMapTiled(pfile)
   map.objects = {}
   for z=1, #mload.layers do
     local layer = mload.layers[z]
-    if layer.type == "tilelayer" or (layer.type == "objectgroup" and  layer.properties.isCollider) then
-      if layer.properties.isCollider then
-        table.insert(map.colliderLayers, layer)
-      else
-        table.insert(layers, layer)
-      end
-    elseif layer.type == "objectgroup" then
+
+    if layer.properties.isCollider ~= nil and layer.properties.isCollider then
+      table.insert(map.colliderLayers, layer)
+      goto continue -- simulate continue
+    end
+
+    if layer.type == "tilelayer" then
+      table.insert(layers, layer)
+      goto continue -- simulate continue
+    end
+    
+    if layer.type == "objectgroup" then
       for n=1, #layer.objects do
         local obj = layer.objects[n]
         obj.layerName = layer.name
         table.insert(map.objects, obj)
       end
-    else
+      goto continue -- simulate continue
     end
+
+    ::continue::
   end
   map.layers = #layers
 
@@ -165,6 +245,9 @@ function TiledManager.importMapTiled(pfile)
   -- Creer les entités physics de collisions dans le World de la Map :
   TiledManager.loadMapColliders(map)
 
+  -- Créer les items
+  TiledManager.loadMapItems(map)
+
   -- Creer les Zones d'évents :
   TiledManager.loadMapEvents(map)
 
@@ -173,6 +256,74 @@ function TiledManager.importMapTiled(pfile)
   return map
 end
 --
+
+function TiledManager.loadMapItems(map)
+  map.listItems = {}
+  for _, object in pairs(map.objects) do
+      if object.layerName == "Items" then
+        if object.shape == "rectangle" then
+          local item = {
+            gid = object.gid,
+            id = object.id,
+            name = object.name,
+            shapeType = "rectangle",
+            x=object.x, y=object.y-16, -- Hack sur Y (avec un modèle Tiled il y a une sorte d'offset)
+            w=object.width, h=object.height,
+            visible = object.visible,
+          }
+
+          if object.properties['scorePoints'] ~= nil then
+            item.scorePoints = object.properties['scorePoints'] or 0
+          end
+          if object.properties['color'] ~= nil then
+            item.color = object.properties['color']
+          end
+          if object.properties['dependency'] ~= nil then
+            item.dependency = object.properties['dependency']
+          end
+          if object.properties['isDone'] ~= nil then
+            item.isDone = object.properties['isDone']
+          end
+
+
+          if object.properties['isAnimate'] then 
+            item.currentFrame = 1
+            item.frameTimer = 0
+            item.frameDuration = map.Animations[item.name][item.currentFrame].duration/1000
+          end
+          
+        
+          local ox, oy = 0, 0
+          if type(map.TileCollider[item.name]) == 'table' then
+              local coinCollider = map.TileCollider[item.name]
+              -- x,y is center of the shape
+              ox, oy = coinCollider.width / 2, coinCollider.height/2
+              item.body = love.physics.newBody(
+                map.world, 
+                item.x+coinCollider.x+ox, 
+                item.y+coinCollider.y+oy, 
+                "kinematic"
+              )
+              item.shape = love.physics.newRectangleShape(coinCollider.width, coinCollider.height)
+          else
+            -- x,y is center of the shape
+            ox, oy = item.w / 2, item.h/2
+            item.body = love.physics.newBody(map.world, item.x+ox, item.y+oy, "kinematic")
+            item.shape = love.physics.newRectangleShape(object.width, object.height)
+          end
+          item.fixture = love.physics.newFixture(item.body, item.shape)
+          item.fixture:setSensor(true) -- evite la collision "physique"
+          item.fixture:setUserData(item)
+
+
+          
+          table.insert(map.listItems, item)
+        end
+      end -- eif
+  end --efor
+end
+--
+
 
 function TiledManager.loadMapColliders(map)
   map.listColliders = {}
@@ -305,7 +456,8 @@ function TiledManager.loadMapColliders(map)
        for _, object in pairs(objects) do
           if object.shape == "rectangle" then
             local block = {
-              id = "ground",
+              id = object.id,
+              name = "ground",
               x=object.x, y=object.y,
               w=object.width, h=object.height,
               isCollider=true,
@@ -329,7 +481,6 @@ function TiledManager.loadMapColliders(map)
               block.sensorFixture:setSensor(true)]]
             end
             table.insert(map.listColliders, block)
-
           end
        end
     end
@@ -339,9 +490,6 @@ function TiledManager.loadMapColliders(map)
   y=0
   --
 
-  for z=1, #map.colliderLayers do
-
-  end
 
   local function newMapLimit(centerX,centerY,w,h)
     local limit = {x=centerX, y=centerY ,w=w, h=h, ox=w/2, oy=h/2, isCollider=true}

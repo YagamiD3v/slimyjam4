@@ -9,6 +9,8 @@ function TiledManager.newMap(pfile)
 
   map.listDropItems = {}
   map.listItems = {}
+  map.listMobs = {}
+  map.listTriggers = {}
   map.listEvents = {}
 
   
@@ -32,6 +34,19 @@ function TiledManager.newMap(pfile)
       ::continue::
     end
 
+    -- Maj des mob
+    for i=#self.listMobs, 1, -1 do 
+      local mob = self.listMobs[i]
+      
+      if not mob.visible then
+        table.remove(self.listMobs, i)
+        goto continue -- simulate continue
+      end
+
+      mob:update(dt)
+
+      ::continue::
+    end
 
   end
 
@@ -79,9 +94,12 @@ function TiledManager.newMap(pfile)
       end
     end
 
-    --love.graphics.line(0,544,600,544)
-
-    if map.debugEvent then
+    -- Affichage des mobs
+    for _, mob in pairs(map.listMobs) do 
+      mob:draw()
+    end
+    
+  if map.debugEvent then
       for n=1, #map.listEvents do
         local event = map.listEvents[n]
         love.graphics.setColor(1,0,0,0.05)
@@ -99,6 +117,12 @@ function TiledManager.newMap(pfile)
 
     if TiledManager.debug then
       TiledManager.draw(map)
+      -- Affichage des triggers
+      for _, trigger in pairs(map.listTriggers) do 
+        love.graphics.setColor(0,1,0)
+        love.graphics.rectangle('line', trigger.x-8, trigger.y-16,trigger.w, trigger.h) --wtf
+        love.graphics.setColor(1,1,1)
+      end
     end
   end
   
@@ -245,8 +269,14 @@ function TiledManager.importMapTiled(pfile)
   -- Creer les entités physics de collisions dans le World de la Map :
   TiledManager.loadMapColliders(map)
 
+  -- Chargement des triggers
+  TiledManager.loadMapTriggers(map)
+
   -- Créer les items
   TiledManager.loadMapItems(map)
+
+  -- Créer les items
+  TiledManager.loadMapMobs(map)
 
   -- Creer les Zones d'évents :
   TiledManager.loadMapEvents(map)
@@ -256,6 +286,25 @@ function TiledManager.importMapTiled(pfile)
   return map
 end
 --
+
+function TiledManager.loadMapTriggers(map)
+  map.listTriggers = {}
+  for _, trigger in pairs(map.objects) do
+    if trigger.layerName == "Triggers" then
+      if (trigger.name == "goLeft" or trigger.name == "goRight") then
+        local t = trigger
+        t.x = t.x + 8
+        t.y = t.y
+        t.w=trigger.width
+        t.h=trigger.height
+        t.direction = trigger.properties.direction
+        t.type = trigger.properties.type
+
+        table.insert(map.listTriggers, t)
+      end
+    end
+  end
+end
 
 function TiledManager.loadMapItems(map)
   map.listItems = {}
@@ -284,7 +333,6 @@ function TiledManager.loadMapItems(map)
           if object.properties['isDone'] ~= nil then
             item.isDone = object.properties['isDone']
           end
-
 
           if object.properties['isAnimate'] then 
             item.currentFrame = 1
@@ -324,6 +372,18 @@ function TiledManager.loadMapItems(map)
 end
 --
 
+function TiledManager.loadMapMobs(map)
+  map.listMobs = {}
+  
+  for _, object in pairs(map.objects) do
+    if object.layerName == "Mobs" then
+      if (object.name == "mob_mushroom") then
+        table.insert(map.listMobs, MobMushroom:new(object, map))
+      end
+    end
+  end
+
+end
 
 function TiledManager.loadMapColliders(map)
   map.listColliders = {}

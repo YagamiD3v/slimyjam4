@@ -7,6 +7,7 @@ local eventsList = {}
 
 function World.new()
   local new = love.physics.newWorld(0, 9.81*World.meter, World.canBodySleep)
+  print("Creation monde : " .. tostring(new))
   new:setCallbacks(World.beginContact)
   --
   table.insert(listWorlds, new)
@@ -70,7 +71,6 @@ function World:beginContact(_fixture, Contact)
       local x1, y1, x2, y2 = Contact:getPositions()
       x1, y1, x2, y2 = applyFunc(math.ceil, x1, y1, x2, y2)
       --print("player touche ground (" .. tostring(x1) .. "," .. tostring(y1) .. ") (" ..tostring(x2) .. "," ..tostring(y2) .. ")")
-
       --print("Friction: " ..tostring(Contact:getFriction()))
 
       --## GROUND ##
@@ -78,8 +78,6 @@ function World:beginContact(_fixture, Contact)
         iPlayer.isOnGround = true
         iPlayer.vy = 0
       end
-
-
     end
 
     if other:getUserData() ~= nil and other:getUserData().name == "coin" then
@@ -112,6 +110,29 @@ function World:beginContact(_fixture, Contact)
     end
 
 
+    if other:getUserData() ~= nil and other:getUserData().type == "mob" then
+      print("Collision avec mob")
+      local nx, ny = Contact:getNormal()
+      if ny == -1 then
+          iPlayer.score = iPlayer.score + other:getUserData().scorePoints
+          -- Le joueur a touché l'ennemi par le haut
+          for i=#map.listMobs, 1, -1 do
+            local m = map.listMobs[i]
+            if m.id == other:getUserData().id then
+              table.remove(map.listMobs, i) 
+              other:getUserData().visible = false
+              other:getBody():destroy()
+              break
+            end
+          end
+      else 
+        print("Le joueur est touché !")
+      end
+
+    end
+
+
+
     for n=1, #map.listEvents do
       local lookMe = map.listEvents[n]
       if other == lookMe.fixture then
@@ -126,9 +147,11 @@ function World:beginContact(_fixture, Contact)
     end
   end
 
-  --other:
-
 end
 --
+
+
+
+
 
 return World

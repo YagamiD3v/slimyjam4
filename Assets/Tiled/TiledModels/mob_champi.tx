@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+ <tileset firstgid="1" source="../Mushroom_4.tsx"/>
+ <object name="mob_mushroom" gid="1" width="16" height="16">
+  <properties>
+   <property name="direction" type="int" value="4"/>
+   <property name="isAnimate" type="bool" value="true"/>
+   <property name="scorePoints" type="int" value="20"/>
+  </properties>
+ </object>
+</template>

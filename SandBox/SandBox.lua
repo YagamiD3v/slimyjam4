@@ -1,5 +1,22 @@
 local SandBox = {}
 
+ENUM_DIRECTION = {
+  TOP = 1,
+  RIGHT = 2,
+  BOTTOM = 3,
+  LEFT = 4
+}
+
+-- There can be up to 16 fixture categories represented as a number from 1 to 16
+ENUM_CATEGORY = {
+  PLAYER = 1,
+  GROUND = 2,
+  MOB = 5,
+  TRIGGER = 6,
+}
+
+MobMushroom = require("../Entity/MobMushroom")
+
 local maptiled = Core.TiledManager.importMapTiled("sand_box")
 MapManager = Core.MapManager.newMapManager()
 MapManager:addNewMapTiled(maptiled)
@@ -21,28 +38,19 @@ Player.inventory = {}
 function SandBox.load()
   -- force, gravity, positions x/y, etc :
   Player.body = love.physics.newBody(MapManager.current.world, Player.x, Player.y, "dynamic")
-  --Player.bodyK = love.physics.newBody(MapManager.current.world, Player.x-20, Player.y-20, "kinematic")
-  
-  --Player.bodyK = love.physics.newBody(MapManager.current.world, Player.x-20, Player.y-20, "kinematic")
-  
+ 
   -- mass defaut = 4
   Player.body:setInertia(math.huge) -- Empêche la rotation du joueur
 
   -- la forme de l objet et les collisions qui en decoulent :
   Player.shape = love.physics.newRectangleShape( Player.w, Player.h )
-  --Player.shapeK = love.physics.newRectangleShape( 30, 30 )
-  --Player.shapeK = love.physics.newRectangleShape( 30, 30 )
 
   -- on indique au monde de l'object quel body est attaché avec quelle fixture(s) :
   Player.fixture = love.physics.newFixture(Player.body, Player.shape, 0.14)
+  --Player.fixture:setCategory(ENUM_CATEGORY.PLAYER)
+  --Player.fixture:setCategory(ENUM_CATEGORY.MOB)
   Player.fixture:setFriction(.2) -- 0 verglas, 1 concrete
   Player.fixture:setUserData(Player)
-
-  --Player.fixtureK = love.physics.newFixture(Player.bodyK, Player.shapeK, 1)
-
-  --Player.fixtureK = love.physics.newFixture(Player.bodyK, Player.shapeK, 1)
-
-  --Player.fixtureK = love.physics.newFixture(Player.bodyK, Player.shapeK, 1)
 
 end
 --
@@ -70,7 +78,6 @@ function SandBox.update(dt)
     local x, y = Player.body:getLinearVelocity()
     Player.body:setLinearVelocity(x/1.01, y)
   end
-
 end
 --
 

@@ -9,8 +9,8 @@ return {
   height = 38,
   tilewidth = 16,
   tileheight = 16,
-  nextlayerid = 14,
-  nextobjectid = 184,
+  nextlayerid = 16,
+  nextobjectid = 208,
   properties = {},
   tilesets = {
     {
@@ -45,6 +45,18 @@ return {
       firstgid = 632,
       filename = "coin.tsx",
       exportfilename = "coin.lua"
+    },
+    {
+      name = "mob_mushroom",
+      firstgid = 644,
+      filename = "Mushroom_4.tsx",
+      exportfilename = "mob_mushroom.lua"
+    },
+    {
+      name = "triggers",
+      firstgid = 648,
+      filename = "triggers.tsx",
+      exportfilename = "triggers.lua"
     }
   },
   layers = {
@@ -1732,6 +1744,194 @@ return {
           properties = {
             ["dependency"] = { id = 173 },
             ["isDone"] = false
+          }
+        }
+      }
+    },
+    {
+      type = "objectgroup",
+      draworder = "topdown",
+      id = 14,
+      name = "Mobs",
+      class = "",
+      visible = true,
+      opacity = 1,
+      offsetx = 0,
+      offsety = 0,
+      parallaxx = 1,
+      parallaxy = 1,
+      properties = {},
+      objects = {
+        {
+          id = 186,
+          name = "mob_mushroom",
+          type = "",
+          shape = "rectangle",
+          x = 512,
+          y = 352,
+          width = 16,
+          height = 16,
+          rotation = 0,
+          gid = 644,
+          visible = true,
+          properties = {
+            ["direction"] = 2,
+            ["isAnimate"] = true,
+            ["scorePoints"] = 20
+          }
+        },
+        {
+          id = 187,
+          name = "mob_mushroom",
+          type = "",
+          shape = "rectangle",
+          x = 256,
+          y = 240,
+          width = 16,
+          height = 16,
+          rotation = 0,
+          gid = 644,
+          visible = true,
+          properties = {
+            ["direction"] = 4,
+            ["isAnimate"] = true,
+            ["scorePoints"] = 20
+          }
+        },
+        {
+          id = 205,
+          name = "mob_mushroom",
+          type = "",
+          shape = "rectangle",
+          x = 336,
+          y = 576,
+          width = 16,
+          height = 16,
+          rotation = 0,
+          gid = 644,
+          visible = true,
+          properties = {
+            ["direction"] = 4,
+            ["isAnimate"] = true,
+            ["scorePoints"] = 20
+          }
+        }
+      }
+    },
+    {
+      type = "objectgroup",
+      draworder = "topdown",
+      id = 15,
+      name = "Triggers",
+      class = "",
+      visible = true,
+      opacity = 1,
+      offsetx = 0,
+      offsety = 0,
+      parallaxx = 1,
+      parallaxy = 1,
+      properties = {},
+      objects = {
+        {
+          id = 188,
+          name = "goRight",
+          type = "",
+          shape = "rectangle",
+          x = 160,
+          y = 240,
+          width = 16,
+          height = 16,
+          rotation = 0,
+          gid = 648,
+          visible = true,
+          properties = {
+            ["direction"] = 2,
+            ["type"] = "ChangeDirection"
+          }
+        },
+        {
+          id = 190,
+          name = "goLeft",
+          type = "",
+          shape = "rectangle",
+          x = 624,
+          y = 352,
+          width = 16,
+          height = 16,
+          rotation = 0,
+          gid = 649,
+          visible = true,
+          properties = {
+            ["direction"] = 4,
+            ["type"] = "changeDirection"
+          }
+        },
+        {
+          id = 192,
+          name = "goRight",
+          type = "",
+          shape = "rectangle",
+          x = 480,
+          y = 352,
+          width = 16,
+          height = 16,
+          rotation = 0,
+          gid = 648,
+          visible = true,
+          properties = {
+            ["direction"] = 2,
+            ["type"] = "changeDirection"
+          }
+        },
+        {
+          id = 194,
+          name = "goLeft",
+          type = "",
+          shape = "rectangle",
+          x = 288,
+          y = 240,
+          width = 16,
+          height = 16,
+          rotation = 0,
+          gid = 649,
+          visible = true,
+          properties = {
+            ["direction"] = 4,
+            ["type"] = "changeDirection"
+          }
+        },
+        {
+          id = 206,
+          name = "goLeft",
+          type = "",
+          shape = "rectangle",
+          x = 400,
+          y = 576,
+          width = 16,
+          height = 16,
+          rotation = 0,
+          gid = 649,
+          visible = true,
+          properties = {
+            ["direction"] = 4,
+            ["type"] = "changeDirection"
+          }
+        },
+        {
+          id = 207,
+          name = "goRight",
+          type = "",
+          shape = "rectangle",
+          x = 208,
+          y = 576,
+          width = 16,
+          height = 16,
+          rotation = 0,
+          gid = 648,
+          visible = true,
+          properties = {
+            ["direction"] = 2,
+            ["type"] = "changeDirection"
           }
         }
       }

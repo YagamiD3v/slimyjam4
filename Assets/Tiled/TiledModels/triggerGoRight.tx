@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+ <tileset firstgid="1" source="../triggers.tsx"/>
+ <object name="goRight" gid="1" width="16" height="16">
+  <properties>
+   <property name="direction" type="int" value="2"/>
+   <property name="type" value="changeDirection"/>
+  </properties>
+ </object>
+</template>

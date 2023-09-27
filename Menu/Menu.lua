@@ -161,7 +161,6 @@ end
 --
 
 function Menu.mousepressed(x,y,button)
-  print(button)
   if button == 1 then
     if mouse.AABB() then
       if listButtons[currentBox] then

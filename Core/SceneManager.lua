@@ -35,6 +35,7 @@ end
 --
 
 function Scene.loadScene()
+  Screen.load()
   if currentScene.load then
     currentScene.load()
   end

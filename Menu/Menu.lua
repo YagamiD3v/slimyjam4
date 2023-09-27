@@ -10,6 +10,31 @@ local font = love.graphics.newFont(22)
 
 local drawSelect = true
 
+local background = love.graphics.newImage("Assets/Menu/background.png")
+
+local mouse = {x=Screen.ox, y=Screen.oy, w=1, h=1}
+function mouse.AABB()
+  for n=1, #listButtons do
+    local button = listButtons[n]
+    if CheckCollision( mouse.x, mouse.y, mouse.w, mouse.h,
+      button.x, button.y, button.w, button.h) then
+      currentBox = n
+      return true
+    end
+  end
+  return false
+end
+--
+function mouse.getPosition()
+  mouse.x, mouse.y = love.mouse.getPosition()
+end
+--
+function mouse.update(dt)
+  mouse.getPosition()
+  mouse.AABB()
+end
+--
+
 local timer = {current=0, delai=20}
 function timer.update(dt)
   timer.current = timer.current + 60 * dt
@@ -22,7 +47,9 @@ end
 --
 
 function Menu.drawButton(self)
-  love.graphics.rectangle("line", self.x, self.y, self.w, self.h)
+  love.graphics.setColor(0.827,0.827,0.827,0.25)
+  love.graphics.rectangle("fill", self.x, self.y, self.w, self.h, 30)
+  love.graphics.setColor(1,1,1,1)
 end
 --
 
@@ -74,8 +101,8 @@ end
 --
 
 function Menu.load()
-  Menu.newButton(Screen.oy - 120, "P L A Y", function() Core.Scene.setScene(SandBox, true) end)
-  Menu.newButton(Screen.oy + 60, "Q U I T", function() love.event.quit() end)
+  Menu.newButton(Screen.oy - 60*3, "P L A Y", function() Core.Scene.setScene(SandBox, true) end)
+  Menu.newButton(Screen.oy - 60, "Q U I T", function() love.event.quit() end)
 end
 --
 
@@ -83,10 +110,14 @@ function Menu.update(dt)
   if timer.update(dt) then
     drawSelect = not drawSelect
   end
+  --
+  mouse.update(dt)
 end
 --
 
 function Menu.draw()
+  love.graphics.draw(background)
+  --
   for n=1, #listButtons do
     local button = listButtons[n]
     --
@@ -95,7 +126,7 @@ function Menu.draw()
     if currentBox == n then
       if drawSelect then
         love.graphics.setColor(0.15,0.8,0.1,1)
-        love.graphics.rectangle("line", button.x, button.y, button.w, button.h)
+        love.graphics.rectangle("line", button.x, button.y, button.w, button.h, 30)
         love.graphics.setColor(1,1,1,1)
       end
     end
@@ -130,6 +161,14 @@ end
 --
 
 function Menu.mousepressed(x,y,button)
+  print(button)
+  if button == 1 then
+    if mouse.AABB() then
+      if listButtons[currentBox] then
+        listButtons[currentBox].action()
+      end
+    end
+  end
 end
 --
 

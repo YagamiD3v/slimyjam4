@@ -68,7 +68,7 @@ end
 
 function Scene.mousepressed(x,y,button)
   if currentScene.mousepressed then
-    currentScene.mousepressed(dt)
+    currentScene.mousepressed(x,y,button)
   end
 end
 --

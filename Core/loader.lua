@@ -1,5 +1,5 @@
 
-local Loader = {debug=true}
+local Loader = {debug=false}
 --
 local dirpath = "Core/"
 local filesTable = love.filesystem.getDirectoryItems(dirpath)
@@ -9,6 +9,7 @@ Core = {}
 function Loader:load()
   -- For All
   require(dirpath.."Globals")
+  require(dirpath.."Screen")
 
   -- Libs independante
   Core.Gamera = require(dirpath.."Gamera")

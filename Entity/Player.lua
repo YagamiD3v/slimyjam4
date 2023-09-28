@@ -3,7 +3,7 @@ local Player = {debug=false}
 function Player.reload()
   Player.isOnGround = true
   Player.maxSpeed = 100
-  Player.x =  20
+  Player.x =  30
   Player.y = 550
   Player.w, Player.h = 26, 26
   Player.vy = 0

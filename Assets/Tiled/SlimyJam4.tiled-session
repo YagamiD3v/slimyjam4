@@ -3,10 +3,10 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "sand_box.tmx",
+    "activeFile": "droplet.tsx",
     "expandedProjectPaths": [
-        "TiledModels",
-        "."
+        ".",
+        "TiledModels"
     ],
     "file.lastUsedOpenFilter": "Tous les Fichiers (*)",
     "fileStates": {
@@ -25,12 +25,27 @@
             "scaleInDock": 5.5,
             "scaleInEditor": 1
         },
+        "autumn.tsx": {
+            "scaleInDock": 3,
+            "scaleInEditor": 3
+        },
+        "autumn_map.tmx": {
+            "expandedObjectLayers": [
+                7
+            ],
+            "scale": 1.698125,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 616.5623849834376,
+                "y": 323.0033124769967
+            }
+        },
         "bee_simple.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
         "coin.tsx": {
-            "scaleInDock": 5.5,
+            "scaleInDock": 3,
             "scaleInEditor": 1
         },
         "droplet.tsx": {
@@ -38,11 +53,15 @@
             "scaleInEditor": 1
         },
         "ground.tsx": {
-            "scaleInDock": 5.5
+            "scaleInDock": 3
         },
         "mob_bee.tsx": {
             "scaleInDock": 5.5,
             "scaleInEditor": 1
+        },
+        "nature.tsx": {
+            "scaleInDock": 3,
+            "scaleInEditor": 5.5
         },
         "player-idle.tsx": {
             "scaleInDock": 1,
@@ -52,18 +71,18 @@
             "expandedObjectLayers": [
                 15,
                 12,
-                9,
-                14
+                14,
+                9
             ],
-            "scale": 1.6351874999999998,
-            "selectedLayer": 6,
+            "scale": 1.5,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 447.043534762833,
-                "y": 317.7005695065551
+                "x": 395.3333333333333,
+                "y": 503.66666666666663
             }
         },
         "sky.tsx": {
-            "scaleInDock": 5.5,
+            "scaleInDock": 3,
             "scaleInEditor": 1
         },
         "spring..tsx": {
@@ -82,7 +101,7 @@
             }
         },
         "spring.tsx": {
-            "scaleInDock": 5.5,
+            "scaleInDock": 3,
             "scaleInEditor": 1
         },
         "spring_map..tmx": {
@@ -99,25 +118,53 @@
         },
         "spring_map.tmx": {
             "expandedObjectLayers": [
+                7,
+                9,
                 6,
-                8,
-                9
+                8
             ],
-            "scale": 1.6351874999999998,
-            "selectedLayer": 6,
+            "scale": 2,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 374.88055651110346,
-                "y": 270.61116844398583
+                "x": 501.5,
+                "y": 295.25
             }
         },
         "staticObjects.tsx": {
-            "scaleInDock": 5.5
+            "scaleInDock": 3
+        },
+        "summer.tmx": {
+            "scale": 1.698125,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 522.3408170776592,
+                "y": 314.75892528524105
+            }
+        },
+        "summer.tsx": {
+            "scaleInDock": 1
+        },
+        "summer_map.tmx": {
+            "scale": 1.4915,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 399.59772041568897,
+                "y": 304.05631914180356
+            }
         },
         "triggers.tsx": {
             "scaleInDock": 5.5
         },
         "winter.tsx": {
             "scaleInDock": 5.5
+        },
+        "winter_map.tmx": {
+            "scale": 1.4915,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 400.26818638954074,
+                "y": 304.05631914180356
+            }
         }
     },
     "frame.defaultDuration": 170,
@@ -135,27 +182,26 @@
     "map.width": 50,
     "openFiles": [
         "spring_map.tmx",
-        "mob_bee.tsx",
-        "Mushroom_4.tsx",
-        "player-idle.tsx",
-        "sky.tsx",
-        "sand_box.tmx"
+        "summer.tmx",
+        "autumn_map.tmx",
+        "droplet.tsx",
+        "nature.tsx"
     ],
     "project": "SlimyJam4.tiled-project",
     "property.type": "bool",
     "recentFiles": [
+        "spring_map.tmx",
+        "summer.tmx",
+        "autumn_map.tmx",
+        "nature.tsx",
+        "droplet.tsx",
         "sand_box.tmx",
+        "autumn.tsx",
         "sky.tsx",
         "player-idle.tsx",
         "Mushroom_4.tsx",
         "mob_bee.tsx",
-        "spring_map.tmx",
-        "droplet.tsx",
-        "bee_simple.tsx",
-        "Collider.tsx",
-        "spring.tsx",
-        "spring..tsx",
-        "spring_map..tmx"
+        "bee_simple.tsx"
     ],
     "tileset.lastUsedFilter": "Fichiers de jeu de tuiles Tiled (*.tsx *.xml)",
     "tileset.lastUsedFormat": "tsx",

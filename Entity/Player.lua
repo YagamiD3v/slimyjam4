@@ -71,9 +71,9 @@ function Player.draw()
   love.graphics.print("Score : " .. tostring(Player.score), 10,70)
   local inv=''
   for i, entry in ipairs(Player.inventory) do
-    inv = inv .. "{id=" .. entry.id .. ", color='" .. entry.color .. "'}"
+    inv = inv .. "{id=" .. entry.id .. ", color='" .. tostring(entry.color) .. "'}"
     if i < #Player.inventory then
-      inv = inv .. ","
+        inv = inv .. ","
     end
   end
   love.graphics.print("Inventory : " .. inv, 10,90)

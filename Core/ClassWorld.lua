@@ -7,7 +7,6 @@ local eventsList = {}
 
 function World.new()
   local new = love.physics.newWorld(0, 9.81*World.meter, World.canBodySleep)
-  print("Creation monde : " .. tostring(new))
   new:setCallbacks(World.beginContact)
   --
   table.insert(listWorlds, new)
@@ -47,7 +46,7 @@ function World:beginContact(_fixture, Contact)
     local iPlayer = player:getUserData()
 
     if other:getUserData() ~= nil and other:getUserData().name == "ground" then
-
+     
       -- Récupère la position du "ground"
       local os_x1, os_y1, os_x2, os_y2 = other:getShape():computeAABB(
         other:getBody():getX(), 
@@ -74,9 +73,9 @@ function World:beginContact(_fixture, Contact)
       --print("Friction: " ..tostring(Contact:getFriction()))
 
       --## GROUND ##
-      if p_y2 >= os_y1 and p_x1 < os_x2 and p_x2 > os_x1 then -- path fixed double jump
+      local nx, ny = Contact:getNormal()
+      if ny == -1 then
         iPlayer.isOnGround = true
-        iPlayer.vy = 0
       end
     end
 
@@ -111,9 +110,9 @@ function World:beginContact(_fixture, Contact)
 
 
     if other:getUserData() ~= nil and other:getUserData().type == "mob" then
-      print("Collision avec mob")
       local nx, ny = Contact:getNormal()
       if ny == -1 then
+          iPlayer.body:setLinearVelocity( 0, -100 )
           iPlayer.score = iPlayer.score + other:getUserData().scorePoints
           -- Le joueur a touché l'ennemi par le haut
           for i=#map.listMobs, 1, -1 do

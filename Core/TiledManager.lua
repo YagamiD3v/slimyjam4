@@ -120,7 +120,7 @@ function TiledManager.newMap(pfile)
       -- Affichage des triggers
       for _, trigger in pairs(map.listTriggers) do 
         love.graphics.setColor(0,1,0)
-        love.graphics.rectangle('line', trigger.x-8, trigger.y-16,trigger.w, trigger.h) --wtf
+        love.graphics.rectangle('line', trigger.x-8, trigger.y-8,trigger.w, trigger.h) --wtf
         love.graphics.setColor(1,1,1)
       end
     end
@@ -175,7 +175,7 @@ function TiledManager.importMapTiled(pfile)
     local nbQuad =  #map.TileSheet
     if tileset.image then
       local file = "Assets/Tiled/"..tileset.image
-      local sheet = Core.ImageManager.newImageSheet( file, 16, 16)
+      local sheet = Core.ImageManager.newImageSheet( file, tileset.tilewidth, tileset.tileheight)
       for n=1, #sheet do
         table.insert(map.TileSheet, sheet[n])
       end
@@ -183,7 +183,7 @@ function TiledManager.importMapTiled(pfile)
       if type(tileset.tiles) == 'table' then
         for _, tile in ipairs(tileset.tiles) do
           if type(tile.objectGroup) == 'table' and type(tile.objectGroup.objects) == 'table' then
-            for _,obj in ipairs(tile.objectGroup.objects) do
+            for _, obj in ipairs(tile.objectGroup.objects) do
               if obj.properties['isCollider'] then
                 map.TileCollider[tileset.name] = obj
               end
@@ -291,7 +291,7 @@ function TiledManager.loadMapTriggers(map)
   map.listTriggers = {}
   for _, trigger in pairs(map.objects) do
     if trigger.layerName == "Triggers" then
-      if (trigger.name == "goLeft" or trigger.name == "goRight") then
+      if (trigger.name == "goLeft" or trigger.name == "goRight" or trigger.name == "goTop" or trigger.name == "goBottom") then
         local t = trigger
         t.x = t.x + 8
         t.y = t.y
@@ -379,8 +379,15 @@ function TiledManager.loadMapMobs(map)
     if object.layerName == "Mobs" then
       if (object.name == "mob_mushroom") then
         table.insert(map.listMobs, MobMushroom:new(object, map))
+        goto continue
+      end
+      if (object.name == "mob_bee") then
+        local mob = MobBee:new(object, map)
+        table.insert(map.listMobs, mob)
       end
     end
+
+    ::continue::
   end
 
 end
@@ -534,11 +541,6 @@ function TiledManager.loadMapColliders(map)
             if block.isGround then
               block.fixture:setUserData(block)
               block.fixture:setFriction(block.friction)
-              
-              -- Créez un capteur pour détecter le sol 
-              --[[block.sensorShape = love.physics.newRectangleShape(block.x+ox+1, block.y+oy, object.height, object.width-2)
-              block.sensorFixture = love.physics.newFixture(block.body, block.sensorShape)
-              block.sensorFixture:setSensor(true)]]
             end
             table.insert(map.listColliders, block)
           end

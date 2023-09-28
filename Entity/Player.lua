@@ -1,4 +1,4 @@
-local Player = {}
+local Player = {debug=false}
 
 function Player.reload()
   Player.isOnGround = true
@@ -64,20 +64,22 @@ end
 --
 
 function Player.draw()
-  love.graphics.setColor( 1,0,0 )
-  love.graphics.print("isOnGround : " .. tostring(Player.isOnGround), 10,10)
-  love.graphics.print("Velocity Y : " .. tostring(math.floor(Player.vy)), 10,30)
-  love.graphics.print("Mass (kg) : " .. tostring(Player.body:getMass()), 10,50)
-  love.graphics.print("Score : " .. tostring(Player.score), 10,70)
-  local inv=''
-  for i, entry in ipairs(Player.inventory) do
-    inv = inv .. "{id=" .. entry.id .. ", color='" .. tostring(entry.color) .. "'}"
-    if i < #Player.inventory then
-        inv = inv .. ","
+  if Player.debug then
+    love.graphics.setColor( 1,0,0 )
+    love.graphics.print("isOnGround : " .. tostring(Player.isOnGround), 10,10)
+    love.graphics.print("Velocity Y : " .. tostring(math.floor(Player.vy)), 10,30)
+    love.graphics.print("Mass (kg) : " .. tostring(Player.body:getMass()), 10,50)
+    love.graphics.print("Score : " .. tostring(Player.score), 10,70)
+    local inv=''
+    for i, entry in ipairs(Player.inventory) do
+      inv = inv .. "{id=" .. entry.id .. ", color='" .. tostring(entry.color) .. "'}"
+      if i < #Player.inventory then
+          inv = inv .. ","
+      end
     end
+    love.graphics.print("Inventory : " .. inv, 10,90)
+    love.graphics.setColor( 1,1,1 )
   end
-  love.graphics.print("Inventory : " .. inv, 10,90)
-  love.graphics.setColor( 1,1,1 )
   -- les 4 points du rectangle
   local points = {Player.shape:getPoints()}
   for n=1, #points, 2 do

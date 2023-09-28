@@ -8,13 +8,15 @@ function Ground.newGround(x,y,w,h)
   new.shape = love.physics.newRectangleShape( w, h )
   new.fixture = love.physics.newFixture(new.body, new.shape, 0.14)
   new.fixture:setFriction(.2) -- 0 verglas, 1 concrete (a cumuler avec la friction du sol)
+  new.fixture:setUserData(new)
+  new.name = "NavGround"
   table.insert(lstGround, new)
 end
 --
 
 function Ground.load()
   lstGround = {}
-  
+
   -- ground
   Ground.newGround(Screen.cx, Screen.h+8, Screen.w, 16)
 

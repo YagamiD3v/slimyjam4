@@ -6,6 +6,7 @@ function NavPlayer.reload()
   NavPlayer.maxSpeed = 100
   NavPlayer.w, NavPlayer.h = 26*3, 26*3
   NavPlayer.isOnGround = true
+  NavPlayer.name = "NavPlayer"
 end
 --
 

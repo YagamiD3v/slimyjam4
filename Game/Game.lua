@@ -8,16 +8,19 @@ local Dialogue = {show=true, list={}}
 
 NavPlayer = require("../Entity/NavPlayer")
 Ground = require("../Game/Ground")
+FlowerPot = require("../Game/FlowerPot")
 
 function Game.load()
   NavPlayer.load()
   Ground.load()
+  FlowerPot.load()
 end
 --
 
 function Game.update(dt)
   NavPlayer.update(dt)
   Ground.update(dt)
+  FlowerPot.update(dt)
   --
   Game.World:update(dt)
 end
@@ -28,6 +31,7 @@ function Game.draw()
   love.graphics.draw(background)
   --
   Ground.draw()
+  FlowerPot.draw()
   --
   NavPlayer.draw()
 

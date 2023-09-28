@@ -1,7 +1,7 @@
-local MobMushroom = {}
+local MobBee = {debug=false}
 
-function MobMushroom:new(obj, pMap)
-    local mob = {update=MobMushroom.update, draw=MobMushroom.draw}
+function MobBee:new(obj, pMap)
+    local mob = {update=MobBee.update, draw=MobBee.draw}
 
     mob.refMap = pMap
     mob.isAnimate = false
@@ -9,7 +9,7 @@ function MobMushroom:new(obj, pMap)
     mob.id = obj.id
     mob.name = obj.name
     mob.shapeType = "rectangle"
-    mob.x = obj.x
+    mob.x = obj.x + obj.width/2
     mob.y = obj.y
     mob.w = obj.width
     mob.h = obj.height
@@ -18,7 +18,7 @@ function MobMushroom:new(obj, pMap)
     
     mob.direction = obj.properties['direction']
     mob.scaleX = 1
-    mob.vx, mob.vy = 20, 0
+    mob.vx, mob.vy = 20, 20
     mob.maxSpeed = 100
     mob.type="mob"
 
@@ -32,7 +32,11 @@ function MobMushroom:new(obj, pMap)
         mob.currentFrame = 1
         mob.frameTimer = 0
         mob.frameDuration = mob.refMap.Animations[mob.name][mob.currentFrame].duration/1000
+    else 
+        mob.currentFrame = 1
     end
+
+
     
     if type(mob.refMap.TileCollider[mob.name]) == 'table' then
         local mobCollider = mob.refMap.TileCollider[mob.name]
@@ -64,16 +68,21 @@ function MobMushroom:new(obj, pMap)
     return mob
 end
 
-function MobMushroom.update(self, dt) -- self == mob:update(dt)
-    local _x = self.x
-    if self.direction == ENUM_DIRECTION.RIGHT then
+function MobBee.update(self, dt) -- self == mob:update(dt)
+    local _x, _y = self.x, self.y
+    
+    if self.direction == ENUM_DIRECTION.TOP then
+        self.y = self.y - self.vy * dt
+    elseif self.direction == ENUM_DIRECTION.BOTTOM then
+        self.y = self.y + self.vy * dt
+    elseif self.direction == ENUM_DIRECTION.RIGHT then
         self.x = self.x + self.vx * dt
         self.scaleX = 1
     elseif self.direction == ENUM_DIRECTION.LEFT then
         self.x = self.x - self.vx * dt
         self.scaleX = -1
     end
-    self.body:setPosition(self.x, self.body:getY())
+    self.body:setPosition(self.x, self.y)
 
     if self.isAnimate then
         self.frameTimer = self.frameTimer + dt
@@ -86,21 +95,29 @@ function MobMushroom.update(self, dt) -- self == mob:update(dt)
     -- Collision avec trigger pour changer de direction
     for _, trig in pairs(self.refMap.listTriggers) do
         if CheckCollision(self.x, self.y, self.w, self.h, trig.x, trig.y, trig.w, trig.h ) then
-            self.body:setPosition(_x, self.body:getY())
+            self.body:setPosition(_x, _y)
             self.direction = trig.direction
         end
     end
 end
 
-function MobMushroom.draw(self)
-   
-    --[[local points = {self.shape:getPoints()}
-    for n=1, #points, 2 do
-      points[n], points[n+1] = self.body:getWorldPoint( points[n], points[n+1] )
+function MobBee.draw(self)
+
+    if MobBee.debug then
+        love.graphics.setColor(1,0,0)
+        love.graphics.print("ID: " .. self.id, self.body:getX(), self.body:getY()-16)
+        
+        local points = {self.shape:getPoints()}
+        for n=1, #points, 2 do
+        points[n], points[n+1] = self.body:getWorldPoint( points[n], points[n+1] )
+        end
+        love.graphics.polygon("fill", points)
+        love.graphics.setColor(1,1,1)
     end
-    love.graphics.polygon("fill", points)]]
+
 
     love.graphics.draw(
+        
         self.refMap.TileSheet[self.Animations[self.currentFrame].tileid].imgdata,
         self.refMap.TileSheet[self.Animations[self.currentFrame].tileid].quad,
         self.body:getX(),
@@ -113,4 +130,4 @@ function MobMushroom.draw(self)
     )
 end
 
-return MobMushroom
+return MobBee

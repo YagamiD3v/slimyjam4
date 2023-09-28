@@ -16,8 +16,9 @@ ENUM_CATEGORY = {
 }
 
 MobMushroom = require("../Entity/MobMushroom")
+MobBee = require("../Entity/MobBee")
 
-local maptiled = Core.TiledManager.importMapTiled("sand_box")
+local maptiled = Core.TiledManager.importMapTiled("spring_map")
 MapManager = Core.MapManager.newMapManager()
 MapManager:addNewMapTiled(maptiled)
 MapManager:setMap(maptiled)
@@ -40,7 +41,8 @@ function SandBox.load()
   Player.body = love.physics.newBody(MapManager.current.world, Player.x, Player.y, "dynamic")
  
   -- mass defaut = 4
-  Player.body:setInertia(math.huge) -- Empêche la rotation du joueur
+  Player.body:setFixedRotation(true)
+  --Player.body:setInertia(math.huge) -- Empêche la rotation du joueur
 
   -- la forme de l objet et les collisions qui en decoulent :
   Player.shape = love.physics.newRectangleShape( Player.w, Player.h )
@@ -49,7 +51,7 @@ function SandBox.load()
   Player.fixture = love.physics.newFixture(Player.body, Player.shape, 0.14)
   --Player.fixture:setCategory(ENUM_CATEGORY.PLAYER)
   --Player.fixture:setCategory(ENUM_CATEGORY.MOB)
-  Player.fixture:setFriction(.2) -- 0 verglas, 1 concrete
+  Player.fixture:setFriction(.2) -- 0 verglas, 1 concrete (a cumuler avec la friction du sol)
   Player.fixture:setUserData(Player)
 
 end
@@ -65,11 +67,11 @@ function SandBox.update(dt)
   -- move
   if love.keyboard.isDown("left") then
     if Player.vx > -Player.maxSpeed then
-      Player.body:applyForce( -30, 0 )
+      Player.body:applyForce( -35, 0 )
     end
   elseif love.keyboard.isDown("right") then
     if Player.vx < Player.maxSpeed then
-      Player.body:applyForce( 30, 0 )
+      Player.body:applyForce( 35, 0 )
     end
   end
 

@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "spring_map.tmx",
+    "activeFile": "sand_box.tmx",
     "expandedProjectPaths": [
         "TiledModels",
         "."
@@ -22,7 +22,7 @@
             "scaleInEditor": 1
         },
         "Mushroom_4.tsx": {
-            "scaleInDock": 1,
+            "scaleInDock": 5.5,
             "scaleInEditor": 1
         },
         "bee_simple.tsx": {
@@ -30,32 +30,41 @@
             "scaleInEditor": 1
         },
         "coin.tsx": {
-            "scaleInDock": 1,
+            "scaleInDock": 5.5,
+            "scaleInEditor": 1
+        },
+        "droplet.tsx": {
+            "scaleInDock": 5.5,
             "scaleInEditor": 1
         },
         "ground.tsx": {
-            "scaleInDock": 1
+            "scaleInDock": 5.5
         },
         "mob_bee.tsx": {
+            "scaleInDock": 5.5,
+            "scaleInEditor": 1
+        },
+        "player-idle.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
         "sand_box.tmx": {
             "expandedObjectLayers": [
                 15,
-                9,
                 12,
+                9,
                 14
             ],
             "scale": 1.6351874999999998,
-            "selectedLayer": 5,
+            "selectedLayer": 6,
             "viewCenter": {
-                "x": 275.1977984176127,
-                "y": 303.0233535909491
+                "x": 447.043534762833,
+                "y": 317.7005695065551
             }
         },
         "sky.tsx": {
-            "scaleInDock": 5.5
+            "scaleInDock": 5.5,
+            "scaleInEditor": 1
         },
         "spring..tsx": {
             "scaleInDock": 1,
@@ -73,7 +82,7 @@
             }
         },
         "spring.tsx": {
-            "scaleInDock": 1,
+            "scaleInDock": 5.5,
             "scaleInEditor": 1
         },
         "spring_map..tmx": {
@@ -90,31 +99,31 @@
         },
         "spring_map.tmx": {
             "expandedObjectLayers": [
-                8,
                 6,
+                8,
                 9
             ],
             "scale": 1.6351874999999998,
-            "selectedLayer": 5,
+            "selectedLayer": 6,
             "viewCenter": {
-                "x": 376.10365783740406,
-                "y": 271.2227191071361
+                "x": 374.88055651110346,
+                "y": 270.61116844398583
             }
         },
         "staticObjects.tsx": {
-            "scaleInDock": 1
+            "scaleInDock": 5.5
         },
         "triggers.tsx": {
-            "scaleInDock": 1
+            "scaleInDock": 5.5
         },
         "winter.tsx": {
-            "scaleInDock": 1
+            "scaleInDock": 5.5
         }
     },
-    "frame.defaultDuration": 120,
+    "frame.defaultDuration": 170,
     "last.exportedFilePath": "D:/Developpement/MiniProjetJeux/GameJam/SlimyJam4/src/Assets/Tiled",
     "last.externalTilesetPath": "D:/Developpement/MiniProjetJeux/GameJam/SlimyJam4/src/Assets/Tiled",
-    "last.imagePath": "D:/Developpement/MiniProjetJeux/GameJam/SlimyJam4/src/Assets/Tiled/sprite/Bee",
+    "last.imagePath": "D:/Developpement/MiniProjetJeux/GameJam/SlimyJam4/src/Assets/Tiled/object",
     "last.objectTemplatePath": "D:/Developpement/MiniProjetJeux/GameJam/SlimyJam4/src/Assets/Tiled/TiledModels",
     "lastUsedTilesetExportFilter": "Fichiers Lua (*.lua)",
     "map.height": 38,
@@ -125,30 +134,35 @@
     "map.tileWidth": 16,
     "map.width": 50,
     "openFiles": [
+        "spring_map.tmx",
+        "mob_bee.tsx",
         "Mushroom_4.tsx",
-        "spring_map.tmx"
+        "player-idle.tsx",
+        "sky.tsx",
+        "sand_box.tmx"
     ],
     "project": "SlimyJam4.tiled-project",
     "property.type": "bool",
     "recentFiles": [
+        "sand_box.tmx",
+        "sky.tsx",
+        "player-idle.tsx",
         "Mushroom_4.tsx",
         "mob_bee.tsx",
         "spring_map.tmx",
+        "droplet.tsx",
         "bee_simple.tsx",
-        "sand_box.tmx",
         "Collider.tsx",
         "spring.tsx",
         "spring..tsx",
-        "spring_map..tmx",
-        "Bee.tsx",
-        "spring.tmx",
-        "coin.tsx"
+        "spring_map..tmx"
     ],
+    "tileset.lastUsedFilter": "Fichiers de jeu de tuiles Tiled (*.tsx *.xml)",
     "tileset.lastUsedFormat": "tsx",
     "tileset.margin": 0,
     "tileset.spacing": 0,
     "tileset.tileSize": {
-        "height": 10,
-        "width": 18
+        "height": 16,
+        "width": 16
     }
 }

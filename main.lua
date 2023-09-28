@@ -24,8 +24,8 @@ function love.load()
   Core.Scene.newScene(SandBox, "SandBox")
   Core.Scene.newScene(Menu, "Menu")
 --  Core.Scene.setScene(Menu)
---  Core.Scene.setScene(Game)
-  Core.Scene.setScene(SandBox)
+  Core.Scene.setScene(Game)
+--  Core.Scene.setScene(SandBox)
   --
   Core.Scene.loadScene()
 end

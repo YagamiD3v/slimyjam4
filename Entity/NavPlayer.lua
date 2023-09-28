@@ -10,6 +10,13 @@ function NavPlayer.reload()
 end
 --
 
+function NavPlayer.beginContact(_fixture, Contact, navplayer, other)
+  if other:getUserData().name == "FlowerPot" then
+    Core.Scene.setScene(SandBox, true)
+  end
+end
+--
+
 function NavPlayer.load()
   --
 

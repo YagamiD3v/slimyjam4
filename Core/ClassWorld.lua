@@ -42,6 +42,22 @@ function World:beginContact(_fixture, Contact)
 
   if player then
     Player.beginContact(_fixture, Contact, player, other, map)
+    return true
+  end
+  --
+
+  local navplayer = false
+  -- Event witch Player
+  if fixture_a:getUserData() ~= nil and fixture_a:getUserData().name == "NavPlayer" then
+    navplayer = fixture_a
+    other = fixture_b
+  elseif fixture_b:getUserData() ~= nil and  fixture_b:getUserData().name == "NavPlayer" then
+    navplayer = fixture_b
+    other = fixture_a
+  end
+  if navplayer then
+    NavPlayer.beginContact(_fixture, Contact, navplayer, other)
+    return true
   end
 
 end

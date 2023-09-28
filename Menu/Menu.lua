@@ -101,7 +101,7 @@ end
 --
 
 function Menu.load()
-  Menu.newButton(Screen.oy - 60*3, "P L A Y", function() Core.Scene.setScene(SandBox, true) end)
+  Menu.newButton(Screen.oy - 60*3, "P L A Y", function() Core.Scene.setScene(Game, true) end)
   Menu.newButton(Screen.oy - 60, "Q U I T", function() love.event.quit() end)
 end
 --

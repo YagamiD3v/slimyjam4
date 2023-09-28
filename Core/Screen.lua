@@ -8,6 +8,9 @@ function Screen.getDimensions()
   --
   Screen.ox=Screen.w/2
   Screen.oy=Screen.h/2
+  --
+  Screen.cx = Screen.ox
+  Screen.cy = Screen.oy
 end
 --
 

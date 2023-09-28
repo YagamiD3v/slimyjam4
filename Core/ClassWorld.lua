@@ -1,6 +1,6 @@
 local World = { meter=32, canBodySleep=true}
 World.__index = World
-love.physics.setMeter(World.meter) -- la hauteur d'un mètre est 16px dans ce monde
+love.physics.setMeter(World.meter) -- la hauteur d'un mètre est de 32 pixels dans ce monde
 
 local listWorlds = {}
 local eventsList = {}

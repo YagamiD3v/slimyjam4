@@ -1,4 +1,4 @@
-local Game = {debug=true}
+local Game = {debug=false}
 
 function Game.load()
 end

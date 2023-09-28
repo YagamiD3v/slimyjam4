@@ -92,6 +92,13 @@ function World:beginContact(_fixture, Contact)
       other:getBody():destroy()
     end 
 
+    if other:getUserData() ~= nil and other:getUserData().name == "droplet" then
+      iPlayer.score = iPlayer.score + other:getUserData().scorePoints
+      table.insert(iPlayer.inventory,other:getUserData())
+      other:getUserData().visible = false
+      other:getBody():destroy()
+    end 
+
     if other:getUserData() ~= nil and other:getUserData().name == "pot" then
       if not other:getUserData().isDone then
         local dep = other:getUserData().dependency

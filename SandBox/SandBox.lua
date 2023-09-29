@@ -19,7 +19,7 @@ MobMushroom = require("../Entity/MobMushroom")
 MobBee = require("../Entity/MobBee")
 Player = require("../Entity/Player")
 
-local maptiled = Core.TiledManager.importMapTiled("summer_map")
+local maptiled = Core.TiledManager.importMapTiled("autumn_map")
 MapManager = Core.MapManager.newMapManager()
 MapManager:addNewMapTiled(maptiled)
 MapManager:setMap(maptiled)

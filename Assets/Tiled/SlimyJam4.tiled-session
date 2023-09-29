@@ -3,10 +3,10 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "droplet.tsx",
+    "activeFile": "spring_map.tmx",
     "expandedProjectPaths": [
-        ".",
-        "TiledModels"
+        "TiledModels",
+        "."
     ],
     "file.lastUsedOpenFilter": "Tous les Fichiers (*)",
     "fileStates": {
@@ -34,10 +34,10 @@
                 7
             ],
             "scale": 1.698125,
-            "selectedLayer": 2,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 616.5623849834376,
-                "y": 323.0033124769967
+                "x": 366.28634523371363,
+                "y": 297.0923813029076
             }
         },
         "bee_simple.tsx": {
@@ -118,16 +118,16 @@
         },
         "spring_map.tmx": {
             "expandedObjectLayers": [
-                7,
-                9,
                 6,
-                8
+                9,
+                8,
+                7
             ],
             "scale": 2,
-            "selectedLayer": 2,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 501.5,
-                "y": 295.25
+                "x": 333.5,
+                "y": 296.75
             }
         },
         "staticObjects.tsx": {
@@ -142,14 +142,15 @@
             }
         },
         "summer.tsx": {
-            "scaleInDock": 1
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         },
         "summer_map.tmx": {
             "scale": 1.4915,
-            "selectedLayer": 0,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 399.59772041568897,
-                "y": 304.05631914180356
+                "x": 431.78008716057667,
+                "y": 289.3060677170634
             }
         },
         "triggers.tsx": {
@@ -160,10 +161,10 @@
         },
         "winter_map.tmx": {
             "scale": 1.4915,
-            "selectedLayer": 0,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 400.26818638954074,
-                "y": 304.05631914180356
+                "x": 398.25678846798525,
+                "y": 303.3858531679517
             }
         }
     },
@@ -182,26 +183,28 @@
     "map.width": 50,
     "openFiles": [
         "spring_map.tmx",
-        "summer.tmx",
         "autumn_map.tmx",
         "droplet.tsx",
-        "nature.tsx"
+        "nature.tsx",
+        "summer_map.tmx",
+        "winter_map.tmx",
+        "summer.tsx"
     ],
     "project": "SlimyJam4.tiled-project",
     "property.type": "bool",
     "recentFiles": [
-        "spring_map.tmx",
-        "summer.tmx",
-        "autumn_map.tmx",
+        "summer.tsx",
+        "winter_map.tmx",
+        "summer_map.tmx",
         "nature.tsx",
         "droplet.tsx",
+        "autumn_map.tmx",
+        "spring_map.tmx",
+        "summer.tmx",
         "sand_box.tmx",
         "autumn.tsx",
         "sky.tsx",
-        "player-idle.tsx",
-        "Mushroom_4.tsx",
-        "mob_bee.tsx",
-        "bee_simple.tsx"
+        "player-idle.tsx"
     ],
     "tileset.lastUsedFilter": "Fichiers de jeu de tuiles Tiled (*.tsx *.xml)",
     "tileset.lastUsedFormat": "tsx",

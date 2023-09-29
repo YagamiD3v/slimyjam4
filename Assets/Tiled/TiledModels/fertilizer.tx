@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+ <tileset firstgid="1" source="../staticObjects.tsx"/>
+ <object name="fertilizer" gid="11" width="16" height="16">
+  <properties>
+   <property name="isCollectable" type="bool" value="false"/>
+   <property name="isGrowing" type="bool" value="false"/>
+   <property name="type" value="plant"/>
+   <property name="z_order" type="int" value="-1"/>
+  </properties>
+ </object>
+</template>

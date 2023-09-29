@@ -36,8 +36,8 @@
             "scale": 4,
             "selectedLayer": 6,
             "viewCenter": {
-                "x": 81.5,
-                "y": 490.875
+                "x": 400,
+                "y": 303.875
             }
         },
         "bee_simple.tsx": {
@@ -118,16 +118,16 @@
         },
         "spring_map.tmx": {
             "expandedObjectLayers": [
-                7,
                 6,
+                7,
                 8,
                 9
             ],
             "scale": 8,
             "selectedLayer": 6,
             "viewCenter": {
-                "x": 59.625,
-                "y": 396.5625
+                "x": 59.5,
+                "y": 396.4375
             }
         },
         "staticObjects.tsx": {
@@ -152,8 +152,8 @@
             "scale": 5.5,
             "selectedLayer": 6,
             "viewCenter": {
-                "x": 54.363636363636374,
-                "y": 503.90909090909093
+                "x": 400,
+                "y": 303.9090909090909
             }
         },
         "triggers.tsx": {
@@ -169,8 +169,8 @@
             "scale": 8,
             "selectedLayer": 6,
             "viewCenter": {
-                "x": 43.875,
-                "y": 463.6875
+                "x": 400,
+                "y": 303.9375
             }
         }
     },
@@ -194,7 +194,7 @@
         "autumn_map.tmx"
     ],
     "project": "SlimyJam4.tiled-project",
-    "property.type": "bool",
+    "property.type": "string",
     "recentFiles": [
         "autumn_map.tmx",
         "winter_map.tmx",

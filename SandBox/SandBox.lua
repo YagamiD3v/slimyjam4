@@ -1,24 +1,29 @@
 local SandBox = {
   levels = {
+    currentLevel = "autumn",
     winter = {
       mission = "Collect the mushrooms and place them in the three flower pots.",
-      map_name = "winter_map"
+      map_name = "winter_map",
+      maptiled=nil
     },
     spring = {
       mission = "Collect the seeds and plant them in the three flower pots.",
       map_name = "spring_map",
+      maptiled=nil
     },
     summer = {
       mission = "Collect the water droplets and water the three flower pots.",
       map_name = "summer_map",
+      maptiled=nil
     },
     autumn = {
       mission = "Harvest the flowers from the three flower pots.",
-      map_name = "autumn_map"
+      map_name = "autumn_map",
+      maptiled=nil
     }
   }
-  
-  
+
+
 }
 
 ENUM_DIRECTION = {
@@ -39,14 +44,28 @@ MapManager = Core.MapManager.newMapManager()
 
 local Gui = require('../Game/Gui')
 
-function SandBox.load()
-  local maptiled = Core.TiledManager.importMapTiled(SandBox.levels.winter.map_name)
+function SandBox.loadLevel(pLevel)
+  Core.ImageManager.reset()
+  --
+  SandBox.levels.currentLevel = pLevel
+  local level = SandBox.levels[SandBox.levels.currentLevel]
+  --
+  local maptiled = Core.TiledManager.importMapTiled(level.map_name)
   MapManager:addNewMapTiled(maptiled)
   MapManager:setMap(maptiled)
-
-  Gui.load(SandBox.levels.winter)
+  --
+  Gui.load(level)
+  --
   Player.load()
+end
+--
 
+function SandBox.load()
+  SandBox.loadLevel("autumn")
+  SandBox.loadLevel("autumn")
+--  SandBox.loadLevel("spring")
+--  SandBox.loadLevel("summer")
+--  SandBox.loadLevel("winter")
 end
 --
 

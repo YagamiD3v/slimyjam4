@@ -1,10 +1,14 @@
-local NavPlayer = {}
+local NavPlayer = {debug=true}
+
+local decX = 0
+local decY = -20
 
 function NavPlayer.reload()
-  NavPlayer.x =  350
-  NavPlayer.y = 590
+  NavPlayer.x =  350 + decX
+  NavPlayer.y = 590 + decY
+  NavPlayer.direction={vx=1, vy=1}
   NavPlayer.maxSpeed = 100
-  NavPlayer.w, NavPlayer.h = 26*3, 26*3
+  NavPlayer.w, NavPlayer.h = 70, 80
   NavPlayer.isOnGround = true
   NavPlayer.name = "NavPlayer"
 end
@@ -18,6 +22,7 @@ end
 --
 
 function NavPlayer.load()
+  NavPlayer.Anims = Core.AnimPlayer.getAnims()
   --
 
   NavPlayer.reload()
@@ -43,6 +48,9 @@ end
 --
 
 function NavPlayer.update(dt)
+
+  NavPlayer.Anims:update(dt)
+
   NavPlayer.body:setAngle(0)
 
   NavPlayer.vx, NavPlayer.vy = NavPlayer.body:getLinearVelocity()
@@ -51,10 +59,12 @@ function NavPlayer.update(dt)
   if love.keyboard.isDown("left") then
     if NavPlayer.vx > -NavPlayer.maxSpeed then
       NavPlayer.body:applyForce( -35, 0 )
+      NavPlayer.direction.vx = -1
     end
   elseif love.keyboard.isDown("right") then
     if NavPlayer.vx < NavPlayer.maxSpeed then
       NavPlayer.body:applyForce( 35, 0 )
+      NavPlayer.direction.vx = 1
     end
   end
 
@@ -65,22 +75,25 @@ function NavPlayer.update(dt)
   end
 
   NavPlayer.vx, NavPlayer.vy = NavPlayer.body:getLinearVelocity()
+  NavPlayer.x, NavPlayer.y = NavPlayer.body:getPosition()
+  NavPlayer.x = NavPlayer.x + decX
+  NavPlayer.y = NavPlayer.y + decY
 
-  if math.floor(NavPlayer.vy) ~= 0 then
-    NavPlayer.isOnGround = false
-  else
-    NavPlayer.isOnGround = true
-  end
 end
 --
 
 function NavPlayer.draw()
-  -- les 4 points du rectangle
-  local points = {NavPlayer.shape:getPoints()}
-  for n=1, #points, 2 do
-    points[n], points[n+1] = NavPlayer.body:getWorldPoint( points[n], points[n+1] )
+
+  if NavPlayer.debug then
+    -- les 4 points du rectangle
+    local points = {NavPlayer.shape:getPoints()}
+    for n=1, #points, 2 do
+      points[n], points[n+1] = NavPlayer.body:getWorldPoint( points[n], points[n+1] )
+    end
+    love.graphics.polygon("fill", points)
   end
-  love.graphics.polygon("fill", points)
+
+  NavPlayer.Anims:draw(NavPlayer, 4)
 end
 --
 
@@ -88,6 +101,7 @@ function NavPlayer.keypressed(k)
   if k == "up" and NavPlayer.isOnGround then
     NavPlayer.body:applyLinearImpulse( 0, -15 )
     NavPlayer.isOnGround = false
+    NavPlayer.Anims:setAnim("Jump")
   end
 end
 --

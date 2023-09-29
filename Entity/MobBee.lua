@@ -115,7 +115,6 @@ function MobBee.draw(self)
         love.graphics.setColor(1,1,1)
     end
 
-
     love.graphics.draw(
         
         self.refMap.TileSheet[self.Animations[self.currentFrame].tileid].imgdata,

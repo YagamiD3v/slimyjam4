@@ -1,11 +1,15 @@
 local Player = {debug=false}
 
+local decX = 0
+local decY = -4
+
 function Player.reload()
   Player.isOnGround = true
   Player.maxSpeed = 100
+  Player.direction={vx=1, vy=1}
   Player.x =  30
   Player.y = 550
-  Player.w, Player.h = 26, 26
+  Player.w, Player.h = 16, 22 -- 26
   Player.vy = 0
   Player.vx = 0
   Player.inventory = {}
@@ -50,6 +54,9 @@ function Player.beginContact(_fixture, Contact, player, other, map)
       local nx, ny = Contact:getNormal()
       if ny == -1 then
         iPlayer.isOnGround = true
+        if Player.Anims.currentAnim == "Jump" then
+          Player.Anims:setAnim("Idle")
+        end
       end
     end
 
@@ -176,6 +183,8 @@ function Player.load()
   Player.name = "player"
   --
 
+  Player.Anims = Core.AnimPlayer.getAnims()
+
   Player.reload()
   --
 
@@ -183,21 +192,26 @@ function Player.load()
   Player.body = love.physics.newBody(MapManager.current.world, Player.x, Player.y, "dynamic")
 
   -- mass defaut = 4
+  Player.body:setMass(4)
   Player.body:setFixedRotation(true)
 
   -- la forme de l objet et les collisions qui en decoulent :
   Player.shape = love.physics.newRectangleShape( Player.w, Player.h )
 
   -- on indique au monde de l'object quel body est attaché avec quelle fixture(s) :
-  Player.fixture = love.physics.newFixture(Player.body, Player.shape, 0.14)
+  Player.fixture = love.physics.newFixture(Player.body, Player.shape, 0.26)
   Player.fixture:setFriction(.2) -- 0 verglas, 1 concrete (a cumuler avec la friction du sol)
   Player.fixture:setUserData(Player)
 
-  
+
 end
 --
 
 function Player.update(dt)
+
+  Player.Anims:update(dt)
+  --
+
   Player.body:setAngle(0)
 
   Player.vx, Player.vy = Player.body:getLinearVelocity()
@@ -206,10 +220,22 @@ function Player.update(dt)
   if love.keyboard.isDown("left") then
     if Player.vx > -Player.maxSpeed then
       Player.body:applyForce( -35, 0 )
+      Player.direction.vx = -1
+      if Player.Anims.currentAnim ~= "Run" and Player.Anims.currentAnim ~= "Jump"  then
+        Player.Anims:setAnim("Run")
+      end
     end
   elseif love.keyboard.isDown("right") then
     if Player.vx < Player.maxSpeed then
       Player.body:applyForce( 35, 0 )
+      Player.direction.vx = 1
+      if Player.Anims.currentAnim ~= "Run" and Player.Anims.currentAnim ~= "Jump" then
+        Player.Anims:setAnim("Run")
+      end
+    end
+  else
+    if Player.Anims.currentAnim == "Run" then
+      Player.Anims:setAnim("Idle")
     end
   end
 
@@ -218,10 +244,18 @@ function Player.update(dt)
     local x, y = Player.body:getLinearVelocity()
     Player.body:setLinearVelocity(x/1.01, y)
   end
+
+
+  Player.x, Player.y = Player.body:getPosition()
+  Player.x = Player.x + decX
+  Player.y = Player.y + decY
+
+
 end
 --
 
 function Player.draw()
+
   if Player.debug then
     love.graphics.setColor( 1,0,0 )
     love.graphics.print("isOnGround : " .. tostring(Player.isOnGround), 10,10)
@@ -237,13 +271,20 @@ function Player.draw()
     end
     love.graphics.print("Inventory : " .. inv, 10,90)
     love.graphics.setColor( 1,1,1 )
+
+    -- les 4 points du rectangle
+    local points = {Player.shape:getPoints()}
+    for n=1, #points, 2 do
+      points[n], points[n+1] = Player.body:getWorldPoint( points[n], points[n+1] )
+    end
+
+    love.graphics.polygon("fill", points)
+
   end
-  -- les 4 points du rectangle
-  local points = {Player.shape:getPoints()}
-  for n=1, #points, 2 do
-    points[n], points[n+1] = Player.body:getWorldPoint( points[n], points[n+1] )
-  end
-  love.graphics.polygon("fill", points)
+
+
+  Player.Anims:draw(Player)
+
 end
 --
 
@@ -251,6 +292,7 @@ function Player.keypressed(k)
   if k == "up" and Player.isOnGround then
     Player.body:applyLinearImpulse( 0, -15 )
     Player.isOnGround = false
+    Player.Anims:setAnim("Jump")
   end
 end
 --

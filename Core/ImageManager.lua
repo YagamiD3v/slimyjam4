@@ -9,6 +9,17 @@ local listAnim = {}
 
 local listAnimLayers = {}
 
+function ImageManager.reset()
+  listImage = {}
+
+  listImageSheet = {}
+
+  listAnim = {}
+
+  listAnimLayers = {}
+end
+--
+
 function ImageManager.searchExist(pList, pfile)
   for _, image in ipairs(pList) do
     if image.file == pfile then
@@ -31,7 +42,7 @@ function ImageManager.newImg(pfile, px, py)
   local new = {
     imgdata=lg.newImage(pfile), 
     file=pfile,
-    
+
   }--, x=px or 0, y=py or 0}
 
 

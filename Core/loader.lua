@@ -13,6 +13,7 @@ function Loader:load()
 
   -- Libs independante
   Core.Gamera = require(dirpath.."Gamera")
+  Core.AnimPlayer = require(dirpath.."AnimPlayer")
 
   -- Prio order require for work
   Core.Scene = require(dirpath.."SceneManager")

@@ -1,6 +1,5 @@
 local TiledManager = {debug=false, db_layer=false}
 
-local TileSheet = {}
 
 function TiledManager.newMap(pfile)
   local map = {name=pfile}
@@ -13,7 +12,7 @@ function TiledManager.newMap(pfile)
   map.listTriggers = {}
   map.listEvents = {}
 
-  
+
   function map:update(dt)
 
     for i=#self.listItems, 1, -1 do 
@@ -37,7 +36,7 @@ function TiledManager.newMap(pfile)
     -- Maj des mob
     for i=#self.listMobs, 1, -1 do 
       local mob = self.listMobs[i]
-      
+
       if not mob.visible then
         table.remove(self.listMobs, i)
         goto continue -- simulate continue
@@ -73,12 +72,14 @@ function TiledManager.newMap(pfile)
         love.graphics.print("All Layers", 10, 10)
       end
     end
-    
+
     -- Affichage des items
     for _, item in ipairs(map.listItems) do 
       --local item = map.listItems[i]
       if item.shapeType == "rectangle" and item.visible then
         if type(map.Animations[item.name]) == "table" then
+          print("#map.TileSheet : "..#map.TileSheet)
+          print("map.Animations[item.name][item.currentFrame].tileid : "..map.Animations[item.name][item.currentFrame].tileid)
           love.graphics.draw(
             map.TileSheet[map.Animations[item.name][item.currentFrame].tileid].imgdata,
             map.TileSheet[map.Animations[item.name][item.currentFrame].tileid].quad,
@@ -90,7 +91,7 @@ function TiledManager.newMap(pfile)
             love.graphics.print("done", item.x, item.y-40)
           end
           if item.type == 'plant' then
-            
+
             if item.isGrowing then
               love.graphics.draw(map.TileSheet[item.gid].imgdata,  map.TileSheet[item.gid].quad, item.x, item.y)
             end
@@ -105,8 +106,8 @@ function TiledManager.newMap(pfile)
     for _, mob in pairs(map.listMobs) do 
       mob:draw()
     end
-    
-  if map.debugEvent then
+
+    if map.debugEvent then
       for n=1, #map.listEvents do
         local event = map.listEvents[n]
         love.graphics.setColor(1,0,0,0.05)
@@ -120,7 +121,7 @@ function TiledManager.newMap(pfile)
       end
       love.graphics.setColor(1,1,1,1)
     end
-    
+
 
     if TiledManager.debug then
       TiledManager.draw(map)
@@ -132,7 +133,7 @@ function TiledManager.newMap(pfile)
       end
     end
   end
-  
+
   return map
 end
 --
@@ -166,7 +167,7 @@ function TiledManager.importMapTiled(pfile)
   map.TileCollider = {}
   map.Animations = {}
   map.shapesTypes = {}
-  
+
   for n=1, #mload.tilesets do
     local tilesetProps = mload.tilesets[n]
     local tileset = require("Assets/Tiled/".. tilesetProps.name )
@@ -176,10 +177,11 @@ function TiledManager.importMapTiled(pfile)
         table.insert( map.shapesTypes, tileColliderID)
       end
     end
-    
+
     -- Stock le nombre de quad avant d'en ajouter d'autres
     -- Cela servira d'offset pour déterminer les ids d'animation
     local nbQuad =  #map.TileSheet
+
     if tileset.image then
       local file = "Assets/Tiled/"..tileset.image
       local sheet = Core.ImageManager.newImageSheet( file, tileset.tilewidth, tileset.tileheight)
@@ -196,6 +198,7 @@ function TiledManager.importMapTiled(pfile)
               end
             end
           end
+
           if type(tile.animation) == 'table' then
             local t = { id = tile.id } 
             t.animation = {}
@@ -209,8 +212,8 @@ function TiledManager.importMapTiled(pfile)
       end
     end
   end
-    
-    
+
+
 
   -- Trie les layers entre layer/collisions/objects :
   local layers = {}
@@ -228,7 +231,7 @@ function TiledManager.importMapTiled(pfile)
       table.insert(layers, layer)
       goto continue -- simulate continue
     end
-    
+
     if layer.type == "objectgroup" then
       for n=1, #layer.objects do
         local obj = layer.objects[n]
@@ -316,89 +319,89 @@ end
 function TiledManager.loadMapItems(map)
   map.listItems = {}
   for _, object in pairs(map.objects) do
-      if object.layerName == "Items" then
-        if object.shape == "rectangle" then
-          local item = {
-            gid = object.gid,
-            id = object.id,
-            name = object.name,
-            shapeType = "rectangle",
-            x=object.x, y=object.y-16, -- Hack sur Y (avec un modèle Tiled il y a une sorte d'offset)
-            w=object.width, h=object.height,
-            visible = object.visible,
-            z_order = 0
-          }
+    if object.layerName == "Items" then
+      if object.shape == "rectangle" then
+        local item = {
+          gid = object.gid,
+          id = object.id,
+          name = object.name,
+          shapeType = "rectangle",
+          x=object.x, y=object.y-16, -- Hack sur Y (avec un modèle Tiled il y a une sorte d'offset)
+          w=object.width, h=object.height,
+          visible = object.visible,
+          z_order = 0
+        }
 
-          if object.properties['scorePoints'] ~= nil then
-            item.scorePoints = object.properties['scorePoints'] or 0
-          end
-          if object.properties['color'] ~= nil then
-            item.color = object.properties['color']
-          end
+        if object.properties['scorePoints'] ~= nil then
+          item.scorePoints = object.properties['scorePoints'] or 0
+        end
+        if object.properties['color'] ~= nil then
+          item.color = object.properties['color']
+        end
 
-          if object.name == "pot" then
-            item.dependency = object.properties['dependency']
-            item.isDone = object.properties['isDone']
-            item.canHarvest = object.properties['canHarvest']
-            item.obj0 = object.properties['obj0']
-            item.obj1 = object.properties['obj1']
-            item.obj2 = object.properties['obj2']
-          end
+        if object.name == "pot" then
+          item.dependency = object.properties['dependency']
+          item.isDone = object.properties['isDone']
+          item.canHarvest = object.properties['canHarvest']
+          item.obj0 = object.properties['obj0']
+          item.obj1 = object.properties['obj1']
+          item.obj2 = object.properties['obj2']
+        end
 
-          if object.properties['type'] ~= nil then
-            item.type = object.properties['type']
-            if item.type == "plant" then
-                item.isGrowing = object.properties['isGrowing']
-                item.isCollectable = object.properties['isCollectable']
-            end
-          end
-          if object.properties['z_order'] ~= nil then
-            item.z_order = object.properties['z_order']
-          end
-          
-          if object.properties['isAnimate'] then 
-            item.currentFrame = 1
-            item.frameTimer = 0
-            item.frameDuration = map.Animations[item.name][item.currentFrame].duration/1000
-          end
-          
-        
-          local ox, oy = 0, 0
-          if type(map.TileCollider[item.name]) == 'table' then
-              local coinCollider = map.TileCollider[item.name]
-              -- x,y is center of the shape
-              ox, oy = coinCollider.width / 2, coinCollider.height/2
-              item.body = love.physics.newBody(
-                map.world, 
-                item.x+coinCollider.x+ox, 
-                item.y+coinCollider.y+oy, 
-                "kinematic"
-              )
-              item.shape = love.physics.newRectangleShape(coinCollider.width, coinCollider.height)
-          else
-            -- x,y is center of the shape
-            ox, oy = item.w / 2, item.h/2
-            item.body = love.physics.newBody(map.world, item.x+ox, item.y+oy, "kinematic")
-            item.shape = love.physics.newRectangleShape(object.width, object.height)
-          end
-          item.fixture = love.physics.newFixture(item.body, item.shape)
-          item.fixture:setSensor(true) -- evite la collision "physique"
-          item.fixture:setUserData(item)
-
-          if (item.z_order == -1) then
-            table.insert(map.listItems, 1, item) -- insère au début pour gérer le z-order
-          else
-            table.insert(map.listItems, item)
+        if object.properties['type'] ~= nil then
+          item.type = object.properties['type']
+          if item.type == "plant" then
+            item.isGrowing = object.properties['isGrowing']
+            item.isCollectable = object.properties['isCollectable']
           end
         end
-      end -- eif
+        if object.properties['z_order'] ~= nil then
+          item.z_order = object.properties['z_order']
+        end
+
+        if object.properties['isAnimate'] then 
+          item.currentFrame = 1
+          item.frameTimer = 0
+          item.frameDuration = map.Animations[item.name][item.currentFrame].duration/1000
+        end
+
+
+        local ox, oy = 0, 0
+        if type(map.TileCollider[item.name]) == 'table' then
+          local coinCollider = map.TileCollider[item.name]
+          -- x,y is center of the shape
+          ox, oy = coinCollider.width / 2, coinCollider.height/2
+          item.body = love.physics.newBody(
+            map.world, 
+            item.x+coinCollider.x+ox, 
+            item.y+coinCollider.y+oy, 
+            "kinematic"
+          )
+          item.shape = love.physics.newRectangleShape(coinCollider.width, coinCollider.height)
+        else
+          -- x,y is center of the shape
+          ox, oy = item.w / 2, item.h/2
+          item.body = love.physics.newBody(map.world, item.x+ox, item.y+oy, "kinematic")
+          item.shape = love.physics.newRectangleShape(object.width, object.height)
+        end
+        item.fixture = love.physics.newFixture(item.body, item.shape)
+        item.fixture:setSensor(true) -- evite la collision "physique"
+        item.fixture:setUserData(item)
+
+        if (item.z_order == -1) then
+          table.insert(map.listItems, 1, item) -- insère au début pour gérer le z-order
+        else
+          table.insert(map.listItems, item)
+        end
+      end
+    end -- eif
   end --efor
 end
 --
 
 function TiledManager.loadMapMobs(map)
   map.listMobs = {}
-  
+
   for _, object in pairs(map.objects) do
     if object.layerName == "Mobs" then
       if (object.name == "mob_mushroom") then
@@ -541,34 +544,34 @@ function TiledManager.loadMapColliders(map)
         y=y+h
       end
     end
-    
-    if map.colliderLayers[z].type == "objectgroup" then
-       local objects = map.colliderLayers[z].objects
-       for _, object in pairs(objects) do
-          if object.shape == "rectangle" then
-            local block = {
-              id = object.id,
-              name = "ground",
-              x=object.x, y=object.y,
-              w=object.width, h=object.height,
-              isCollider=true,
-              isGround = object.properties['isGround'],
-              friction = object.properties['friction']
-            }
-            
-            -- x,y is center of the shape
-            local ox, oy = block.w / 2, block.h/2
-            block.body = love.physics.newBody(map.world, block.x+ox, block.y+oy, "static")
-            block.shape = love.physics.newRectangleShape(object.width, object.height)
-            block.fixture = love.physics.newFixture(block.body, block.shape)
 
-            if block.isGround then
-              block.fixture:setUserData(block)
-              block.fixture:setFriction(block.friction)
-            end
-            table.insert(map.listColliders, block)
+    if map.colliderLayers[z].type == "objectgroup" then
+      local objects = map.colliderLayers[z].objects
+      for _, object in pairs(objects) do
+        if object.shape == "rectangle" then
+          local block = {
+            id = object.id,
+            name = "ground",
+            x=object.x, y=object.y,
+            w=object.width, h=object.height,
+            isCollider=true,
+            isGround = object.properties['isGround'],
+            friction = object.properties['friction']
+          }
+
+          -- x,y is center of the shape
+          local ox, oy = block.w / 2, block.h/2
+          block.body = love.physics.newBody(map.world, block.x+ox, block.y+oy, "static")
+          block.shape = love.physics.newRectangleShape(object.width, object.height)
+          block.fixture = love.physics.newFixture(block.body, block.shape)
+
+          if block.isGround then
+            block.fixture:setUserData(block)
+            block.fixture:setFriction(block.friction)
           end
-       end
+          table.insert(map.listColliders, block)
+        end
+      end
     end
   end
   cellID = 1
@@ -679,7 +682,7 @@ end
 function TiledManager.draw(map)
   if TiledManager.debug then
     love.graphics.setColor(1,0,0,0.5)
-    
+
     for n=1, #map.listColliders do
       local block = map.listColliders[n]
       local shapetype = block.shape:getType()

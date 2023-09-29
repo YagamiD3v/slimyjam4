@@ -102,6 +102,14 @@ function math.rsign() return love.math.random(2) == 2 and 1 or -1 end
 -- Returns 1 if number is positive, -1 if it's negative, or 0 if it's 0.
 function math.sign(n) return n>0 and 1 or n<0 and -1 or 0 end
 
+function math.signExclusive(n)
+  if n >= 0 then
+    return 1 
+  else
+    return -1
+  end
+end
+
 
 -- Gives a precise random decimal number given a minimum and maximum
 function math.prandom(min, max) return love.math.random() * (max - min) + min end

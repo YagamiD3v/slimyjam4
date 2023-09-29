@@ -183,17 +183,16 @@ function Player.load()
 
   -- mass defaut = 4
   Player.body:setFixedRotation(true)
-  --Player.body:setInertia(math.huge) -- Empêche la rotation du joueur
 
   -- la forme de l objet et les collisions qui en decoulent :
   Player.shape = love.physics.newRectangleShape( Player.w, Player.h )
 
   -- on indique au monde de l'object quel body est attaché avec quelle fixture(s) :
   Player.fixture = love.physics.newFixture(Player.body, Player.shape, 0.14)
-  --Player.fixture:setCategory(ENUM_CATEGORY.PLAYER)
-  --Player.fixture:setCategory(ENUM_CATEGORY.MOB)
   Player.fixture:setFriction(.2) -- 0 verglas, 1 concrete (a cumuler avec la friction du sol)
   Player.fixture:setUserData(Player)
+
+  Player.a = 3
 end
 --
 

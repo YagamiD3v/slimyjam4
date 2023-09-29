@@ -5,8 +5,8 @@
     },
     "activeFile": "spring_map.tmx",
     "expandedProjectPaths": [
-        "TiledModels",
-        "."
+        ".",
+        "TiledModels"
     ],
     "file.lastUsedOpenFilter": "Tous les Fichiers (*)",
     "fileStates": {
@@ -34,10 +34,10 @@
                 7
             ],
             "scale": 1.698125,
-            "selectedLayer": 1,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 366.28634523371363,
-                "y": 297.0923813029076
+                "x": 399.8527788001472,
+                "y": 303.57011409642985
             }
         },
         "bee_simple.tsx": {
@@ -118,16 +118,16 @@
         },
         "spring_map.tmx": {
             "expandedObjectLayers": [
+                7,
                 6,
-                9,
                 8,
-                7
+                9
             ],
-            "scale": 2,
-            "selectedLayer": 1,
+            "scale": 8,
+            "selectedLayer": 6,
             "viewCenter": {
-                "x": 333.5,
-                "y": 296.75
+                "x": 59.75,
+                "y": 396.6875
             }
         },
         "staticObjects.tsx": {
@@ -146,11 +146,14 @@
             "scaleInEditor": 1
         },
         "summer_map.tmx": {
-            "scale": 1.4915,
-            "selectedLayer": 1,
+            "expandedObjectLayers": [
+                7
+            ],
+            "scale": 5.5,
+            "selectedLayer": 6,
             "viewCenter": {
-                "x": 431.78008716057667,
-                "y": 289.3060677170634
+                "x": 54.363636363636374,
+                "y": 503.90909090909093
             }
         },
         "triggers.tsx": {
@@ -160,11 +163,14 @@
             "scaleInDock": 5.5
         },
         "winter_map.tmx": {
-            "scale": 1.4915,
-            "selectedLayer": 1,
+            "expandedObjectLayers": [
+                12
+            ],
+            "scale": 8,
+            "selectedLayer": 6,
             "viewCenter": {
-                "x": 398.25678846798525,
-                "y": 303.3858531679517
+                "x": 699,
+                "y": 150.1875
             }
         }
     },
@@ -183,23 +189,20 @@
     "map.width": 50,
     "openFiles": [
         "spring_map.tmx",
-        "autumn_map.tmx",
-        "droplet.tsx",
-        "nature.tsx",
         "summer_map.tmx",
         "winter_map.tmx",
-        "summer.tsx"
+        "autumn_map.tmx"
     ],
     "project": "SlimyJam4.tiled-project",
-    "property.type": "bool",
+    "property.type": "string",
     "recentFiles": [
-        "summer.tsx",
+        "autumn_map.tmx",
         "winter_map.tmx",
         "summer_map.tmx",
+        "spring_map.tmx",
+        "summer.tsx",
         "nature.tsx",
         "droplet.tsx",
-        "autumn_map.tmx",
-        "spring_map.tmx",
         "summer.tmx",
         "sand_box.tmx",
         "autumn.tsx",

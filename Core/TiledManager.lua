@@ -75,7 +75,7 @@ function TiledManager.newMap(pfile)
     end
     
     -- Affichage des items
-    for _, item in pairs(map.listItems) do 
+    for _, item in ipairs(map.listItems) do 
       --local item = map.listItems[i]
       if item.shapeType == "rectangle" and item.visible then
         if type(map.Animations[item.name]) == "table" then
@@ -87,9 +87,16 @@ function TiledManager.newMap(pfile)
           )
         else
           if (item.isDone) then
-            love.graphics.print("done", item.x, item.y-10)
+            love.graphics.print("done", item.x, item.y-40)
           end
-          love.graphics.draw(map.TileSheet[item.gid].imgdata,  map.TileSheet[item.gid].quad, item.x, item.y)
+          if item.type == 'plant' then
+            
+            if item.isGrowing then
+              love.graphics.draw(map.TileSheet[item.gid].imgdata,  map.TileSheet[item.gid].quad, item.x, item.y)
+            end
+          else
+            love.graphics.draw(map.TileSheet[item.gid].imgdata,  map.TileSheet[item.gid].quad, item.x, item.y)
+          end
         end
       end
     end
@@ -319,6 +326,7 @@ function TiledManager.loadMapItems(map)
             x=object.x, y=object.y-16, -- Hack sur Y (avec un modèle Tiled il y a une sorte d'offset)
             w=object.width, h=object.height,
             visible = object.visible,
+            z_order = 0
           }
 
           if object.properties['scorePoints'] ~= nil then
@@ -327,13 +335,26 @@ function TiledManager.loadMapItems(map)
           if object.properties['color'] ~= nil then
             item.color = object.properties['color']
           end
-          if object.properties['dependency'] ~= nil then
+
+          if object.name == "pot" then
             item.dependency = object.properties['dependency']
-          end
-          if object.properties['isDone'] ~= nil then
             item.isDone = object.properties['isDone']
+            item.obj0 = object.properties['obj0']
+            item.obj1 = object.properties['obj1']
+            item.obj2 = object.properties['obj2']
           end
 
+          if object.properties['type'] ~= nil then
+            item.type = object.properties['type']
+            if item.type == "plant" then
+                item.isGrowing = object.properties['isGrowing']
+                item.isCollectable = object.properties['isCollectable']
+            end
+          end
+          if object.properties['z_order'] ~= nil then
+            item.z_order = object.properties['z_order']
+          end
+          
           if object.properties['isAnimate'] then 
             item.currentFrame = 1
             item.frameTimer = 0
@@ -363,9 +384,11 @@ function TiledManager.loadMapItems(map)
           item.fixture:setSensor(true) -- evite la collision "physique"
           item.fixture:setUserData(item)
 
-
-          
-          table.insert(map.listItems, item)
+          if (item.z_order == -1) then
+            table.insert(map.listItems, 1, item) -- insère au début pour gérer le z-order
+          else
+            table.insert(map.listItems, item)
+          end
         end
       end -- eif
   end --efor

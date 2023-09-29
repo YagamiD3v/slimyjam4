@@ -58,14 +58,8 @@ function Player.beginContact(_fixture, Contact, player, other, map)
     other:getBody():destroy()
   end
 
-  if other:getUserData() ~= nil and other:getUserData().name == "mushroom" then
-    iPlayer.score = iPlayer.score + other:getUserData().scorePoints
-    table.insert(iPlayer.inventory,other:getUserData())
-    other:getUserData().visible = false
-    other:getBody():destroy()
-  end 
-
-  if other:getUserData() ~= nil and other:getUserData().name == "droplet" then
+  if other:getUserData() ~= nil and 
+    (other:getUserData().name == "mushroom" or other:getUserData().name == "droplet" or other:getUserData().name == "seed") then
     iPlayer.score = iPlayer.score + other:getUserData().scorePoints
     table.insert(iPlayer.inventory,other:getUserData())
     other:getUserData().visible = false
@@ -75,13 +69,47 @@ function Player.beginContact(_fixture, Contact, player, other, map)
   if other:getUserData() ~= nil and other:getUserData().name == "pot" then
     if not other:getUserData().isDone then
       local dep = other:getUserData().dependency
-
       for i=#iPlayer.inventory, 1, -1 do
         local inv = iPlayer.inventory[i]
         if inv.id == dep.id then
           other:getUserData().isDone = true
           table.remove(iPlayer.inventory, i)
           break
+        end
+      end
+      
+      if other:getUserData().isDone then -- Fait pousser la plante
+
+
+        if other:getUserData().obj0 ~= nil then 
+          local obj = Player.findItemId(other:getUserData().obj0.id, map.listItems)
+          if (obj ~= nil) then
+            if obj.name == "fertilizer" and obj.isGrowing then
+              obj.isGrowing = false
+            else
+              obj.isGrowing = true
+            end
+          end 
+        end
+        if other:getUserData().obj1 ~= nil then 
+          local obj = Player.findItemId(other:getUserData().obj1.id, map.listItems)
+          if (obj ~= nil) then
+            if obj.isGrowing == true then
+              obj.isGrowing = false
+            else
+              obj.isGrowing = true
+            end
+          end 
+        end
+        if other:getUserData().obj2 ~= nil then 
+          local obj = Player.findItemId(other:getUserData().obj2.id, map.listItems)
+          if (obj ~= nil) then
+            if obj.isGrowing == true then
+              obj.isGrowing = false
+            else
+              obj.isGrowing = true
+            end
+          end  
         end
       end
     end
@@ -123,6 +151,13 @@ function Player.beginContact(_fixture, Contact, player, other, map)
     if event.properties.isTeleport then
       table.insert(eventsList, function() Game:setMap(event.properties.toMap, event.properties.toSpawn) end )
     end
+  end
+end
+--
+
+function Player.findItemId(idItem, listItem)
+  for _, item in ipairs(listItem) do
+    if item.id == idItem then return item end
   end
 end
 --

@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <template>
  <tileset firstgid="1" source="../staticObjects.tsx"/>
- <object gid="129" width="16" height="16">
+ <object name="pot" gid="129" width="16" height="16">
   <properties>
    <property name="dependency" type="object" value="0"/>
    <property name="isDone" type="bool" value="false"/>
+   <property name="obj0" type="object" value="0"/>
+   <property name="obj1" type="object" value="0"/>
+   <property name="obj2" type="object" value="0"/>
   </properties>
  </object>
 </template>

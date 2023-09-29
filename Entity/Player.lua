@@ -172,6 +172,7 @@ end
 
 function Player.load()
   Player.score = 0 
+  Player.lives = 3
   Player.name = "player"
   --
 
@@ -192,7 +193,7 @@ function Player.load()
   Player.fixture:setFriction(.2) -- 0 verglas, 1 concrete (a cumuler avec la friction du sol)
   Player.fixture:setUserData(Player)
 
-  Player.a = 3
+  
 end
 --
 

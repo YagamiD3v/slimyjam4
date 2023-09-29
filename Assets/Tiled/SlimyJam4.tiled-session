@@ -33,11 +33,11 @@
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 1.698125,
-            "selectedLayer": 3,
+            "scale": 4,
+            "selectedLayer": 6,
             "viewCenter": {
-                "x": 399.8527788001472,
-                "y": 303.57011409642985
+                "x": 81.5,
+                "y": 490.875
             }
         },
         "bee_simple.tsx": {
@@ -126,8 +126,8 @@
             "scale": 8,
             "selectedLayer": 6,
             "viewCenter": {
-                "x": 59.75,
-                "y": 396.6875
+                "x": 59.625,
+                "y": 396.5625
             }
         },
         "staticObjects.tsx": {
@@ -169,8 +169,8 @@
             "scale": 8,
             "selectedLayer": 6,
             "viewCenter": {
-                "x": 699,
-                "y": 150.1875
+                "x": 43.875,
+                "y": 463.6875
             }
         }
     },
@@ -194,7 +194,7 @@
         "autumn_map.tmx"
     ],
     "project": "SlimyJam4.tiled-project",
-    "property.type": "string",
+    "property.type": "bool",
     "recentFiles": [
         "autumn_map.tmx",
         "winter_map.tmx",

@@ -18,124 +18,132 @@ function Player.beginContact(_fixture, Contact, player, other, map)
   -- On récupère "l'instance" du joueur
   local iPlayer = player:getUserData()
 
-  if other:getUserData() ~= nil and other:getUserData().name == "ground" then
+  if other:getUserData() ~= nil then
+    if other:getUserData().name == "ground" then
+      --[[
+        -- Récupère la position du "ground"
+        local os_x1, os_y1, os_x2, os_y2 = other:getShape():computeAABB(
+          other:getBody():getX(), 
+          other:getBody():getY(),
+          other:getBody():getAngle()
+        )
+        os_x1, os_y1, os_x2, os_y2 = applyFunc(math.ceil, os_x1, os_y1, os_x2, os_y2)
+        --print( other:getUserData().id .. " position : " ..os_x1 .. "," .. os_y1)
 
-    -- Récupère la position du "ground"
-    local os_x1, os_y1, os_x2, os_y2 = other:getShape():computeAABB(
-      other:getBody():getX(), 
-      other:getBody():getY(),
-      other:getBody():getAngle()
-    )
-    os_x1, os_y1, os_x2, os_y2 = applyFunc(math.ceil, os_x1, os_y1, os_x2, os_y2)
-    --print( other:getUserData().id .. " position : " ..os_x1 .. "," .. os_y1)
-
-    -- Récupère la position du player
-    local p_x1, py_1, p_x2, p_y2 = player:getShape():computeAABB(
-      player:getBody():getX(),
-      player:getBody():getY(),
-      player:getBody():getAngle()
-    )
-    p_x1, py_1, p_x2, p_y2 = applyFunc(math.ceil, p_x1, py_1, p_x2, p_y2)
-    --print( player:getUserData().id .. " position : " .. p_x1 .. "," .. py_1 .. " w:" .. p_x2 .. " h:" .. p_y2) 
-
-
-    -- Récupère les points de contacts
-    local x1, y1, x2, y2 = Contact:getPositions()
-    x1, y1, x2, y2 = applyFunc(math.ceil, x1, y1, x2, y2)
-    --print("player touche ground (" .. tostring(x1) .. "," .. tostring(y1) .. ") (" ..tostring(x2) .. "," ..tostring(y2) .. ")")
-    --print("Friction: " ..tostring(Contact:getFriction()))
-
-    --## GROUND ##
-    local nx, ny = Contact:getNormal()
-    if ny == -1 then
-      iPlayer.isOnGround = true
-    end
-  end
-
-  if other:getUserData() ~= nil and other:getUserData().name == "coin" then
-    iPlayer.score = iPlayer.score + other:getUserData().scorePoints
-    other:getUserData().visible = false
-    other:getBody():destroy()
-  end
-
-  if other:getUserData() ~= nil and 
-    (other:getUserData().name == "mushroom" or other:getUserData().name == "droplet" or other:getUserData().name == "seed") then
-    iPlayer.score = iPlayer.score + other:getUserData().scorePoints
-    table.insert(iPlayer.inventory,other:getUserData())
-    other:getUserData().visible = false
-    other:getBody():destroy()
-  end 
-
-  if other:getUserData() ~= nil and other:getUserData().name == "pot" then
-    if not other:getUserData().isDone then
-      local dep = other:getUserData().dependency
-      for i=#iPlayer.inventory, 1, -1 do
-        local inv = iPlayer.inventory[i]
-        if inv.id == dep.id then
-          other:getUserData().isDone = true
-          table.remove(iPlayer.inventory, i)
-          break
-        end
-      end
-      
-      if other:getUserData().isDone then -- Fait pousser la plante
+        -- Récupère la position du player
+        local p_x1, py_1, p_x2, p_y2 = player:getShape():computeAABB(
+          player:getBody():getX(),
+          player:getBody():getY(),
+          player:getBody():getAngle()
+        )
+        p_x1, py_1, p_x2, p_y2 = applyFunc(math.ceil, p_x1, py_1, p_x2, p_y2)
+        --print( player:getUserData().id .. " position : " .. p_x1 .. "," .. py_1 .. " w:" .. p_x2 .. " h:" .. p_y2) 
 
 
-        if other:getUserData().obj0 ~= nil then 
-          local obj = Player.findItemId(other:getUserData().obj0.id, map.listItems)
-          if (obj ~= nil) then
-            if obj.name == "fertilizer" and obj.isGrowing then
-              obj.isGrowing = false
-            else
-              obj.isGrowing = true
-            end
-          end 
-        end
-        if other:getUserData().obj1 ~= nil then 
-          local obj = Player.findItemId(other:getUserData().obj1.id, map.listItems)
-          if (obj ~= nil) then
-            if obj.isGrowing == true then
-              obj.isGrowing = false
-            else
-              obj.isGrowing = true
-            end
-          end 
-        end
-        if other:getUserData().obj2 ~= nil then 
-          local obj = Player.findItemId(other:getUserData().obj2.id, map.listItems)
-          if (obj ~= nil) then
-            if obj.isGrowing == true then
-              obj.isGrowing = false
-            else
-              obj.isGrowing = true
-            end
-          end  
-        end
+        -- Récupère les points de contacts
+        local x1, y1, x2, y2 = Contact:getPositions()
+        x1, y1, x2, y2 = applyFunc(math.ceil, x1, y1, x2, y2)
+        --print("player touche ground (" .. tostring(x1) .. "," .. tostring(y1) .. ") (" ..tostring(x2) .. "," ..tostring(y2) .. ")")
+        --print("Friction: " ..tostring(Contact:getFriction()))
+      ]]
+      --## GROUND ##
+      local nx, ny = Contact:getNormal()
+      if ny == -1 then
+        iPlayer.isOnGround = true
       end
     end
 
-  end
-
-
-  if other:getUserData() ~= nil and other:getUserData().type == "mob" then
-    local nx, ny = Contact:getNormal()
-    if ny == -1 then
-      iPlayer.body:setLinearVelocity( 0, -100 )
+    if other:getUserData().name == "coin" then
       iPlayer.score = iPlayer.score + other:getUserData().scorePoints
-      -- Le joueur a touché l'ennemi par le haut
-      for i=#map.listMobs, 1, -1 do
-        local m = map.listMobs[i]
-        if m.id == other:getUserData().id then
-          table.remove(map.listMobs, i) 
-          other:getUserData().visible = false
-          other:getBody():destroy()
-          break
-        end
-      end
-    else 
-      print("Le joueur est touché !")
+      other:getUserData().visible = false
+      other:getBody():destroy()
     end
 
+    if other:getUserData().name == "mushroom" or other:getUserData().name == "droplet" or other:getUserData().name == "seed" then
+      iPlayer.score = iPlayer.score + other:getUserData().scorePoints
+      table.insert(iPlayer.inventory,other:getUserData())
+      other:getUserData().visible = false
+      other:getBody():destroy()
+    end 
+
+
+    if other:getUserData().name == "pot" then
+      local o = other:getUserData()
+      if not o.isDone then
+        if o.dependency ~= nil then -- le pot attend un item
+          local dep = o.dependency
+          for i=#iPlayer.inventory, 1, -1 do
+            local inv = iPlayer.inventory[i]
+            if inv.id == dep.id then
+              o.isDone = true
+              table.remove(iPlayer.inventory, i)
+              break
+            end
+          end
+
+          -- On fait pousser avec l'item reçu
+          if o.isDone then
+            if o.obj0 ~= nil then 
+              local obj = Player.findItemId(o.obj0.id, map.listItems)
+              if (obj ~= nil) then
+                if obj.name == "fertilizer" and obj.isGrowing then
+                  obj.isGrowing = false
+                else
+                  obj.isGrowing = true
+                end
+              end 
+            end
+            if o.obj1 ~= nil then 
+              local obj = Player.findItemId(o.obj1.id, map.listItems)
+              if (obj ~= nil) then obj.isGrowing = not obj.isGrowing end 
+            end
+            if o.obj2 ~= nil then 
+              local obj = Player.findItemId(o.obj2.id, map.listItems)
+              if (obj ~= nil) then obj.isGrowing = not obj.isGrowing end  
+            end
+          end
+        end
+
+        if o.canHarvest then -- le pot peut être récolté (automne)
+          o.isDone = true
+          if o.obj0 ~= nil then
+            local obj = Player.findItemId(o.obj0.id, map.listItems)
+            if (obj ~= nil) then obj.isGrowing = false end
+          end
+          if o.obj1 ~= nil then 
+            local obj = Player.findItemId(o.obj1.id, map.listItems)
+            if (obj ~= nil) then obj.isGrowing = false end
+          end
+          if o.obj2 ~= nil then
+            local obj = Player.findItemId(o.obj2.id, map.listItems)
+            if (obj ~= nil) then obj.isGrowing = false end
+          end
+        end
+
+      end
+    end
+
+
+    if other:getUserData().type == "mob" then
+      local nx, ny = Contact:getNormal()
+      if ny == -1 then
+        iPlayer.body:setLinearVelocity( 0, -100 )
+        iPlayer.score = iPlayer.score + other:getUserData().scorePoints
+        -- Le joueur a touché l'ennemi par le haut
+        for i=#map.listMobs, 1, -1 do
+          local m = map.listMobs[i]
+          if m.id == other:getUserData().id then
+            table.remove(map.listMobs, i) 
+            other:getUserData().visible = false
+            other:getBody():destroy()
+            break
+          end
+        end
+      else 
+        print("Le joueur est touché !")
+      end
+
+    end
   end
 
 

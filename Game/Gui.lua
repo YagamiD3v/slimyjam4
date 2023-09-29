@@ -8,9 +8,8 @@ function Gui.load(lvl)
 end
 
 function Gui.update(dt)
-    
     Gui.score = Player.score
-    Gui.lives = Player.a
+    Gui.lives = Player.lives
 end
 --
 

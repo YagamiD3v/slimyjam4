@@ -1677,6 +1677,7 @@ return {
           gid = 595,
           visible = true,
           properties = {
+            ["canHarvest"] = false,
             ["dependency"] = { id = 132 },
             ["isDone"] = false,
             ["obj0"] = { id = 160 },
@@ -1697,6 +1698,7 @@ return {
           gid = 596,
           visible = true,
           properties = {
+            ["canHarvest"] = false,
             ["dependency"] = { id = 129 },
             ["isDone"] = false,
             ["obj0"] = { id = 158 },
@@ -1717,6 +1719,7 @@ return {
           gid = 597,
           visible = true,
           properties = {
+            ["canHarvest"] = false,
             ["dependency"] = { id = 133 },
             ["isDone"] = false,
             ["obj0"] = { id = 159 },

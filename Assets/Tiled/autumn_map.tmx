@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="left-up" width="50" height="38" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="129">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="left-up" width="50" height="38" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="137">
  <editorsettings>
   <export target="autumn_map.lua" format="lua"/>
  </editorsettings>
@@ -57,7 +57,7 @@
 27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27
 </data>
  </layer>
- <layer id="2" name="Ground_z0_rock" width="50" height="38">
+ <layer id="2" name="Ground_z0_rock" width="50" height="38" locked="1">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -99,7 +99,7 @@
 161,162,162,162,162,162,162,162,162,162,162,162,162,162,162,162,162,162,162,162,162,162,162,162,162,162,162,162,156,1151,1151,1151,1151,1151,1151,1151,1151,1151,1151,1151,1151,1151,1151,1151,1151,1151,1151,1151,1151,1151
 </data>
  </layer>
- <layer id="3" name="Ground_z1_grass" width="50" height="38">
+ <layer id="3" name="Ground_z1_grass" width="50" height="38" locked="1">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -141,7 +141,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="4" name="Decors_z0" width="50" height="38">
+ <layer id="4" name="Decors_z0" width="50" height="38" locked="1">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,517,515,516,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,500,535,533,534,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -512,7 +512,7 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup id="7" name="Items" locked="1">
+ <objectgroup id="7" name="Items">
   <object id="2" template="TiledModels/coin.tx" x="160" y="544"/>
   <object id="3" template="TiledModels/coin.tx" x="208" y="528"/>
   <object id="4" template="TiledModels/coin.tx" x="256" y="544"/>
@@ -545,17 +545,62 @@
   <object id="31" template="TiledModels/coin.tx" x="128" y="64"/>
   <object id="80" template="TiledModels/pot_1.tx" x="656" y="512">
    <properties>
+    <property name="canHarvest" type="bool" value="true"/>
     <property name="dependency" type="object" value="127"/>
+    <property name="obj0" type="object" value="133"/>
+    <property name="obj1" type="object" value="134"/>
    </properties>
   </object>
   <object id="81" template="TiledModels/pot_2.tx" x="16" y="432">
    <properties>
+    <property name="canHarvest" type="bool" value="true"/>
     <property name="dependency" type="object" value="126"/>
+    <property name="obj0" type="object" value="135"/>
+    <property name="obj1" type="object" value="136"/>
    </properties>
   </object>
   <object id="82" template="TiledModels/pot_3.tx" name="pot" x="688" y="128">
    <properties>
+    <property name="canHarvest" type="bool" value="true"/>
     <property name="dependency" type="object" value="128"/>
+    <property name="obj0" type="object" value="129"/>
+    <property name="obj1" type="object" value="130"/>
+   </properties>
+  </object>
+  <object id="129" template="TiledModels/plant0.tx" x="688" y="128">
+   <properties>
+    <property name="isCollectable" type="bool" value="true"/>
+    <property name="isGrowing" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="130" template="TiledModels/plant2.tx" x="688" y="112">
+   <properties>
+    <property name="isCollectable" type="bool" value="true"/>
+    <property name="isGrowing" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="133" template="TiledModels/plant0.tx" x="656" y="512">
+   <properties>
+    <property name="isCollectable" type="bool" value="true"/>
+    <property name="isGrowing" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="134" template="TiledModels/plant2.tx" x="656" y="496">
+   <properties>
+    <property name="isCollectable" type="bool" value="true"/>
+    <property name="isGrowing" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="135" template="TiledModels/plant0.tx" x="16" y="432">
+   <properties>
+    <property name="isCollectable" type="bool" value="true"/>
+    <property name="isGrowing" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="136" template="TiledModels/plant2.tx" x="16" y="416">
+   <properties>
+    <property name="isCollectable" type="bool" value="true"/>
+    <property name="isGrowing" type="bool" value="true"/>
    </properties>
   </object>
  </objectgroup>

@@ -339,6 +339,7 @@ function TiledManager.loadMapItems(map)
           if object.name == "pot" then
             item.dependency = object.properties['dependency']
             item.isDone = object.properties['isDone']
+            item.canHarvest = object.properties['canHarvest']
             item.obj0 = object.properties['obj0']
             item.obj1 = object.properties['obj1']
             item.obj2 = object.properties['obj2']

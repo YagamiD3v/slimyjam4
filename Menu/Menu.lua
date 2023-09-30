@@ -1,4 +1,4 @@
-local  Menu = {debug=true}
+local  Menu = {debug=false}
 
 local listButtons = {}
 

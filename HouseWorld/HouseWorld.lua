@@ -4,16 +4,17 @@ HouseWorld.World = Core.ClassWorld.new()
 
 local background = love.graphics.newImage("Assets/HouseWorld/background_game.png")
 
-local Dialogue = {show=true, list={}}
-
 NavPlayer = require("../Entity/NavPlayer")
 Ground = require("../HouseWorld/Ground")
 FlowerPot = require("../HouseWorld/FlowerPot")
+MissionGui = require("../HouseWorld/MissionGui")
 
 function HouseWorld.load()
   NavPlayer.load()
   Ground.load()
   FlowerPot.load()
+  --
+  MissionGui.load()
 end
 --
 
@@ -34,6 +35,11 @@ function HouseWorld.draw()
   FlowerPot.draw()
   --
   NavPlayer.draw()
+
+  --
+  if not Game.tempo then
+    MissionGui.draw()
+  end
 
   if HouseWorld.debug then
     love.graphics.print("Scene HouseWorld",10,10)

@@ -5,7 +5,7 @@ local decY = -20
 
 function NavPlayer.reload()
   NavPlayer.x =  350 + decX
-  NavPlayer.y = 590 + decY
+  NavPlayer.y = 565 + decY
   NavPlayer.direction={vx=1, vy=1}
   NavPlayer.maxSpeed = 100
   NavPlayer.w, NavPlayer.h = 70, 80
@@ -18,7 +18,6 @@ function NavPlayer.beginContact(_fixture, Contact, navplayer, other)
   if other:getUserData().name == "FlowerPot" then
     local nx, ny = Contact:getNormal()
     if ny == 1 then -- par dessus
-      --Core.Scene.setScene(SandBox, true)  
       Game.setWorldScene(SandBox, Game.levels.currentLevel) 
     end
   elseif other:getUserData().name == "NavGround" then
@@ -115,7 +114,6 @@ function NavPlayer.draw()
 
   NavPlayer.Anims:draw(NavPlayer, 4)
 
-  love.graphics.print("isOnGround : "..tostring(NavPlayer.isOnGround), 20, 400)
 end
 --
 
@@ -124,6 +122,11 @@ function NavPlayer.keypressed(k)
     NavPlayer.body:applyLinearImpulse( 0, -15 )
     NavPlayer.isOnGround = false
     NavPlayer.Anims:setAnim("Jump")
+  end
+  if NavPlayer.debug then
+    if k == "down" and NavPlayer.isOnGround then
+      NavPlayer.Anims:setAnim("Hurt")
+    end
   end
 end
 --

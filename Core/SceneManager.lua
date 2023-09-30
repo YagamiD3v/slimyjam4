@@ -1,4 +1,4 @@
-local Scene = {debug=false,current=""}
+local Scene = {debug=false, current=""}
 
 Scene.listScene = {}
 

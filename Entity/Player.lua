@@ -12,23 +12,14 @@ function Player.reload()
   Player.w, Player.h = 16, 22 -- 26
   Player.vy = 0
   Player.vx = 0
-  Player.inventory = {}
-end
---
 
-function Player.load()
-  Player.score = 0 
-  Player.lives = 3
-  Player.name = "player"
-  --
+  Player.isDie = false
+  Player.respawnDelay = 3
+  Player.deathTime = 0
 
-  Player.Anims = Core.AnimPlayer.getAnims()
-
-  Player.reload()
-  --
+  Player.Anims:setAnim("Idle")
 
   -- force, gravity, positions x/y, etc :
-
   if Player.body then
     Player.body:destroy()
   end
@@ -46,8 +37,34 @@ function Player.load()
   Player.fixture = love.physics.newFixture(Player.body, Player.shape, 0.26)
   Player.fixture:setFriction(.2) -- 0 verglas, 1 concrete (a cumuler avec la friction du sol)
   Player.fixture:setUserData(Player)
+end
+--
 
+function Player.load()
+  Player.score = 0 
+  Player.lives = 3
+  Player.name = "player"
+  Player.inventory = {}
+  --
 
+  Player.Anims = Core.AnimPlayer.getAnims()
+
+  Player.reload()
+  --
+
+  
+end
+--
+
+function Player.lostLife()
+  Player.lives = Player.lives - 1
+  Player.deathTime = love.timer.getTime()
+  Player.isDie = true
+  Player.animDie = true
+  Player.Anims:setAnim("Hurt")
+  Player.body:setLinearVelocity( 0, -200 )
+  Player.fixture:destroy()
+  Core.Sfx.play("Hurt")
 end
 --
 
@@ -163,15 +180,19 @@ function Player.beginContact(_fixture, Contact, player, other, map)
           end
         end
       else 
-        print("Le joueur est touché !")
-        Core.Sfx.play("Hurt")
+        --print("Le joueur est touché !")
+        Player.lostLife()
       end
 
+    end
+
+    if other:getUserData().name == "water" then
+      Player.lostLife()
     end
   end
 
 
-
+  --[[
   for n=1, #map.listEvents do
     local lookMe = map.listEvents[n]
     if other == lookMe.fixture then
@@ -184,11 +205,20 @@ function Player.beginContact(_fixture, Contact, player, other, map)
       table.insert(eventsList, function() Game:setMap(event.properties.toMap, event.properties.toSpawn) end )
     end
   end
+  ]]
 end
 --
 
 
 function Player.update(dt)
+  if Player.isDie and love.timer.getTime() - Player.deathTime > Player.respawnDelay then
+    if Player.lives == 0 then
+      Core.Scene.setScene(Menu)
+    else
+      Player.reload()
+    end
+  end
+
 
   Player.Anims:update(dt)
   --
@@ -197,33 +227,35 @@ function Player.update(dt)
 
   Player.vx, Player.vy = Player.body:getLinearVelocity()
 
-  -- move
-  if love.keyboard.isDown("left") then
-    if Player.vx > -Player.maxSpeed then
-      Player.body:applyForce( -35, 0 )
-      Player.direction.vx = -1
-      if Player.Anims.currentAnim ~= "Run" and Player.Anims.currentAnim ~= "Jump"  then
-        Player.Anims:setAnim("Run")
+  if not Player.isDie then
+    -- move
+    if love.keyboard.isDown("left") then
+      if Player.vx > -Player.maxSpeed then
+        Player.body:applyForce( -35, 0 )
+        Player.direction.vx = -1
+        if Player.Anims.currentAnim ~= "Run" and Player.Anims.currentAnim ~= "Jump"  then
+          Player.Anims:setAnim("Run")
+        end
+      end
+    elseif love.keyboard.isDown("right") then
+      if Player.vx < Player.maxSpeed then
+        Player.body:applyForce( 35, 0 )
+        Player.direction.vx = 1
+        if Player.Anims.currentAnim ~= "Run" and Player.Anims.currentAnim ~= "Jump" then
+          Player.Anims:setAnim("Run")
+        end
+      end
+    else
+      if Player.Anims.currentAnim == "Run" then
+        Player.Anims:setAnim("Idle")
       end
     end
-  elseif love.keyboard.isDown("right") then
-    if Player.vx < Player.maxSpeed then
-      Player.body:applyForce( 35, 0 )
-      Player.direction.vx = 1
-      if Player.Anims.currentAnim ~= "Run" and Player.Anims.currentAnim ~= "Jump" then
-        Player.Anims:setAnim("Run")
-      end
-    end
-  else
-    if Player.Anims.currentAnim == "Run" then
-      Player.Anims:setAnim("Idle")
-    end
-  end
 
-  -- Si la touche de déplacement n'est pas enfoncée, arrêtez le deplacement
-  if not (love.keyboard.isDown("right") or love.keyboard.isDown("left")) then
-    local x, y = Player.body:getLinearVelocity()
-    Player.body:setLinearVelocity(x/1.01, y)
+    -- Si la touche de déplacement n'est pas enfoncée, arrêtez le deplacement
+    if not (love.keyboard.isDown("right") or love.keyboard.isDown("left")) then
+      local x, y = Player.body:getLinearVelocity()
+      Player.body:setLinearVelocity(x/1.01, y)
+    end
   end
 
 

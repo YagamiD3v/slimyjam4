@@ -9,8 +9,8 @@ return {
   height = 38,
   tilewidth = 16,
   tileheight = 16,
-  nextlayerid = 16,
-  nextobjectid = 214,
+  nextlayerid = 17,
+  nextobjectid = 216,
   properties = {},
   tilesets = {
     {
@@ -2012,6 +2012,37 @@ return {
           properties = {
             ["direction"] = 2,
             ["type"] = "changeDirection"
+          }
+        }
+      }
+    },
+    {
+      type = "objectgroup",
+      draworder = "topdown",
+      id = 16,
+      name = "Events",
+      class = "",
+      visible = true,
+      opacity = 1,
+      offsetx = 0,
+      offsety = 0,
+      parallaxx = 1,
+      parallaxy = 1,
+      properties = {},
+      objects = {
+        {
+          id = 215,
+          name = "water",
+          type = "",
+          shape = "rectangle",
+          x = 464.364,
+          y = 603,
+          width = 335.636,
+          height = 5,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["isEvent"] = true
           }
         }
       }

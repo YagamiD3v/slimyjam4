@@ -68,6 +68,18 @@ function Player.lostLife()
 end
 --
 
+
+function Player.changeLevelIfAllPotAreDone(listItem)
+  for _, item in ipairs(listItem) do
+    if item.name == "pot" and not item.isDone then 
+      return false 
+    end
+  end
+
+  -- All pots are done
+  print("Change Level !")
+end
+
 function Player.findItemId(idItem, listItem)
   for _, item in ipairs(listItem) do
     if item.id == idItem then return item end
@@ -160,6 +172,8 @@ function Player.beginContact(_fixture, Contact, player, other, map)
         end
 
       end
+
+      Player.changeLevelIfAllPotAreDone(map.listItems)
     end
 
 

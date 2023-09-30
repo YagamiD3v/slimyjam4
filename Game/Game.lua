@@ -53,22 +53,20 @@ Game.WorldLast = nil
 Game.fading = {0,0,0,0}
 Game.fadeSens = 1
 
-function Game.setWorldScene(pWorld, Saison, pEnterOut)
+function Game.setWorldScene(pWorld, Saison, pEnterOut, fading)
   Game.tempo = true
   Game.levels.house.status = pEnterOut or "enter"
   --
   Game.WorldLast = Game.WorldCurrent or HouseWorld
+  Game.WorldCurrent = pWorld
+  --
   Game.levels.nextLevel = Saison
+
   --
-  if Game.levels.house.status == "enter" then 
-    Game.fading = {0,0,0,0}
-  else
-    Game.fading = {0,0,0,0}
-  end
+  Game.fading = {0,0,0,0}
+  Game.fadeSens = 1
   --
-  Game.action = function(dt)
-    Game.WorldCurrent = pWorld
-    Game.tempo = false
+  Game.switchLevelFading = function(dt)
     Game.levels.currentLevel = Game.levels.nextLevel
     if pWorld == SandBox then
       SandBox.setLevel(Saison)
@@ -80,22 +78,26 @@ end
 function Game.fadingDraw(x,y)
   love.graphics.setColor(Game.fading)
   love.graphics.rectangle("fill", 0, 0, Screen.w, Screen.h)
-  love.graphics.setColor(1,1,1,1)    
+  love.graphics.setColor(1,1,1,1)  
 end
 --
 
 function Game.load()
   Game.tempo = false
-  Game.action = function() end
+  Game.switchLevelFading = function() end
   Game.animTimer = {
     current=0,
     delai=50,
     speed=60,
+    noir=false,
+    blanc=false,
     update=function(self,dt)
       self.current = self.current + (self.speed * dt)
       if self.current >= self.delai and Game.fading[4] == 1 then
-        self.current = 0
-        Game.action()
+--        self.current = 0
+        return true
+      else
+        return false
       end
 
     end
@@ -111,7 +113,29 @@ end
 function Game.update(dt)
   if Game.tempo then
 
-    Game.animTimer:update(dt)
+    if Game.animTimer:update(dt) then
+      --[[
+      start to : 
+      Game.fading = {0,0,0,0}
+      Game.fadeSens = 1
+      ]]--
+      if not Game.animTimer.noir then
+        if Game.fading[4] == 1 then
+          Game.animTimer.current = 0
+          Game.animTimer.noir = true
+          Game.fadeSens = -1
+          Game.switchLevelFading()
+        end
+      elseif not Game.animTimer.blanc then
+        if Game.fading[4] == 0 then
+          Game.animTimer.blanc = true
+        end
+      end
+    end
+
+    if Game.animTimer.blanc and Game.animTimer.noir then
+      Game.tempo = false
+    end
 
     -- alpha fading :
     Game.fading[4] = Game.fading[4] + (2 * Game.fadeSens * dt)

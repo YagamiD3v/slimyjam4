@@ -4,7 +4,7 @@ local lstGround = {}
 
 function Ground.newGround(x,y,w,h)
   local new = {}
-  new.body = love.physics.newBody(Game.World, x, y, "static")
+  new.body = love.physics.newBody(HouseWorld.World, x, y, "static")
   new.shape = love.physics.newRectangleShape( w, h )
   new.fixture = love.physics.newFixture(new.body, new.shape, 0.14)
   new.fixture:setFriction(.2) -- 0 verglas, 1 concrete (a cumuler avec la friction du sol)

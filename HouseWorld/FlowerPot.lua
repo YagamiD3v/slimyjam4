@@ -2,8 +2,8 @@ local FlowerPot = {debug=false}
 
 local lstFlowerPots = {}
 
-local Happy = love.graphics.newImage("Assets/Game/FlowerPot_Happy.png")
-local NoHappy = love.graphics.newImage("Assets/Game/FlowerPot_NoHappy.png")
+local Happy = love.graphics.newImage("Assets/HouseWorld/FlowerPot_Happy.png")
+local NoHappy = love.graphics.newImage("Assets/HouseWorld/FlowerPot_NoHappy.png")
 local imgW, imgH = Happy:getDimensions()
 local imgOx, imgOy = imgW/2, imgH/2
 
@@ -12,7 +12,7 @@ function FlowerPot.newGround(x)
   local y = Screen.h-imgOy
   --
   local new = {x=x, y=y, ox=imgOx, oy=imgOy, w=imgW, h=imgH}
-  new.body = love.physics.newBody(Game.World, x, y, "static")
+  new.body = love.physics.newBody(HouseWorld.World, x, y, "static")
   new.shape = love.physics.newRectangleShape( imgW, imgH )
   new.fixture = love.physics.newFixture(new.body, new.shape, 0.14)
   new.fixture:setFriction(.2) -- 0 verglas, 1 concrete (a cumuler avec la friction du sol)

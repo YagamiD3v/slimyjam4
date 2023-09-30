@@ -200,11 +200,6 @@ function TiledManager.importMapTiled(pfile)
           if type(tile.animation) == 'table' then
             local t = { id = tile.id } 
             t.animation = {}
---            print("---")
---            print("anim.tileid : "..tile.animation[1].tileid)
---            print("tilesetProps.firstgid : "..tilesetProps.firstgid)
---            print("---")
---            print()
             for n=1, #tile.animation do
               local anim  = tile.animation[n]
               local tileid = anim.tileid + tilesetProps.firstgid

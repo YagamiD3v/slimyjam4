@@ -1,7 +1,5 @@
 local Gui = { debug=false, level = {}, score=0 }
 
-
-
 function Gui.load(lvl)
    Gui.level = lvl
    Gui.lives = 0

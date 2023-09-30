@@ -16,7 +16,6 @@ end
 --
 
 function World:update(dt) -- met à jour le monde physique
-  --MapManager.current.world:update(dt)
   for n=1, #listWorlds do
     local world = listWorlds[n]
     world:update(dt)
@@ -27,7 +26,7 @@ end
 function World:beginContact(_fixture, Contact)
   -- Vous pouvez gérer ce qui se passe lorsqu'il y a contact ici
   local fixture_a, fixture_b = Contact:getFixtures()
-  local map = MapManager.current
+  local map = Core.MapManager.current
   local player = false
   local other = nil
 

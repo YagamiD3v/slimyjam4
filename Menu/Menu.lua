@@ -25,10 +25,12 @@ function mouse.AABB()
   return false
 end
 --
+
 function mouse.getPosition()
   mouse.x, mouse.y = love.mouse.getPosition()
 end
 --
+
 function mouse.update(dt)
   mouse.getPosition()
   mouse.AABB()

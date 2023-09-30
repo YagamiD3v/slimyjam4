@@ -17,9 +17,9 @@ end
 function NavPlayer.beginContact(_fixture, Contact, navplayer, other)
   if other:getUserData().name == "FlowerPot" then
     local nx, ny = Contact:getNormal()
---    print(nx, ny)
     if ny == 1 then -- par dessus
-      Core.Scene.setScene(SandBox, true)  
+      --Core.Scene.setScene(SandBox, true)  
+      Game.setWorldScene(SandBox, Game.levels.currentLevel) 
     end
   elseif other:getUserData().name == "NavGround" then
     NavPlayer.isOnGround = true    
@@ -35,7 +35,7 @@ function NavPlayer.load()
   --
 
   -- force, gravity, positions x/y, etc :
-  NavPlayer.body = love.physics.newBody(Game.World, NavPlayer.x, NavPlayer.y, "dynamic")
+  NavPlayer.body = love.physics.newBody(HouseWorld.World, NavPlayer.x, NavPlayer.y, "dynamic")
 
   -- mass defaut = 4
   NavPlayer.body:setFixedRotation(true)

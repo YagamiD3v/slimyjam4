@@ -15,14 +15,17 @@ love.graphics.setDefaultFilter( 'nearest', 'nearest' )
 require("Core/loader")
 
 -- Many Globals Scenes used (Intro/Menu/Game/etc.) :
+Menu = require("Menu/Menu")
 Game = require("Game/Game")
 SandBox = require("SandBox/SandBox")
-Menu = require("Menu/Menu")
+HouseWorld = require("HouseWorld/HouseWorld")
 
 function love.load()
   Core.Scene.newScene(Game, "Game")
   Core.Scene.newScene(SandBox, "SandBox")
+  Core.Scene.newScene(HouseWorld, "HouseWorld")
   Core.Scene.newScene(Menu, "Menu")
+  --
   Core.Scene.setScene(Menu)
 --  Core.Scene.setScene(Game)
 --  Core.Scene.setScene(SandBox)

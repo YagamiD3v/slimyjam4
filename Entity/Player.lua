@@ -32,8 +32,8 @@ function Player.load()
   if Player.body then
     Player.body:destroy()
   end
-
-  Player.body = love.physics.newBody(MapManager.current.world, Player.x, Player.y, "dynamic")
+  
+  Player.body = love.physics.newBody(Core.MapManager.current.world, Player.x, Player.y, "dynamic")
 
   -- mass defaut = 4
   Player.body:setMass(4)

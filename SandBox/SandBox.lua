@@ -44,15 +44,18 @@ MapManager = Core.MapManager.newMapManager()
 
 local Gui = require('../Game/Gui')
 
+function SandBox.newLevel(pLevel)
+  local level = SandBox.levels[pLevel]
+  level.maptiled = Core.TiledManager.importMapTiled(level.map_name)
+  MapManager:addNewMapTiled(level.maptiled)
+end
+--
+
 function SandBox.loadLevel(pLevel)
-  Core.ImageManager.reset()
   --
   SandBox.levels.currentLevel = pLevel
   local level = SandBox.levels[SandBox.levels.currentLevel]
-  --
-  local maptiled = Core.TiledManager.importMapTiled(level.map_name)
-  MapManager:addNewMapTiled(maptiled)
-  MapManager:setMap(maptiled)
+  MapManager:setMap(level.maptiled)
   --
   Gui.load(level)
   --
@@ -61,11 +64,20 @@ end
 --
 
 function SandBox.load()
+
+  SandBox.newLevel("autumn")
+  SandBox.newLevel("spring")
+  SandBox.newLevel("summer")
+  SandBox.newLevel("winter")
+  
   SandBox.loadLevel("autumn")
-  SandBox.loadLevel("autumn")
---  SandBox.loadLevel("spring")
---  SandBox.loadLevel("summer")
---  SandBox.loadLevel("winter")
+  SandBox.loadLevel("spring")
+  SandBox.loadLevel("summer")
+  SandBox.loadLevel("winter")
+  SandBox.loadLevel("winter")
+  SandBox.loadLevel("winter")
+  SandBox.loadLevel("winter")
+
 end
 --
 

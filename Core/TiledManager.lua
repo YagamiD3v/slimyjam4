@@ -78,8 +78,6 @@ function TiledManager.newMap(pfile)
       --local item = map.listItems[i]
       if item.shapeType == "rectangle" and item.visible then
         if type(map.Animations[item.name]) == "table" then
-          print("#map.TileSheet : "..#map.TileSheet)
-          print("map.Animations[item.name][item.currentFrame].tileid : "..map.Animations[item.name][item.currentFrame].tileid)
           love.graphics.draw(
             map.TileSheet[map.Animations[item.name][item.currentFrame].tileid].imgdata,
             map.TileSheet[map.Animations[item.name][item.currentFrame].tileid].quad,
@@ -202,9 +200,16 @@ function TiledManager.importMapTiled(pfile)
           if type(tile.animation) == 'table' then
             local t = { id = tile.id } 
             t.animation = {}
-            for __, anim in ipairs(tile.animation) do
-              anim.tileid = anim.tileid + nbQuad + 1
-              table.insert(t.animation, anim)
+--            print("---")
+--            print("anim.tileid : "..tile.animation[1].tileid)
+--            print("tilesetProps.firstgid : "..tilesetProps.firstgid)
+--            print("---")
+--            print()
+            for n=1, #tile.animation do
+              local anim  = tile.animation[n]
+              local tileid = anim.tileid + tilesetProps.firstgid
+              local frame={tileid=tileid, duration=anim.duration}
+              table.insert(t.animation, frame)
             end
             map.Animations[tileset.name] = t.animation
           end

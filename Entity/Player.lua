@@ -16,6 +16,48 @@ function Player.reload()
 end
 --
 
+function Player.load()
+  Player.score = 0 
+  Player.lives = 3
+  Player.name = "player"
+  --
+
+  Player.Anims = Core.AnimPlayer.getAnims()
+
+  Player.reload()
+  --
+
+  -- force, gravity, positions x/y, etc :
+
+  if Player.body then
+    Player.body:destroy()
+  end
+
+  Player.body = love.physics.newBody(MapManager.current.world, Player.x, Player.y, "dynamic")
+
+  -- mass defaut = 4
+  Player.body:setMass(4)
+  Player.body:setFixedRotation(true)
+
+  -- la forme de l objet et les collisions qui en decoulent :
+  Player.shape = love.physics.newRectangleShape( Player.w, Player.h )
+
+  -- on indique au monde de l'object quel body est attaché avec quelle fixture(s) :
+  Player.fixture = love.physics.newFixture(Player.body, Player.shape, 0.26)
+  Player.fixture:setFriction(.2) -- 0 verglas, 1 concrete (a cumuler avec la friction du sol)
+  Player.fixture:setUserData(Player)
+
+
+end
+--
+
+function Player.findItemId(idItem, listItem)
+  for _, item in ipairs(listItem) do
+    if item.id == idItem then return item end
+  end
+end
+--
+
 function Player.beginContact(_fixture, Contact, player, other, map)
   local event = nil
 
@@ -170,42 +212,6 @@ function Player.beginContact(_fixture, Contact, player, other, map)
 end
 --
 
-function Player.findItemId(idItem, listItem)
-  for _, item in ipairs(listItem) do
-    if item.id == idItem then return item end
-  end
-end
---
-
-function Player.load()
-  Player.score = 0 
-  Player.lives = 3
-  Player.name = "player"
-  --
-
-  Player.Anims = Core.AnimPlayer.getAnims()
-
-  Player.reload()
-  --
-
-  -- force, gravity, positions x/y, etc :
-  Player.body = love.physics.newBody(MapManager.current.world, Player.x, Player.y, "dynamic")
-
-  -- mass defaut = 4
-  Player.body:setMass(4)
-  Player.body:setFixedRotation(true)
-
-  -- la forme de l objet et les collisions qui en decoulent :
-  Player.shape = love.physics.newRectangleShape( Player.w, Player.h )
-
-  -- on indique au monde de l'object quel body est attaché avec quelle fixture(s) :
-  Player.fixture = love.physics.newFixture(Player.body, Player.shape, 0.26)
-  Player.fixture:setFriction(.2) -- 0 verglas, 1 concrete (a cumuler avec la friction du sol)
-  Player.fixture:setUserData(Player)
-
-
-end
---
 
 function Player.update(dt)
 

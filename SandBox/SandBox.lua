@@ -51,7 +51,7 @@ function SandBox.newLevel(pLevel)
 end
 --
 
-function SandBox.loadLevel(pLevel)
+function SandBox.setLevel(pLevel)
   --
   SandBox.levels.currentLevel = pLevel
   local level = SandBox.levels[SandBox.levels.currentLevel]
@@ -70,13 +70,8 @@ function SandBox.load()
   SandBox.newLevel("summer")
   SandBox.newLevel("winter")
   
-  SandBox.loadLevel("autumn")
-  SandBox.loadLevel("spring")
-  SandBox.loadLevel("summer")
-  SandBox.loadLevel("winter")
-  SandBox.loadLevel("winter")
-  SandBox.loadLevel("winter")
-  SandBox.loadLevel("winter")
+  --
+  SandBox.setLevel("winter")
 
 end
 --

@@ -604,62 +604,26 @@ function TiledManager.loadMapEvents(map)
   -- kinematic bodies do not react to forces and only collide with dynamic bodies.
   -- use fixture:setSensor(true) for disable collisions
   -- for detect enter need CallBack functiosn of World. (look ClassWorld.lua)
-
+  
   for n=1, #map.objects do
-    local event = map.objects[n]
-    event.shapetype = event.shape
-    event.shape = {}
-    event.polygon_points = {}
-    if event.shapetype == "polygon" then
-      event.isZone=true
-      event.list_points = {}
-      for n=1, #event.polygon do
-        local point = event.polygon[n]
-        table.insert(event.list_points, point.x)
-        table.insert(event.list_points, point.y)
-      end
-      event.body = love.physics.newBody(map.world, event.x, event.y, "kinematic") -- x,y is center of Forme
-      event.shape = love.physics.newPolygonShape(event.list_points)
-      event.fixture = love.physics.newFixture(event.body, event.shape)
-    elseif event.shapetype == "polyline" then
-      event.isZone=true
-      event.width = math.max(event.polyline[1].x + event.polyline[2].x)
-      event.height = math.max(event.polyline[1].y + event.polyline[2].y)
-      if event.width == 0 then
-        event.width = 2
-      elseif event.height == 0 then
-        event.height = 2
-      end
+    local object = map.objects[n]
+    if object.layerName == "Events" then
+      local event = object
+      --event.shapetype = event.shape
+      --event.shape = {}
+      --event.polygon_points = {}
+      --event.isZone=true
       event.ox = event.width / 2
       event.oy = event.height / 2
       event.body = love.physics.newBody(map.world, event.x+event.ox, event.y+event.oy, "kinematic") -- x,y is center of Forme
       event.shape = love.physics.newRectangleShape(event.width, event.height)
       event.fixture = love.physics.newFixture(event.body, event.shape)
-    elseif event.shapetype == "rectangle" then
-      event.isZone=true
-      event.ox = event.width / 2
-      event.oy = event.height / 2
-      event.body = love.physics.newBody(map.world, event.x+event.ox, event.y+event.oy, "kinematic") -- x,y is center of Forme
-      event.shape = love.physics.newRectangleShape(event.width, event.height)
-      event.fixture = love.physics.newFixture(event.body, event.shape)
-    elseif event.shapetype == "point" then
-      event.isZone=true
-      event.ox = 5
-      event.oy = 5
-      event.body = love.physics.newBody(map.world, event.x, event.y-event.oy, "kinematic") -- x,y is center of Forme
-      event.shape = love.physics.newRectangleShape(10, 10)
-      event.fixture = love.physics.newFixture(event.body, event.shape)
-    else
-      event.isEvent=true
+      event.fixture:setUserData(event)
       --
-      event.body = love.physics.newBody(map.world, event.x, event.y, "kinematic") -- x,y is center of Forme
-      event.shape = love.physics.newRectangleShape(2,2)
-      event.fixture = love.physics.newFixture(event.body, event.shape)
+      --event.fixture:setSensor(true)
+      --
+      table.insert(map.listEvents, event)
     end
-    --
-    event.fixture:setSensor(true)
-    --
-    table.insert(map.listEvents, event)
   end
 end
 --

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="left-up" width="50" height="38" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="137">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="left-up" width="50" height="38" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="138">
  <editorsettings>
   <export target="autumn_map.lua" format="lua"/>
  </editorsettings>
@@ -652,5 +652,12 @@
   <object id="121" template="TiledModels/triggerGoTop.tx" x="208" y="160"/>
   <object id="124" template="TiledModels/triggerGoRight.tx" x="576" y="122.496"/>
   <object id="125" template="TiledModels/triggerGoLeft.tx" x="736" y="120.661"/>
+ </objectgroup>
+ <objectgroup id="10" name="Events">
+  <object id="137" name="water" x="464.171" y="602.891" width="335.636" height="5">
+   <properties>
+    <property name="isEvent" type="bool" value="true"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

@@ -36,8 +36,8 @@
             "scale": 4,
             "selectedLayer": 6,
             "viewCenter": {
-                "x": 400,
-                "y": 303.875
+                "x": 399.75,
+                "y": 303.625
             }
         },
         "bee_simple.tsx": {
@@ -119,15 +119,15 @@
         "spring_map.tmx": {
             "expandedObjectLayers": [
                 6,
-                7,
                 8,
-                9
+                9,
+                7
             ],
-            "scale": 8,
-            "selectedLayer": 6,
+            "scale": 11,
+            "selectedLayer": 9,
             "viewCenter": {
-                "x": 59.5,
-                "y": 396.4375
+                "x": 516.909090909091,
+                "y": 593.6818181818182
             }
         },
         "staticObjects.tsx": {
@@ -149,11 +149,11 @@
             "expandedObjectLayers": [
                 7
             ],
-            "scale": 5.5,
-            "selectedLayer": 6,
+            "scale": 16,
+            "selectedLayer": 9,
             "viewCenter": {
-                "x": 400,
-                "y": 303.9090909090909
+                "x": 494.9375,
+                "y": 620.90625
             }
         },
         "triggers.tsx": {
@@ -166,11 +166,11 @@
             "expandedObjectLayers": [
                 12
             ],
-            "scale": 8,
-            "selectedLayer": 6,
+            "scale": 11,
+            "selectedLayer": 9,
             "viewCenter": {
-                "x": 400,
-                "y": 303.9375
+                "x": 475.72727272727275,
+                "y": 584.6818181818182
             }
         }
     },
@@ -194,8 +194,9 @@
         "autumn_map.tmx"
     ],
     "project": "SlimyJam4.tiled-project",
-    "property.type": "string",
+    "property.type": "bool",
     "recentFiles": [
+        "spring.tsx",
         "autumn_map.tmx",
         "winter_map.tmx",
         "summer_map.tmx",
@@ -206,8 +207,7 @@
         "summer.tmx",
         "sand_box.tmx",
         "autumn.tsx",
-        "sky.tsx",
-        "player-idle.tsx"
+        "sky.tsx"
     ],
     "tileset.lastUsedFilter": "Fichiers de jeu de tuiles Tiled (*.tsx *.xml)",
     "tileset.lastUsedFormat": "tsx",

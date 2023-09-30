@@ -66,6 +66,7 @@ function AnimPlayer.load()
   AnimPlayer.newAnim("Idle", "player-idle.png", 4, 60)
   AnimPlayer.newAnim("Run", "player-run.png", 6, 60)
   AnimPlayer.newAnim("Jump", "player-jump.png", 2, 60, "Jump", false)
+  AnimPlayer.newAnim("Hurt", "player-hurt.png", 2, 60, "Hurt")
 end
 --
 
@@ -123,6 +124,7 @@ function AnimPlayer.getAnims()
   anims.Idle = AnimPlayer.Idle
   anims.Run = AnimPlayer.Run
   anims.Jump = AnimPlayer.Jump
+  anims.Hurt = AnimPlayer.Hurt
   --
   return anims
 end

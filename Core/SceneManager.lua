@@ -46,6 +46,9 @@ function Scene.update(dt)
   if currentScene.update then
     currentScene.update(dt)
   end
+  if Core.Sfx.update then
+    Core.Sfx.update(dt)
+  end
 end
 --
 

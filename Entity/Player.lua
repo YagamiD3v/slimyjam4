@@ -77,7 +77,7 @@ function Player.beginContact(_fixture, Contact, player, other, map)
       Player.score = Player.score + other:getUserData().scorePoints
       other:getUserData().visible = false
       other:getBody():destroy()
-      Core.Sfx.Coin:play()
+      Core.Sfx.play("Coin")
     end
 
     if other:getUserData().name == "mushroom" or other:getUserData().name == "droplet" or other:getUserData().name == "seed" then
@@ -85,7 +85,7 @@ function Player.beginContact(_fixture, Contact, player, other, map)
       table.insert(Player.inventory,other:getUserData())
       other:getUserData().visible = false
       other:getBody():destroy()
-      Core.Sfx.PowerUp:play()
+      Core.Sfx.play("PowerUp")
     end 
 
 
@@ -158,13 +158,13 @@ function Player.beginContact(_fixture, Contact, player, other, map)
             table.remove(map.listMobs, i) 
             other:getUserData().visible = false
             other:getBody():destroy()
-            Core.Sfx.Hit:play()
+            Core.Sfx.play("Hit")
             break
           end
         end
       else 
         print("Le joueur est touché !")
-        Core.Sfx.Hurt:play()
+        Core.Sfx.play("Hurt")
       end
 
     end

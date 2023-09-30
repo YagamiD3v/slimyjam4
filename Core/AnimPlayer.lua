@@ -24,7 +24,7 @@ function AnimPlayer.setAnim(self, pAnimName)
   self.timer.current = 0
   local anim = self[self.currentAnim]
   if anim.sfx then
-    anim.sfx:play()
+    Core.Sfx.play(anim.sfx)
   end
 end
 --
@@ -65,7 +65,7 @@ end
 function AnimPlayer.load()
   AnimPlayer.newAnim("Idle", "player-idle.png", 4, 60)
   AnimPlayer.newAnim("Run", "player-run.png", 6, 60)
-  AnimPlayer.newAnim("Jump", "player-jump.png", 2, 60, Core.Sfx.Jump, false)
+  AnimPlayer.newAnim("Jump", "player-jump.png", 2, 60, "Jump", false)
 end
 --
 

@@ -43,10 +43,15 @@ function AnimPlayer.newAnim(pName, pFileName, pFrames, pSpeed, pSound, pLoop)
   --
   local sound = false
   if pSound then
-    sound = love.audio.newSource("Sfx/"..pSound,"stream")
+    sound = pSound
   end
   --
-  local anim = {name=pName, imagedata=imgSource, nbFrames=pFrames, speed=pSpeed, w=w, h=h, ox=ox, oy=oy, sfx=sound, loop=pLoop or true}
+  local loop = pLoop
+  if loop == nil then
+    loop = true
+  end
+  --
+  local anim = {name=pName, imagedata=imgSource, nbFrames=pFrames, speed=pSpeed, w=w, h=h, ox=ox, oy=oy, sfx=sound, loop=loop}
   for n = 1, pFrames do
     table.insert(anim, {quad=love.graphics.newQuad(x,y,w,h,imgSourceW,imgSourceH)})
     --
@@ -60,7 +65,7 @@ end
 function AnimPlayer.load()
   AnimPlayer.newAnim("Idle", "player-idle.png", 4, 60)
   AnimPlayer.newAnim("Run", "player-run.png", 6, 60)
-  AnimPlayer.newAnim("Jump", "player-jump.png", 2, 60, "Jump.wav", false)
+  AnimPlayer.newAnim("Jump", "player-jump.png", 2, 60, Core.Sfx.Jump, false)
 end
 --
 
@@ -72,7 +77,7 @@ function AnimPlayer.update(self, dt)
     if self.currentFrame > anim.nbFrames then
       if anim.loop == false then
         self.currentFrame = anim.nbFrames
-      else
+      elseif anim.loop == true then
         self.currentFrame = 1
       end
     end
@@ -122,7 +127,5 @@ function AnimPlayer.getAnims()
   return anims
 end
 --
-
-AnimPlayer.load()
 
 return AnimPlayer

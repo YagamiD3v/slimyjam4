@@ -61,41 +61,12 @@ end
 function Player.beginContact(_fixture, Contact, player, other, map)
   local event = nil
 
-  -- On récupère "l'instance" du joueur
-  local iPlayer = player:getUserData()
-
   if other:getUserData() ~= nil then
     if other:getUserData().name == "ground" then
-      --[[
-        -- Récupère la position du "ground"
-        local os_x1, os_y1, os_x2, os_y2 = other:getShape():computeAABB(
-          other:getBody():getX(), 
-          other:getBody():getY(),
-          other:getBody():getAngle()
-        )
-        os_x1, os_y1, os_x2, os_y2 = applyFunc(math.ceil, os_x1, os_y1, os_x2, os_y2)
-        --print( other:getUserData().id .. " position : " ..os_x1 .. "," .. os_y1)
-
-        -- Récupère la position du player
-        local p_x1, py_1, p_x2, p_y2 = player:getShape():computeAABB(
-          player:getBody():getX(),
-          player:getBody():getY(),
-          player:getBody():getAngle()
-        )
-        p_x1, py_1, p_x2, p_y2 = applyFunc(math.ceil, p_x1, py_1, p_x2, p_y2)
-        --print( player:getUserData().id .. " position : " .. p_x1 .. "," .. py_1 .. " w:" .. p_x2 .. " h:" .. p_y2) 
-
-
-        -- Récupère les points de contacts
-        local x1, y1, x2, y2 = Contact:getPositions()
-        x1, y1, x2, y2 = applyFunc(math.ceil, x1, y1, x2, y2)
-        --print("player touche ground (" .. tostring(x1) .. "," .. tostring(y1) .. ") (" ..tostring(x2) .. "," ..tostring(y2) .. ")")
-        --print("Friction: " ..tostring(Contact:getFriction()))
-      ]]
       --## GROUND ##
       local nx, ny = Contact:getNormal()
       if ny == -1 then
-        iPlayer.isOnGround = true
+        Player.isOnGround = true
         if Player.Anims.currentAnim == "Jump" then
           Player.Anims:setAnim("Idle")
         end
@@ -103,16 +74,18 @@ function Player.beginContact(_fixture, Contact, player, other, map)
     end
 
     if other:getUserData().name == "coin" then
-      iPlayer.score = iPlayer.score + other:getUserData().scorePoints
+      Player.score = Player.score + other:getUserData().scorePoints
       other:getUserData().visible = false
       other:getBody():destroy()
+      Core.Sfx.Coin:play()
     end
 
     if other:getUserData().name == "mushroom" or other:getUserData().name == "droplet" or other:getUserData().name == "seed" then
-      iPlayer.score = iPlayer.score + other:getUserData().scorePoints
-      table.insert(iPlayer.inventory,other:getUserData())
+      Player.score = Player.score + other:getUserData().scorePoints
+      table.insert(Player.inventory,other:getUserData())
       other:getUserData().visible = false
       other:getBody():destroy()
+      Core.Sfx.PowerUp:play()
     end 
 
 
@@ -121,11 +94,11 @@ function Player.beginContact(_fixture, Contact, player, other, map)
       if not o.isDone then
         if o.dependency ~= nil then -- le pot attend un item
           local dep = o.dependency
-          for i=#iPlayer.inventory, 1, -1 do
-            local inv = iPlayer.inventory[i]
+          for i=#Player.inventory, 1, -1 do
+            local inv = Player.inventory[i]
             if inv.id == dep.id then
               o.isDone = true
-              table.remove(iPlayer.inventory, i)
+              table.remove(Player.inventory, i)
               break
             end
           end
@@ -176,8 +149,8 @@ function Player.beginContact(_fixture, Contact, player, other, map)
     if other:getUserData().type == "mob" then
       local nx, ny = Contact:getNormal()
       if ny == -1 then
-        iPlayer.body:setLinearVelocity( 0, -100 )
-        iPlayer.score = iPlayer.score + other:getUserData().scorePoints
+        Player.body:setLinearVelocity( 0, -100 )
+        Player.score = Player.score + other:getUserData().scorePoints
         -- Le joueur a touché l'ennemi par le haut
         for i=#map.listMobs, 1, -1 do
           local m = map.listMobs[i]
@@ -185,11 +158,13 @@ function Player.beginContact(_fixture, Contact, player, other, map)
             table.remove(map.listMobs, i) 
             other:getUserData().visible = false
             other:getBody():destroy()
+            Core.Sfx.Hit:play()
             break
           end
         end
       else 
         print("Le joueur est touché !")
+        Core.Sfx.Hurt:play()
       end
 
     end

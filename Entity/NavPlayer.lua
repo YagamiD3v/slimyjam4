@@ -1,4 +1,4 @@
-local NavPlayer = {debug=true}
+local NavPlayer = {debug=false}
 
 local decX = 0
 local decY = -20
@@ -16,7 +16,13 @@ end
 
 function NavPlayer.beginContact(_fixture, Contact, navplayer, other)
   if other:getUserData().name == "FlowerPot" then
-    Core.Scene.setScene(SandBox, true)
+    local nx, ny = Contact:getNormal()
+--    print(nx, ny)
+    if ny == 1 then -- par dessus
+      Core.Scene.setScene(SandBox, true)  
+    end
+  elseif other:getUserData().name == "NavGround" then
+    NavPlayer.isOnGround = true    
   end
 end
 --
@@ -79,6 +85,20 @@ function NavPlayer.update(dt)
   NavPlayer.x = NavPlayer.x + decX
   NavPlayer.y = NavPlayer.y + decY
 
+  if NavPlayer.isOnGround then
+    if NavPlayer.Anims.currentAnim == "Jump" then
+      NavPlayer.Anims:setAnim("Idle")
+    elseif NavPlayer.Anims.currentAnim == "Idle" then
+      if math.floor(NavPlayer.vx) ~= 0 then
+        NavPlayer.Anims:setAnim("Run")
+      end
+    elseif NavPlayer.Anims.currentAnim == "Run" then
+      if math.floor(NavPlayer.vx) == 0 then
+        NavPlayer.Anims:setAnim("Idle")
+      end
+    end
+  end
+
 end
 --
 
@@ -94,6 +114,8 @@ function NavPlayer.draw()
   end
 
   NavPlayer.Anims:draw(NavPlayer, 4)
+
+  love.graphics.print("isOnGround : "..tostring(NavPlayer.isOnGround), 20, 400)
 end
 --
 

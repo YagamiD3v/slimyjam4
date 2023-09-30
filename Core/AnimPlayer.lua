@@ -22,10 +22,14 @@ function AnimPlayer.setAnim(self, pAnimName)
   self.currentAnim = pAnimName
   self.currentFrame = 1
   self.timer.current = 0
+  local anim = self[self.currentAnim]
+  if anim.sfx then
+    anim.sfx:play()
+  end
 end
 --
 
-function AnimPlayer.newAnim(pName, pFileName, pFrames, pSpeed, pLoop)
+function AnimPlayer.newAnim(pName, pFileName, pFrames, pSpeed, pSound, pLoop)
   local dirpath = "Assets/Tiled/sprite/Player/"
   local imgSource = love.graphics.newImage(dirpath..pFileName)
   local imgSourceW, imgSourceH = imgSource:getDimensions()
@@ -36,7 +40,13 @@ function AnimPlayer.newAnim(pName, pFileName, pFrames, pSpeed, pLoop)
   --
   local x = 0
   local y = 0
-  local anim = {name=pName, imagedata=imgSource, nbFrames=pFrames, speed=pSpeed, w=w, h=h, ox=ox, oy=oy, loop=pLoop}
+  --
+  local sound = false
+  if pSound then
+    sound = love.audio.newSource("Sfx/"..pSound,"stream")
+  end
+  --
+  local anim = {name=pName, imagedata=imgSource, nbFrames=pFrames, speed=pSpeed, w=w, h=h, ox=ox, oy=oy, sfx=sound, loop=pLoop or true}
   for n = 1, pFrames do
     table.insert(anim, {quad=love.graphics.newQuad(x,y,w,h,imgSourceW,imgSourceH)})
     --
@@ -50,7 +60,7 @@ end
 function AnimPlayer.load()
   AnimPlayer.newAnim("Idle", "player-idle.png", 4, 60)
   AnimPlayer.newAnim("Run", "player-run.png", 6, 60)
-  AnimPlayer.newAnim("Jump", "player-jump.png", 2, 60, false)
+  AnimPlayer.newAnim("Jump", "player-jump.png", 2, 60, "Jump.wav", false)
 end
 --
 

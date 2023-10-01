@@ -1,4 +1,4 @@
-local Player = {debug=true}
+local Player = {debug=false}
 
 local decX = 0
 local decY = -4
@@ -139,6 +139,7 @@ function Player.beginContact(_fixture, Contact, player, other, map)
             if inv.id == dep.id then
               o.isDone = true
               Pop:new(Player.x, Player.y - 30, 'Done!', 2)
+              Core.Sfx.play("PowerUp")
               table.remove(Player.inventory, i)
               break
             end
@@ -169,6 +170,7 @@ function Player.beginContact(_fixture, Contact, player, other, map)
 
         if o.canHarvest then -- le pot peut être récolté (automne)
           o.isDone = true
+          Core.Sfx.play("PowerUp")
           Pop:new(Player.x, Player.y - 30, 'Done!', 2)
           if o.obj0 ~= nil then
             local obj = Player.findItemId(o.obj0.id, map.listItems)
@@ -193,7 +195,7 @@ function Player.beginContact(_fixture, Contact, player, other, map)
     if other:getUserData().type == "mob" then
       local nx, ny = Contact:getNormal()
       if ny == -1 then
-        Player.body:setLinearVelocity( 0, -100 )
+        Player.body:setLinearVelocity( 0, -150 )
         Player.score = Player.score + other:getUserData().scorePoints
         Pop:new(Player.x, Player.y - 30, other:getUserData().scorePoints )
         -- Le joueur a touché l'ennemi par le haut
@@ -201,6 +203,7 @@ function Player.beginContact(_fixture, Contact, player, other, map)
           local m = map.listMobs[i]
           if m.id == other:getUserData().id then
             table.remove(map.listMobs, i) 
+            Explosion:new(other:getUserData().x-8, other:getUserData().y-16)
             other:getUserData().visible = false
             other:getBody():destroy()
             Core.Sfx.play("Hit")

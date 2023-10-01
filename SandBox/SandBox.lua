@@ -8,6 +8,8 @@ MobMushroom = require("../Entity/MobMushroom")
 MobBee = require("../Entity/MobBee")
 Player = require("../Entity/Player")
 Pop = require("../Entity/Pop")
+Explosion = require("../Entity/Explosion")
+Explosion:init()
 
 
 function SandBox.newLevel(pLevel)
@@ -49,6 +51,7 @@ function SandBox.update(dt)
   Gui.update(dt)
   --
   Pop:updateAll(dt)
+  Explosion:update(dt)
   Player.update(dt)
 end
 --
@@ -56,7 +59,8 @@ end
 
 function SandBox.draw()
   Core.MapManager.current.draw()
-  Pop:drawAll(dt)
+  Explosion:draw()
+  Pop:drawAll()
   Player.draw()
 
   Gui.draw(dt)

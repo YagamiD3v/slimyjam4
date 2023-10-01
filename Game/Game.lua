@@ -216,6 +216,8 @@ end
 --
 
 function Game.update(dt)
+  Core.Music.update(dt)
+  --
   if Game.tempo then
     Game.fading.update(dt)
   else

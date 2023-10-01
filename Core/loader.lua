@@ -14,6 +14,7 @@ function Loader:load()
   -- Libs independante
   Core.Gamera = require(dirpath.."Gamera")
   Core.Sfx = require(dirpath.."Sfx")
+  Core.Music = require(dirpath.."Music")
   Core.Particules = require(dirpath.."Particules")
 
   -- Prio order require for work

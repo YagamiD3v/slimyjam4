@@ -68,6 +68,10 @@ function Player.lostLife()
 end
 --
 
+function Player.powerUp()
+  Player.lives = Player.lives + 1
+  Core.Sfx.play("PowerUp")
+end
 
 function Player.changeLevelIfAllPotAreDone(listItem)
   for _, item in ipairs(listItem) do
@@ -116,6 +120,13 @@ function Player.beginContact(_fixture, Contact, player, other, map)
       other:getBody():destroy()
       Core.Sfx.play("PowerUp")
     end 
+
+    if other:getUserData().name == "powerup" then
+      Player.score = Player.score + other:getUserData().scorePoints
+      other:getUserData().visible = false
+      other:getBody():destroy()
+      Player.powerUp()
+    end
 
 
     if other:getUserData().name == "pot" then

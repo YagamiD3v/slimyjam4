@@ -10,7 +10,7 @@ return {
   tilewidth = 16,
   tileheight = 16,
   nextlayerid = 11,
-  nextobjectid = 142,
+  nextobjectid = 163,
   properties = {},
   tilesets = {
     {
@@ -83,6 +83,12 @@ return {
       name = "autumn",
       firstgid = 1248,
       filename = "autumn.tsx"
+    },
+    {
+      name = "powerup",
+      firstgid = 1468,
+      filename = "powerup.tsx",
+      exportfilename = "powerup.lua"
     }
   },
   layers = {
@@ -187,7 +193,7 @@ return {
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 325, 326, 327, 325, 326, 327, 325, 326, 327, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 333, 334, 335, 333, 334, 335, 333, 334, 335, 0, 0, 0, 0, 0, 203, 205, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 341, 342, 343, 341, 342, 343, 341, 342, 343, 0, 0, 0, 1287, 1288, 217, 219, 68, 0, 0, 0,
-        0, 0, 0, 0, 0, 192, 193, 0, 0, 192, 193, 0, 0, 192, 193, 0, 0, 192, 193, 0, 0, 192, 193, 0, 0, 192, 193, 0, 942, 943, 1287, 1288, 204, 205, 203, 204, 68, 1287, 1288, 205, 203, 205, 1298, 1299, 231, 233, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 192, 193, 0, 0, 0, 0, 0, 0, 192, 193, 0, 0, 0, 0, 0, 0, 192, 193, 0, 0, 0, 0, 0, 942, 943, 1287, 1288, 204, 205, 203, 204, 68, 1287, 1288, 205, 203, 205, 1298, 1299, 231, 233, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 956, 957, 1298, 1299, 218, 219, 217, 218, 82, 1298, 1299, 219, 217, 219, 916, 1278, 0, 0, 0, 0, 0, 208,
         133, 134, 135, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 918, 930, 916, 231, 232, 233, 930, 915, 96, 930, 928, 929, 914, 915, 0, 0, 0, 0, 0, 0, 0, 0,
         147, 148, 149, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 916, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 138, 0,
@@ -793,22 +799,6 @@ return {
           }
         },
         {
-          id = 57,
-          name = "",
-          type = "",
-          shape = "rectangle",
-          x = 144,
-          y = 400,
-          width = 32,
-          height = 9,
-          rotation = 0,
-          visible = true,
-          properties = {
-            ["friction"] = 0.8,
-            ["isGround"] = true
-          }
-        },
-        {
           id = 58,
           name = "",
           type = "",
@@ -825,43 +815,11 @@ return {
           }
         },
         {
-          id = 59,
-          name = "",
-          type = "",
-          shape = "rectangle",
-          x = 272,
-          y = 400,
-          width = 32,
-          height = 9,
-          rotation = 0,
-          visible = true,
-          properties = {
-            ["friction"] = 0.8,
-            ["isGround"] = true
-          }
-        },
-        {
           id = 60,
           name = "",
           type = "",
           shape = "rectangle",
           x = 336,
-          y = 400,
-          width = 32,
-          height = 9,
-          rotation = 0,
-          visible = true,
-          properties = {
-            ["friction"] = 0.8,
-            ["isGround"] = true
-          }
-        },
-        {
-          id = 61,
-          name = "",
-          type = "",
-          shape = "rectangle",
-          x = 400,
           y = 400,
           width = 32,
           height = 9,
@@ -1136,6 +1094,38 @@ return {
           x = 480,
           y = 352,
           width = 144,
+          height = 16,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["friction"] = 0.8,
+            ["isGround"] = true
+          }
+        },
+        {
+          id = 144,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 368,
+          y = 96,
+          width = 32,
+          height = 16,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["friction"] = 0.8,
+            ["isGround"] = true
+          }
+        },
+        {
+          id = 145,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 368,
+          y = 80,
+          width = 16,
           height = 16,
           rotation = 0,
           visible = true,
@@ -1420,7 +1410,7 @@ return {
           name = "coin",
           type = "",
           shape = "rectangle",
-          x = 368,
+          x = 384,
           y = 368,
           width = 16,
           height = 16,
@@ -1437,7 +1427,7 @@ return {
           name = "coin",
           type = "",
           shape = "rectangle",
-          x = 384,
+          x = 400,
           y = 368,
           width = 16,
           height = 16,
@@ -1454,7 +1444,7 @@ return {
           name = "coin",
           type = "",
           shape = "rectangle",
-          x = 464,
+          x = 448,
           y = 384,
           width = 16,
           height = 16,
@@ -1954,6 +1944,23 @@ return {
             ["type"] = "plant",
             ["z_order"] = -1
           }
+        },
+        {
+          id = 159,
+          name = "powerup",
+          type = "",
+          shape = "rectangle",
+          x = 375.333,
+          y = 75,
+          width = 16,
+          height = 16,
+          rotation = 0,
+          gid = 1468,
+          visible = true,
+          properties = {
+            ["isAnimate"] = true,
+            ["scorePoints"] = 30
+          }
         }
       }
     },
@@ -2104,6 +2111,24 @@ return {
           shape = "rectangle",
           x = 599.32,
           y = 116.806,
+          width = 18,
+          height = 10,
+          rotation = 0,
+          gid = 883,
+          visible = true,
+          properties = {
+            ["direction"] = 2,
+            ["isAnimate"] = true,
+            ["scorePoints"] = 30
+          }
+        },
+        {
+          id = 147,
+          name = "mob_bee",
+          type = "",
+          shape = "rectangle",
+          x = 320,
+          y = 144,
           width = 18,
           height = 10,
           rotation = 0,
@@ -2400,6 +2425,108 @@ return {
           visible = true,
           properties = {
             ["direction"] = 4,
+            ["type"] = "changeDirection"
+          }
+        },
+        {
+          id = 150,
+          name = "goRight",
+          type = "",
+          shape = "rectangle",
+          x = 304.333,
+          y = 130.333,
+          width = 16,
+          height = 16,
+          rotation = 0,
+          gid = 863,
+          visible = true,
+          properties = {
+            ["direction"] = 2,
+            ["type"] = "changeDirection"
+          }
+        },
+        {
+          id = 151,
+          name = "goTop",
+          type = "",
+          shape = "rectangle",
+          x = 436,
+          y = 144,
+          width = 16,
+          height = 16,
+          rotation = 0,
+          gid = 865,
+          visible = true,
+          properties = {
+            ["direction"] = 1,
+            ["type"] = "changeDirection"
+          }
+        },
+        {
+          id = 152,
+          name = "goBottom",
+          type = "",
+          shape = "rectangle",
+          x = 397.333,
+          y = 21,
+          width = 16,
+          height = 16,
+          rotation = 0,
+          gid = 866,
+          visible = true,
+          properties = {
+            ["direction"] = 3,
+            ["type"] = "changeDirection"
+          }
+        },
+        {
+          id = 154,
+          name = "goLeft",
+          type = "",
+          shape = "rectangle",
+          x = 416,
+          y = 163.333,
+          width = 16,
+          height = 16,
+          rotation = 0,
+          gid = 864,
+          visible = true,
+          properties = {
+            ["direction"] = 4,
+            ["type"] = "changeDirection"
+          }
+        },
+        {
+          id = 156,
+          name = "goLeft",
+          type = "",
+          shape = "rectangle",
+          x = 430.667,
+          y = 16,
+          width = 16,
+          height = 16,
+          rotation = 0,
+          gid = 864,
+          visible = true,
+          properties = {
+            ["direction"] = 4,
+            ["type"] = "changeDirection"
+          }
+        },
+        {
+          id = 157,
+          name = "goTop",
+          type = "",
+          shape = "rectangle",
+          x = 287.667,
+          y = 153.667,
+          width = 16,
+          height = 16,
+          rotation = 0,
+          gid = 865,
+          visible = true,
+          properties = {
+            ["direction"] = 1,
             ["type"] = "changeDirection"
           }
         }

@@ -31,13 +31,14 @@
         },
         "autumn_map.tmx": {
             "expandedObjectLayers": [
-                7
+                7,
+                6
             ],
-            "scale": 4,
+            "scale": 1.5,
             "selectedLayer": 6,
             "viewCenter": {
-                "x": 399.75,
-                "y": 303.625
+                "x": 392,
+                "y": 349
             }
         },
         "bee_simple.tsx": {
@@ -65,6 +66,9 @@
         },
         "player-idle.tsx": {
             "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "powerup.tsx": {
             "scaleInEditor": 1
         },
         "sand_box.tmx": {
@@ -118,16 +122,16 @@
         },
         "spring_map.tmx": {
             "expandedObjectLayers": [
-                6,
-                8,
+                7,
                 9,
-                7
+                6,
+                8
             ],
-            "scale": 11,
-            "selectedLayer": 9,
+            "scale": 2,
+            "selectedLayer": 6,
             "viewCenter": {
-                "x": 516.909090909091,
-                "y": 593.6818181818182
+                "x": 260,
+                "y": 375.25
             }
         },
         "staticObjects.tsx": {
@@ -147,13 +151,16 @@
         },
         "summer_map.tmx": {
             "expandedObjectLayers": [
-                7
+                7,
+                9,
+                6,
+                8
             ],
-            "scale": 16,
-            "selectedLayer": 9,
+            "scale": 3,
+            "selectedLayer": 6,
             "viewCenter": {
-                "x": 494.9375,
-                "y": 620.90625
+                "x": 223.33333333333331,
+                "y": 481.8333333333333
             }
         },
         "triggers.tsx": {
@@ -164,13 +171,14 @@
         },
         "winter_map.tmx": {
             "expandedObjectLayers": [
+                9,
                 12
             ],
-            "scale": 11,
-            "selectedLayer": 9,
+            "scale": 2,
+            "selectedLayer": 6,
             "viewCenter": {
-                "x": 475.72727272727275,
-                "y": 584.6818181818182
+                "x": 354,
+                "y": 303.25
             }
         }
     },
@@ -196,18 +204,18 @@
     "project": "SlimyJam4.tiled-project",
     "property.type": "bool",
     "recentFiles": [
-        "spring.tsx",
-        "autumn_map.tmx",
+        "powerup.tsx",
         "winter_map.tmx",
-        "summer_map.tmx",
         "spring_map.tmx",
+        "autumn_map.tmx",
+        "coin.tsx",
+        "droplet.tsx",
+        "spring.tsx",
+        "summer_map.tmx",
         "summer.tsx",
         "nature.tsx",
-        "droplet.tsx",
         "summer.tmx",
-        "sand_box.tmx",
-        "autumn.tsx",
-        "sky.tsx"
+        "sand_box.tmx"
     ],
     "tileset.lastUsedFilter": "Fichiers de jeu de tuiles Tiled (*.tsx *.xml)",
     "tileset.lastUsedFormat": "tsx",

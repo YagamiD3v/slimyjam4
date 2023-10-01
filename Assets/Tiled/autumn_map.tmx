@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="left-up" width="50" height="38" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="138">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="left-up" width="50" height="38" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="141">
  <editorsettings>
   <export target="autumn_map.lua" format="lua"/>
  </editorsettings>
@@ -84,7 +84,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,325,326,327,325,326,327,325,326,327,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,333,334,335,333,334,335,333,334,335,0,0,0,0,0,203,205,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,341,342,343,341,342,343,341,342,343,0,0,0,203,205,217,219,68,0,0,0,
-0,0,0,0,0,192,193,0,0,192,193,0,0,192,193,0,0,192,193,0,0,192,193,0,0,192,193,0,930,931,205,203,204,205,203,204,205,203,204,205,203,205,1051,1052,231,233,0,0,0,0,
+0,0,0,0,0,192,193,0,0,0,0,0,0,192,193,0,0,0,0,0,0,192,193,0,0,0,0,0,930,931,205,203,204,205,203,204,205,203,204,205,203,205,1051,1052,231,233,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,941,942,219,217,218,219,217,218,219,217,218,219,217,219,1020,1031,0,0,0,0,0,208,
 133,134,135,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,912,921,1020,231,232,233,1031,1018,1019,1031,1029,1030,1018,1019,0,0,0,0,0,0,0,0,
 147,148,149,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1020,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,138,0,
@@ -225,7 +225,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup color="#ff0000" id="6" name="ColliderShape" visible="0" locked="1">
+ <objectgroup color="#ff0000" id="6" name="ColliderShape" locked="1">
   <properties>
    <property name="isCollider" type="bool" value="true"/>
   </properties>
@@ -379,31 +379,13 @@
     <property name="isGround" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="57" x="144" y="400" width="32" height="9">
-   <properties>
-    <property name="friction" type="float" value="0.8"/>
-    <property name="isGround" type="bool" value="true"/>
-   </properties>
-  </object>
   <object id="58" x="208" y="400" width="32" height="9">
    <properties>
     <property name="friction" type="float" value="0.8"/>
     <property name="isGround" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="59" x="272" y="400" width="32" height="9">
-   <properties>
-    <property name="friction" type="float" value="0.8"/>
-    <property name="isGround" type="bool" value="true"/>
-   </properties>
-  </object>
   <object id="60" x="336" y="400" width="32" height="9">
-   <properties>
-    <property name="friction" type="float" value="0.8"/>
-    <property name="isGround" type="bool" value="true"/>
-   </properties>
-  </object>
-  <object id="61" x="400" y="400" width="32" height="9">
    <properties>
     <property name="friction" type="float" value="0.8"/>
     <property name="isGround" type="bool" value="true"/>
@@ -511,8 +493,20 @@
     <property name="isGround" type="bool" value="true"/>
    </properties>
   </object>
+  <object id="138" x="368" y="96" width="32" height="16">
+   <properties>
+    <property name="friction" type="float" value="0.8"/>
+    <property name="isGround" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="139" x="368" y="80" width="16" height="16">
+   <properties>
+    <property name="friction" type="float" value="0.8"/>
+    <property name="isGround" type="bool" value="true"/>
+   </properties>
+  </object>
  </objectgroup>
- <objectgroup id="7" name="Items">
+ <objectgroup id="7" name="Items" locked="1">
   <object id="2" template="TiledModels/coin.tx" x="160" y="544"/>
   <object id="3" template="TiledModels/coin.tx" x="208" y="528"/>
   <object id="4" template="TiledModels/coin.tx" x="256" y="544"/>
@@ -528,9 +522,9 @@
   <object id="14" template="TiledModels/coin.tx" x="256" y="368"/>
   <object id="15" template="TiledModels/coin.tx" x="304" y="368"/>
   <object id="16" template="TiledModels/coin.tx" x="320" y="368"/>
-  <object id="17" template="TiledModels/coin.tx" x="368" y="368"/>
-  <object id="18" template="TiledModels/coin.tx" x="384" y="368"/>
-  <object id="19" template="TiledModels/coin.tx" x="464" y="384"/>
+  <object id="17" template="TiledModels/coin.tx" x="384" y="368"/>
+  <object id="18" template="TiledModels/coin.tx" x="400" y="368"/>
+  <object id="19" template="TiledModels/coin.tx" x="448" y="384"/>
   <object id="20" template="TiledModels/coin.tx" x="592" y="320"/>
   <object id="21" template="TiledModels/coin.tx" x="672" y="352"/>
   <object id="22" template="TiledModels/coin.tx" x="736" y="464"/>
@@ -653,7 +647,7 @@
   <object id="124" template="TiledModels/triggerGoRight.tx" x="576" y="122.496"/>
   <object id="125" template="TiledModels/triggerGoLeft.tx" x="736" y="120.661"/>
  </objectgroup>
- <objectgroup id="10" name="Events">
+ <objectgroup id="10" name="Events" locked="1">
   <object id="137" name="water" x="464.171" y="602.891" width="335.636" height="5">
    <properties>
     <property name="isEvent" type="bool" value="true"/>

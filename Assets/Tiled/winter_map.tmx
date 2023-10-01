@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="left-up" width="50" height="38" tilewidth="16" tileheight="16" infinite="0" nextlayerid="17" nextobjectid="216">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="left-up" width="50" height="38" tilewidth="16" tileheight="16" infinite="0" nextlayerid="17" nextobjectid="221">
  <editorsettings>
   <export target="winter_map.lua" format="lua"/>
  </editorsettings>
@@ -82,7 +82,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,488,489,490,488,489,490,488,489,490,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,496,497,498,496,497,498,496,497,498,0,0,0,0,0,175,177,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,504,505,506,504,505,506,504,505,506,0,0,0,192,193,189,191,40,0,0,0,
-0,0,0,0,0,164,165,0,0,164,165,0,0,164,165,0,0,164,165,0,0,164,165,0,0,164,165,0,52,53,52,175,176,37,52,53,40,52,53,177,52,53,206,207,203,205,0,0,0,0,
+0,0,0,0,0,164,165,0,0,0,0,0,0,164,165,0,0,0,0,0,0,164,165,0,0,0,0,0,52,53,52,175,176,37,52,53,40,52,53,177,52,53,206,207,203,205,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,66,67,66,189,190,51,66,67,54,66,67,191,66,67,26,40,0,0,0,0,0,180,
 105,106,107,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,28,40,166,203,204,65,40,166,68,40,178,179,24,25,0,0,0,0,0,0,0,0,
 119,120,121,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,166,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,110,0,
@@ -110,13 +110,13 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,262,263,0,0,248,262,263,264,248,249,0,0,0,0,
 0,0,0,236,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,248,249,0,0,276,277,0,0,0,276,277,278,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,248,249,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-244,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,236,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+250,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,236,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,228,229,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,230,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,239,241,256,257,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,230,0,0,0,0,253,255,270,271,239,240,241,239,240,241,242,243,0,0,0,242,243,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,267,269,0,0,253,254,255,253,254,255,0,0,0,0,0,0,0,242,243,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,267,268,269,267,268,269,0,0,0,0,0,0,0,0,0,228,229,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,234,235,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,230,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,245,247,262,263,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,236,0,0,0,0,259,261,276,277,245,246,247,245,246,247,248,249,0,0,0,242,243,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,273,275,0,0,259,260,261,259,260,261,0,0,0,0,0,0,0,242,243,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,273,274,275,273,274,275,0,0,0,0,0,0,0,0,0,228,229,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,228,229,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,230,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,230,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -389,31 +389,13 @@
     <property name="isGround" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="40" x="144" y="400" width="32" height="9">
-   <properties>
-    <property name="friction" type="float" value="0.5"/>
-    <property name="isGround" type="bool" value="true"/>
-   </properties>
-  </object>
   <object id="41" x="208" y="400" width="32" height="9">
    <properties>
     <property name="friction" type="float" value="0.5"/>
     <property name="isGround" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="43" x="272" y="400" width="32" height="9">
-   <properties>
-    <property name="friction" type="float" value="0.5"/>
-    <property name="isGround" type="bool" value="true"/>
-   </properties>
-  </object>
   <object id="44" x="336" y="400" width="32" height="9">
-   <properties>
-    <property name="friction" type="float" value="0.5"/>
-    <property name="isGround" type="bool" value="true"/>
-   </properties>
-  </object>
-  <object id="45" x="400" y="400" width="32" height="9">
    <properties>
     <property name="friction" type="float" value="0.5"/>
     <property name="isGround" type="bool" value="true"/>
@@ -433,25 +415,25 @@
   </object>
   <object id="55" x="32" y="208" width="32" height="32">
    <properties>
-    <property name="friction" type="float" value="0.5"/>
+    <property name="friction" type="float" value="0"/>
     <property name="isGround" type="bool" value="true"/>
    </properties>
   </object>
   <object id="56" x="96" y="224" width="64" height="48">
    <properties>
-    <property name="friction" type="float" value="0.5"/>
+    <property name="friction" type="float" value="0"/>
     <property name="isGround" type="bool" value="true"/>
    </properties>
   </object>
   <object id="57" x="160" y="240" width="96" height="48">
    <properties>
-    <property name="friction" type="float" value="0.5"/>
+    <property name="friction" type="float" value="0"/>
     <property name="isGround" type="bool" value="true"/>
    </properties>
   </object>
   <object id="58" x="256" y="240" width="32" height="32">
    <properties>
-    <property name="friction" type="float" value="0.5"/>
+    <property name="friction" type="float" value="0"/>
     <property name="isGround" type="bool" value="true"/>
    </properties>
   </object>
@@ -475,7 +457,7 @@
   </object>
   <object id="65" x="0" y="176" width="16" height="32">
    <properties>
-    <property name="friction" type="float" value="0.5"/>
+    <property name="friction" type="float" value="0"/>
     <property name="isGround" type="bool" value="true"/>
    </properties>
   </object>
@@ -509,6 +491,18 @@
     <property name="isGround" type="bool" value="true"/>
    </properties>
   </object>
+  <object id="218" x="368" y="96" width="32" height="16">
+   <properties>
+    <property name="friction" type="float" value="0.8"/>
+    <property name="isGround" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="219" x="368" y="80" width="16" height="16">
+   <properties>
+    <property name="friction" type="float" value="0.8"/>
+    <property name="isGround" type="bool" value="true"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup id="12" name="Items" locked="1">
   <object id="130" template="TiledModels/coin.tx" x="160" y="544"/>
@@ -526,9 +520,9 @@
   <object id="142" template="TiledModels/coin.tx" x="256" y="368"/>
   <object id="143" template="TiledModels/coin.tx" x="304" y="368"/>
   <object id="144" template="TiledModels/coin.tx" x="320" y="368"/>
-  <object id="145" template="TiledModels/coin.tx" x="368" y="368"/>
-  <object id="146" template="TiledModels/coin.tx" x="384" y="368"/>
-  <object id="147" template="TiledModels/coin.tx" x="464" y="384"/>
+  <object id="145" template="TiledModels/coin.tx" x="384" y="368"/>
+  <object id="146" template="TiledModels/coin.tx" x="400" y="368"/>
+  <object id="147" template="TiledModels/coin.tx" x="448" y="384"/>
   <object id="148" template="TiledModels/coin.tx" x="592" y="320"/>
   <object id="150" template="TiledModels/coin.tx" x="672" y="352"/>
   <object id="151" template="TiledModels/coin.tx" x="736" y="464"/>
@@ -588,7 +582,7 @@
   <object id="206" template="TiledModels/triggerGoLeft.tx" x="400" y="576"/>
   <object id="207" template="TiledModels/triggerGoRight.tx" x="208" y="576"/>
  </objectgroup>
- <objectgroup id="16" name="Events">
+ <objectgroup id="16" name="Events" locked="1">
   <object id="215" name="water" x="464.364" y="603" width="335.636" height="5">
    <properties>
     <property name="isEvent" type="bool" value="true"/>

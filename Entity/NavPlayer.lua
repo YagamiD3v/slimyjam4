@@ -69,14 +69,17 @@ function NavPlayer.update(dt)
   NavPlayer.body:setAngle(0)
 
   NavPlayer.vx, NavPlayer.vy = NavPlayer.body:getLinearVelocity()
+  
+  local left = love.keyboard.isDown("left") or love.keyboard.isDown("a") or love.keyboard.isDown("q")
+  local right = love.keyboard.isDown("right") or love.keyboard.isDown("d")
 
   -- move
-  if love.keyboard.isDown("left") then
+  if left then
     if NavPlayer.vx > -NavPlayer.maxSpeed then
       NavPlayer.body:applyForce( -35, 0 )
       NavPlayer.direction.vx = -1
     end
-  elseif love.keyboard.isDown("right") then
+  elseif right then
     if NavPlayer.vx < NavPlayer.maxSpeed then
       NavPlayer.body:applyForce( 35, 0 )
       NavPlayer.direction.vx = 1
@@ -84,7 +87,7 @@ function NavPlayer.update(dt)
   end
 
   -- Si la touche de déplacement n'est pas enfoncée, arrêtez le deplacement
-  if not (love.keyboard.isDown("right") or love.keyboard.isDown("left")) then
+  if not (left or right) then
     local x, y = NavPlayer.body:getLinearVelocity()
     NavPlayer.body:setLinearVelocity(x/1.01, y)
   end
@@ -128,7 +131,7 @@ end
 --
 
 function NavPlayer.keypressed(k)
-  if k == "up" and NavPlayer.isOnGround then
+  if (k == "up" or k == "w" or k == "z") and NavPlayer.isOnGround then
     NavPlayer.body:applyLinearImpulse( 0, -15 )
     NavPlayer.isOnGround = false
     NavPlayer.Anims:setAnim("Jump")

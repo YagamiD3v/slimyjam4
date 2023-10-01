@@ -75,9 +75,11 @@ function Game.setWorldScene(pWorld, Saison, FadeInOut, pEnterOut)
   Game.fading.reset(FadeInOut)
   --
   Game.switchLevelFading = function(dt)
-    Game.levels.currentLevel = Game.levels.nextLevel
-    if pWorld == SandBox then
-      SandBox.setLevel(Game.levels.nextLevel)
+    if Game.levels.currentLevel ~= Game.levels.nextLevel then
+      Game.levels.currentLevel = Game.levels.nextLevel
+      if pWorld == SandBox then
+        SandBox.setLevel(Game.levels.nextLevel)
+      end
     end
   end
 end
@@ -147,15 +149,18 @@ function Game.fading.update(dt)
     if Game.fading.color[4] == 1 then
       Game.fading.noir = true
       Game.fading.sens = -Game.fading.sens
-      if Game.tempo then
-        Game.switchLevelFading()
-      end
     end
   end
 
   if Game.fading.noir then
+
+    if Game.tempo then
+      Game.switchLevelFading()
+    end
+
     if Game.fading.timer.update(dt) then
       Game.fading.alphaUpdate(dt)
+
       if not Game.fading.blanc then
         if Game.fading.color[4] == 0 then
           Game.fading.blanc = true

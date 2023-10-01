@@ -18,9 +18,14 @@ function NavPlayer.beginContact(_fixture, Contact, navplayer, other)
   if other:getUserData().name == "FlowerPot" then
     local nx, ny = Contact:getNormal()
     if ny == 1 then -- par dessus
-      Game.setWorldScene(SandBox, Game.levels.currentLevel)
-      NavPlayer.y = NavPlayer.y - 1
-      NavPlayer.body:applyLinearImpulse( -35, -15 )
+      if Game.levels.house.status == "enter" then
+        Game.setWorldScene(SandBox, Game.levels.currentLevel)
+        NavPlayer.Anims:setAnim("Jump")
+        NavPlayer.direction.vx = -1
+        NavPlayer.y = NavPlayer.y - 1
+        NavPlayer.body:setLinearVelocity( 0, 0)
+        NavPlayer.body:applyLinearImpulse( -35, -15 )
+      end
     end
   elseif other:getUserData().name == "NavGround" then
     NavPlayer.isOnGround = true    

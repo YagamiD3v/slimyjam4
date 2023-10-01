@@ -1,0 +1,228 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "spring_map.tmx",
+    "expandedProjectPaths": [
+        ".",
+        "TiledModels"
+    ],
+    "file.lastUsedOpenFilter": "Tous les Fichiers (*)",
+    "fileStates": {
+        "": {
+            "scaleInDock": 1
+        },
+        "Bee.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Collider.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Mushroom_4.tsx": {
+            "scaleInDock": 5.5,
+            "scaleInEditor": 1
+        },
+        "autumn.tsx": {
+            "scaleInDock": 3,
+            "scaleInEditor": 3
+        },
+        "autumn_map.tmx": {
+            "expandedObjectLayers": [
+                7,
+                6
+            ],
+            "scale": 1.5,
+            "selectedLayer": 6,
+            "viewCenter": {
+                "x": 392,
+                "y": 349
+            }
+        },
+        "bee_simple.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "coin.tsx": {
+            "scaleInDock": 3,
+            "scaleInEditor": 1
+        },
+        "droplet.tsx": {
+            "scaleInDock": 5.5,
+            "scaleInEditor": 1
+        },
+        "ground.tsx": {
+            "scaleInDock": 3
+        },
+        "mob_bee.tsx": {
+            "scaleInDock": 5.5,
+            "scaleInEditor": 1
+        },
+        "nature.tsx": {
+            "scaleInDock": 3,
+            "scaleInEditor": 5.5
+        },
+        "player-idle.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "powerup.tsx": {
+            "scaleInEditor": 1
+        },
+        "sand_box.tmx": {
+            "expandedObjectLayers": [
+                15,
+                12,
+                14,
+                9
+            ],
+            "scale": 1.5,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 395.3333333333333,
+                "y": 503.66666666666663
+            }
+        },
+        "sky.tsx": {
+            "scaleInDock": 3,
+            "scaleInEditor": 1
+        },
+        "spring..tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "spring.tmx": {
+            "expandedObjectLayers": [
+                6
+            ],
+            "scale": 1.6351874999999998,
+            "selectedLayer": 5,
+            "viewCenter": {
+                "x": 399.0368077055384,
+                "y": 303.0233535909491
+            }
+        },
+        "spring.tsx": {
+            "scaleInDock": 3,
+            "scaleInEditor": 1
+        },
+        "spring_map..tmx": {
+            "expandedObjectLayers": [
+                6,
+                8
+            ],
+            "scale": 1.6351874999999998,
+            "selectedLayer": 8,
+            "viewCenter": {
+                "x": 400.25990903183884,
+                "y": 304.2464549172496
+            }
+        },
+        "spring_map.tmx": {
+            "expandedObjectLayers": [
+                7,
+                9,
+                6,
+                8
+            ],
+            "scale": 2,
+            "selectedLayer": 6,
+            "viewCenter": {
+                "x": 260,
+                "y": 375.25
+            }
+        },
+        "staticObjects.tsx": {
+            "scaleInDock": 3
+        },
+        "summer.tmx": {
+            "scale": 1.698125,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 522.3408170776592,
+                "y": 314.75892528524105
+            }
+        },
+        "summer.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "summer_map.tmx": {
+            "expandedObjectLayers": [
+                7,
+                9,
+                6,
+                8
+            ],
+            "scale": 3,
+            "selectedLayer": 6,
+            "viewCenter": {
+                "x": 223.33333333333331,
+                "y": 481.8333333333333
+            }
+        },
+        "triggers.tsx": {
+            "scaleInDock": 5.5
+        },
+        "winter.tsx": {
+            "scaleInDock": 5.5
+        },
+        "winter_map.tmx": {
+            "expandedObjectLayers": [
+                9,
+                12
+            ],
+            "scale": 2,
+            "selectedLayer": 6,
+            "viewCenter": {
+                "x": 354,
+                "y": 303.25
+            }
+        }
+    },
+    "frame.defaultDuration": 170,
+    "last.exportedFilePath": "D:/Developpement/MiniProjetJeux/GameJam/SlimyJam4/src/Assets/Tiled",
+    "last.externalTilesetPath": "D:/Developpement/MiniProjetJeux/GameJam/SlimyJam4/src/Assets/Tiled",
+    "last.imagePath": "D:/Developpement/MiniProjetJeux/GameJam/SlimyJam4/src/Assets/Tiled/object",
+    "last.objectTemplatePath": "D:/Developpement/MiniProjetJeux/GameJam/SlimyJam4/src/Assets/Tiled/TiledModels",
+    "lastUsedTilesetExportFilter": "Fichiers Lua (*.lua)",
+    "map.height": 38,
+    "map.lastUsedExportFilter": "Fichiers Lua (*.lua)",
+    "map.lastUsedFormat": "tmx",
+    "map.renderOrder": null,
+    "map.tileHeight": 16,
+    "map.tileWidth": 16,
+    "map.width": 50,
+    "openFiles": [
+        "spring_map.tmx",
+        "summer_map.tmx",
+        "winter_map.tmx",
+        "autumn_map.tmx"
+    ],
+    "project": "SlimyJam4.tiled-project",
+    "property.type": "bool",
+    "recentFiles": [
+        "powerup.tsx",
+        "winter_map.tmx",
+        "spring_map.tmx",
+        "autumn_map.tmx",
+        "coin.tsx",
+        "droplet.tsx",
+        "spring.tsx",
+        "summer_map.tmx",
+        "summer.tsx",
+        "nature.tsx",
+        "summer.tmx",
+        "sand_box.tmx"
+    ],
+    "tileset.lastUsedFilter": "Fichiers de jeu de tuiles Tiled (*.tsx *.xml)",
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.margin": 0,
+    "tileset.spacing": 0,
+    "tileset.tileSize": {
+        "height": 16,
+        "width": 16
+    }
+}

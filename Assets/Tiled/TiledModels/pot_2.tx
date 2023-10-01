@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+ <tileset firstgid="1" source="../staticObjects.tsx"/>
+ <object name="pot" gid="128" width="16" height="16">
+  <properties>
+   <property name="canHarvest" type="bool" value="false"/>
+   <property name="dependency" type="object" value="0"/>
+   <property name="isDone" type="bool" value="false"/>
+   <property name="obj0" type="object" value="0"/>
+   <property name="obj1" type="object" value="0"/>
+   <property name="obj2" type="object" value="0"/>
+  </properties>
+ </object>
+</template>

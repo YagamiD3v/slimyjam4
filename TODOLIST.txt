@@ -1,0 +1,6 @@
+[] Question : Gestion du path vers les images dans Tiled : peut-on utiliser des chemins relatif ?
++ Crypto : Oui.
+
+[] Création d'un "niveau" (plateforme et collision) dans tiled et affichage dans love
+[] Intégration du moteur physique de love2d
+[] Création du PJ (déplacement, saut)

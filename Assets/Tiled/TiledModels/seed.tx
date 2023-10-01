@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+ <tileset firstgid="1" source="../staticObjects.tsx"/>
+ <object name="seed" gid="58" width="16" height="16">
+  <properties>
+   <property name="isAnimate" type="bool" value="false"/>
+   <property name="scorePoints" type="int" value="5"/>
+  </properties>
+ </object>
+</template>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+ <tileset firstgid="1" source="../mob_bee.tsx"/>
+ <object name="mob_bee" gid="1" width="18" height="10">
+  <properties>
+   <property name="direction" type="int" value="3"/>
+   <property name="isAnimate" type="bool" value="true"/>
+   <property name="scorePoints" type="int" value="30"/>
+  </properties>
+ </object>
+</template>

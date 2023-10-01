@@ -16,6 +16,19 @@ local mouse = {x=Screen.ox, y=Screen.oy, w=1, h=1}
 
 local particules = nil
 
+local ScoreText = nil
+
+local function generateText(pText)
+  local text = {}
+  text.data = love.graphics.newText(font, pText)
+  text.w, text.h = text.data:getDimensions()
+  text.ox, text.oy = text.w/2, text.h/2
+  text.x, text.y = Screen.cx, Screen.cy+20
+
+  return text
+end
+--
+
 function mouse.AABB()
   for n=1, #listButtons do
     local button = listButtons[n]
@@ -109,6 +122,8 @@ function EndGame.load()
   EndGame.newButton(Screen.oy + 140, "Q U I T", function() love.event.quit() end)
   --
   particules = Core.Particules.new(Screen.cx, Screen.h)
+  --
+  ScoreText = generateText("Your Score is : "..tostring(Game.score))
 end
 --
 
@@ -140,9 +155,11 @@ function EndGame.draw()
     end
   end
   --
-  
+
+  love.graphics.draw(ScoreText.data, ScoreText.x, ScoreText.y, 0, 1, 1,  ScoreText.ox, ScoreText.oy)
+
   particules:draw()
-  
+
   if EndGame.debug then
     love.graphics.print("Scene EndGame",10,10)
   end

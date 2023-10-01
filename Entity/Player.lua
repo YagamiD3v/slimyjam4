@@ -8,7 +8,7 @@ function Player.reload()
   Player.maxSpeed = 100
   Player.direction={vx=1, vy=1}
   Player.x =  30
-  Player.y = 550
+  Player.y = 560
   Player.w, Player.h = 16, 22 -- 26
   Player.vy = 0
   Player.vx = 0
@@ -41,8 +41,8 @@ end
 --
 
 function Player.load()
-  Player.score = 0 
-  Player.lives = 3
+  Player.score = Game.score
+  Player.lives = Game.playerLife
   Player.name = "player"
   Player.inventory = {}
   --
@@ -51,8 +51,6 @@ function Player.load()
 
   Player.reload()
   --
-
-
 end
 --
 
@@ -64,8 +62,6 @@ function Player.lostLife()
   Player.Anims:setAnim("Hurt")
   Player.body:setLinearVelocity( 0, -200 )
   Player.fixture:destroy()
-  --  Core.Sfx.play("Hurt") -- deja appele dans le changement d'animation si un son est lié ;)
-  Game.fading.express() -- le fading quand le joueur est touché
 end
 --
 
@@ -82,7 +78,7 @@ function Player.changeLevelIfAllPotAreDone(listItem)
   end
 
   -- All pots are done
-  print("Change Level !")
+  Game.setWorldScene(HouseWorld, "autumn")
 end
 
 function Player.findItemId(idItem, listItem)
@@ -206,7 +202,6 @@ function Player.beginContact(_fixture, Contact, player, other, map)
           end
         end
       else 
-        --print("Le joueur est touché !")
         Player.lostLife()
       end
 
@@ -217,30 +212,19 @@ function Player.beginContact(_fixture, Contact, player, other, map)
     end
   end
 
-
-  --[[
-  for n=1, #map.listEvents do
-    local lookMe = map.listEvents[n]
-    if other == lookMe.fixture then
-      event = lookMe
-    end
-  end
-  --
-  if event then
-    if event.properties.isTeleport then
-      table.insert(eventsList, function() Game:setMap(event.properties.toMap, event.properties.toSpawn) end )
-    end
-  end
-  ]]
 end
 --
 
 
 function Player.update(dt)
+  Game.score = Player.score
+  Game.playerLife = Player.lives
+  
   if Player.isDie and love.timer.getTime() - Player.deathTime > Player.respawnDelay then
     if Player.lives == 0 then
       Core.Scene.setScene(Menu)
     else
+      Game.fading.express() -- le fading quand le joueur est touché
       Player.reload()
     end
   end

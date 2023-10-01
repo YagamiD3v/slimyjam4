@@ -29,7 +29,6 @@ end
 --
 
 function SandBox.load()
-
   SandBox.newLevel("autumn")
   SandBox.newLevel("spring")
   SandBox.newLevel("summer")

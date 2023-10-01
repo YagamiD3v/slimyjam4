@@ -7,6 +7,8 @@ end
 -- Cette ligne permet d'afficher des traces dans la console pendant l'éxécution
 io.stdout:setvbuf("no")
 
+local canvas
+
 
 -- settings
 love.graphics.setDefaultFilter( 'nearest', 'nearest' )
@@ -34,16 +36,30 @@ function love.load()
   Core.Scene.setScene(Menu)
   --
   Core.Scene.loadScene()
+  --
+  canvas = love.graphics.newCanvas(Screen.w, Screen.h)
+  --
+--  love.window.setFullscreen(true)
+  love.window.maximize()
+  
+  love.mouse.setVisible(false)
 end
 --
 
 function love.update(dt)
+  Screen.update(dt)
+  --
   Core.Scene.update(dt)
+  love.graphics.setCanvas(canvas)
+  love.graphics.clear(0, 0, 0, 0)
+  love.graphics.setBlendMode("alpha")
+  Core.Scene.draw()
+  love.graphics.setCanvas()
 end
 --
 
 function love.draw()
-  Core.Scene.draw()
+  love.graphics.draw(canvas,  Screen.offsetX / 2,  Screen.offsetY / 2, 0, Screen.sx, Screen.sy)
 end
 --
 

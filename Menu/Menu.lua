@@ -28,12 +28,14 @@ end
 
 function mouse.getPosition()
   mouse.x, mouse.y = love.mouse.getPosition()
+  mouse.x = mouse.x * Screen.sx
+  mouse.y = mouse.y * Screen.sy
 end
 --
 
 function mouse.update(dt)
-  mouse.getPosition()
-  mouse.AABB()
+--  mouse.getPosition()
+--  mouse.AABB()
 end
 --
 
@@ -163,13 +165,13 @@ end
 --
 
 function Menu.mousepressed(x,y,button)
-  if button == 1 then
-    if mouse.AABB() then
-      if listButtons[currentBox] then
-        listButtons[currentBox].action()
-      end
-    end
-  end
+--  if button == 1 then
+--    if mouse.AABB() then
+--      if listButtons[currentBox] then
+--        listButtons[currentBox].action()
+--      end
+--    end
+--  end
 end
 --
 

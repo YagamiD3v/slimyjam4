@@ -76,7 +76,7 @@ end
 --
 
 function Game.setWorldScene(pWorld, Saison, FadeInOut, pEnterOut)
-  print("Saison : " .. Saison)
+  --print("Saison : " .. Saison)
   Game.tempo = true
   Game.levels.house.status = pEnterOut or "enter"
   --

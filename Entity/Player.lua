@@ -23,7 +23,7 @@ function Player.reload()
   if Player.body then
     Player.body:destroy()
   end
-  
+
   Player.body = love.physics.newBody(Core.MapManager.current.world, Player.x, Player.y, "dynamic")
 
   -- mass defaut = 4
@@ -52,7 +52,7 @@ function Player.load()
   Player.reload()
   --
 
-  
+
 end
 --
 
@@ -64,7 +64,8 @@ function Player.lostLife()
   Player.Anims:setAnim("Hurt")
   Player.body:setLinearVelocity( 0, -200 )
   Player.fixture:destroy()
-  Core.Sfx.play("Hurt")
+  --  Core.Sfx.play("Hurt") -- deja appele dans le changement d'animation si un son est lié ;)
+  Game.fading.express() -- le fading quand le joueur est touché
 end
 --
 

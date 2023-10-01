@@ -50,8 +50,12 @@ ENUM_DIRECTION = {
 Game.WorldCurrent = nil
 Game.WorldLast = nil
 
+Game.tempo = false
+Game.fastTempo = false
+
 Game.fading = {0,0,0,0}
 Game.fading.sens = 1
+Game.fading.speed = 2
 Game.fading.noir=false
 Game.fading.blanc=false
 Game.fading.timer = {current=0, delai=15, speed=60}
@@ -76,9 +80,24 @@ function Game.setWorldScene(pWorld, Saison, FadeInOut, pEnterOut)
 end
 --
 
+function Game.fading.express()
+  Game.fading.reset(false, 120)
+  Game.fastTempo = true
+end
+--
+
 function Game.fading.reset(FadeInOut, pSpeed)
+
   Game.fading.timer.current = 0
-  --
+
+  Game.fading.timer.speed = pSpeed or 60
+
+  if pSpeed then
+    Game.fading.speed = 4
+  else
+    Game.fading.speed = 2
+  end
+
   if not FadeInOut then
     Game.fading.color = {0,0,0,0}
     Game.fading.sens = 1
@@ -90,7 +109,7 @@ function Game.fading.reset(FadeInOut, pSpeed)
     Game.fading.noir=true
     Game.fading.blanc=false
   end
-  Game.fading.speed = pSpeed
+
 end
 --
 
@@ -125,7 +144,9 @@ function Game.fading.update(dt)
     if Game.fading.color[4] == 1 then
       Game.fading.noir = true
       Game.fading.sens = -Game.fading.sens
-      Game.switchLevelFading()
+      if Game.tempo then
+        Game.switchLevelFading()
+      end
     end
   end
 
@@ -140,6 +161,7 @@ function Game.fading.update(dt)
 
       if Game.fading.blanc and Game.fading.noir then
         Game.tempo = false
+        Game.fastTempo = false
       end
 
     end
@@ -149,9 +171,9 @@ end
 --
 
 function Game.fading.draw()
-  if Game.fading.noir then
+  if Game.fading.noir or Game.fastTempo then
     Game.WorldCurrent.draw()
-  else
+  elseif Game.tempo then
     Game.WorldLast.draw()
   end
 
@@ -163,6 +185,7 @@ end
 
 function Game.load()
   Game.tempo = false
+  Game.fastTempo = false
   Game.switchLevelFading = function() end
   --
   HouseWorld.load()
@@ -176,6 +199,9 @@ function Game.update(dt)
   if Game.tempo then
     Game.fading.update(dt)
   else
+    if Game.fastTempo then
+      Game.fading.update(dt)
+    end
     Game.WorldCurrent.update(dt)
   end
 end
@@ -187,6 +213,9 @@ function Game.draw()
     Game.fading.draw()
   else
     Game.WorldCurrent.draw()
+    if Game.fastTempo then
+      Game.fading.draw()
+    end
   end
 
   --

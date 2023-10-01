@@ -78,7 +78,7 @@ function Player.changeLevelIfAllPotAreDone(listItem)
   end
 
   -- All pots are done
-  Game.setWorldScene(HouseWorld, "autumn")
+  Game.setWorldScene(HouseWorld, Game.levels.currentLevel, false, "out")
 end
 
 function Player.findItemId(idItem, listItem)
@@ -108,6 +108,7 @@ function Player.beginContact(_fixture, Contact, player, other, map)
       other:getUserData().visible = false
       other:getBody():destroy()
       Core.Sfx.play("Coin")
+      Pop:new(Player.x, Player.y - 30, other:getUserData().scorePoints)
     end
 
     if other:getUserData().name == "mushroom" or other:getUserData().name == "droplet" or other:getUserData().name == "seed" then
@@ -116,6 +117,7 @@ function Player.beginContact(_fixture, Contact, player, other, map)
       other:getUserData().visible = false
       other:getBody():destroy()
       Core.Sfx.play("PowerUp")
+      Pop:new(Player.x, Player.y - 30, other:getUserData().scorePoints)
     end 
 
     if other:getUserData().name == "powerup" then
@@ -123,6 +125,7 @@ function Player.beginContact(_fixture, Contact, player, other, map)
       other:getUserData().visible = false
       other:getBody():destroy()
       Player.powerUp()
+      Pop:new(Player.x, Player.y - 30, other:getUserData().scorePoints)
     end
 
 
@@ -135,6 +138,7 @@ function Player.beginContact(_fixture, Contact, player, other, map)
             local inv = Player.inventory[i]
             if inv.id == dep.id then
               o.isDone = true
+              Pop:new(Player.x, Player.y - 30, 'Done!', 2)
               table.remove(Player.inventory, i)
               break
             end
@@ -165,6 +169,7 @@ function Player.beginContact(_fixture, Contact, player, other, map)
 
         if o.canHarvest then -- le pot peut être récolté (automne)
           o.isDone = true
+          Pop:new(Player.x, Player.y - 30, 'Done!', 2)
           if o.obj0 ~= nil then
             local obj = Player.findItemId(o.obj0.id, map.listItems)
             if (obj ~= nil) then obj.isGrowing = false end
@@ -190,6 +195,7 @@ function Player.beginContact(_fixture, Contact, player, other, map)
       if ny == -1 then
         Player.body:setLinearVelocity( 0, -100 )
         Player.score = Player.score + other:getUserData().scorePoints
+        Pop:new(Player.x, Player.y - 30, other:getUserData().scorePoints )
         -- Le joueur a touché l'ennemi par le haut
         for i=#map.listMobs, 1, -1 do
           local m = map.listMobs[i]
@@ -219,7 +225,7 @@ end
 function Player.update(dt)
   Game.score = Player.score
   Game.playerLife = Player.lives
-  
+
   if Player.isDie and love.timer.getTime() - Player.deathTime > Player.respawnDelay then
     if Player.lives == 0 then
       Core.Scene.setScene(Menu)

@@ -1,7 +1,8 @@
 local Game = {debug=false}
+Game.lstsaisons = {"winter", "spring", "summer", "autumn"}
+Game.currentSaison = 1
 Game.levels = {
   currentLevel = "winter",
-  nextLevel = "winter",
 
   house = {
     status = "enter",
@@ -63,24 +64,34 @@ Game.fading.timer = {current=0, delai=15, speed=60}
 Game.score = 0
 Game.playerLife = 3
 
+function Game.getSaison()
+  for n=1, #Game.lstsaisons do
+    if Game.levels.currentLevel == Game.lstsaisons[n] then
+      Game.currentSaison = n
+      return true
+    end    
+  end
+  return false
+end
+--
+
 function Game.setWorldScene(pWorld, Saison, FadeInOut, pEnterOut)
+  print("Saison : " .. Saison)
   Game.tempo = true
   Game.levels.house.status = pEnterOut or "enter"
   --
   Game.WorldLast = Game.WorldCurrent or HouseWorld
   Game.WorldCurrent = pWorld
   --
-  Game.levels.nextLevel = Saison
+  Game.levels.currentLevel = Saison
   --
   Game.fading.reset(FadeInOut)
   --
   Game.switchLevelFading = function(dt)
-    if Game.levels.currentLevel ~= Game.levels.nextLevel then
-      Game.levels.currentLevel = Game.levels.nextLevel
-      if pWorld == SandBox then
-        SandBox.setLevel(Game.levels.nextLevel)
-      end
+    if pWorld == SandBox then
+      SandBox.setLevel(Game.levels.currentLevel)
     end
+--    end
   end
 end
 --
@@ -149,14 +160,13 @@ function Game.fading.update(dt)
     if Game.fading.color[4] == 1 then
       Game.fading.noir = true
       Game.fading.sens = -Game.fading.sens
+      if Game.tempo then
+        Game.switchLevelFading()
+      end
     end
   end
 
   if Game.fading.noir then
-
-    if Game.tempo then
-      Game.switchLevelFading()
-    end
 
     if Game.fading.timer.update(dt) then
       Game.fading.alphaUpdate(dt)
@@ -214,6 +224,8 @@ function Game.update(dt)
     end
     Game.WorldCurrent.update(dt)
   end
+  --
+  Game.getSaison()
 end
 --
 

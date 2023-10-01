@@ -19,6 +19,8 @@ end
 
 function SandBox.setLevel(pLevel)
   --
+  print("SandBox.setLevel(pLevel) : "..pLevel)
+  --
   Game.levels.currentLevel = pLevel
   local level = Game.levels[Game.levels.currentLevel]
   Core.MapManager:setMap(level.maptiled)

@@ -1,4 +1,4 @@
-local HouseWorld = {debug=false}
+local HouseWorld = {debug=true}
 
 HouseWorld.World = Core.ClassWorld.new()
 
@@ -9,12 +9,16 @@ Ground = require("../HouseWorld/Ground")
 FlowerPot = require("../HouseWorld/FlowerPot")
 MissionGui = require("../HouseWorld/MissionGui")
 
+local switchBox = {}
+
 function HouseWorld.load()
   NavPlayer.load()
   Ground.load()
   FlowerPot.load()
   --
   MissionGui.load()
+  --
+  switchBox = {x=50, y=Screen.h-NavPlayer.h, w=NavPlayer.w, h=NavPlayer.h}
 end
 --
 
@@ -22,6 +26,16 @@ function HouseWorld.update(dt)
   NavPlayer.update(dt)
   Ground.update(dt)
   FlowerPot.update(dt)
+  if Game.levels.house.status == "out" then
+    if CheckCollision(NavPlayer.x,NavPlayer.y,NavPlayer.w,NavPlayer.h, switchBox.x,switchBox.y,switchBox.w,switchBox.h) then
+      if Game.lstsaisons[ Game.currentSaison+1 ] then
+        Game.setWorldScene(HouseWorld, Game.lstsaisons[ Game.currentSaison+1 ], false, "enter")
+        Core.Sfx.play("PowerUp")
+      else
+        Core.Scene.setScene(Menu)
+      end
+    end
+  end
   --
   HouseWorld.World:update(dt)
 end
@@ -43,6 +57,8 @@ function HouseWorld.draw()
 
   if HouseWorld.debug then
     love.graphics.print("Scene HouseWorld",10,10)
+    --love.graphics.rectangle("line", switchBox.x, switchBox.y, switchBox.w, switchBox.h)
+    love.graphics.print("currentLevel : "..Game.levels.currentLevel, 10, 20)
   end
 end
 --

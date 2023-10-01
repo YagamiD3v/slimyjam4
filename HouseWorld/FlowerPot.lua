@@ -7,6 +7,36 @@ local NoHappy = love.graphics.newImage("Assets/HouseWorld/FlowerPot_NoHappy.png"
 local imgW, imgH = Happy:getDimensions()
 local imgOx, imgOy = imgW/2, imgH/2
 
+local font = love.graphics.newFont(28)
+
+local listText = {}
+
+local completed = {}
+
+local nextSaison = {}
+
+local MissionText = {}
+
+local function generateText(pText)
+  local text = {}
+  text.data = love.graphics.newText(font, pText)
+  text.w, text.h = text.data:getDimensions()
+  text.ox, text.oy = text.w/2, text.h/2
+  text.xDef, text.yDef = 0, 0
+  text.x, text.y = 0, 0
+  text.radian = 0
+
+  function text.update(dt)
+    text.radian = text.radian + 30 * dt % math.rad(360)
+    text.y = text.yDef + (math.sin(text.radian) * 2)
+  end
+
+  table.insert(listText, text)
+
+  return text
+end
+--
+
 
 function FlowerPot.newGround(x)
   local y = Screen.h-imgOy
@@ -26,6 +56,11 @@ end
 --
 
 function FlowerPot.load()
+
+  completed = generateText("! Succes !")
+  nextSaison = generateText("Go to next Saison".."\n".."\n"..">>        <<")
+  MissionText = generateText("     Enter To".."\n".."The Flower Pot")
+
   lstFlowerPots = {}
 
   -- pot n°1
@@ -34,6 +69,19 @@ end
 --
 
 function FlowerPot.update(dt)
+  for _, text in ipairs (listText) do
+    text.update(dt)
+  end
+  --
+  for n=1, #lstFlowerPots do
+    local pot = lstFlowerPots[n]
+    if Game.levels.house.status == "enter" then
+      pot.image = NoHappy
+    else
+      pot.image = Happy
+    end
+  end
+  --
 end
 --
 
@@ -51,6 +99,12 @@ function FlowerPot.draw()
     end
     --
     love.graphics.draw(pot.image, pot.x, pot.y, 0, 1, 1, pot.ox, pot.oy)
+    if pot.image == Happy then
+      love.graphics.draw(completed.data, pot.x, (pot.y-(pot.h*1.5)) + completed.y, 0, 1, 1, completed.ox, completed.oy)
+      love.graphics.draw(nextSaison.data, nextSaison.ox, (Screen.h - NavPlayer.h) + nextSaison.y, 0, 1, 1, nextSaison.ox, nextSaison.oy)
+    else
+      love.graphics.draw(MissionText.data, pot.x, (pot.y-(pot.h*1.5)) + MissionText.y, 0, 1, 1, MissionText.ox, MissionText.oy)
+    end
   end
 end
 --

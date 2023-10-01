@@ -1,4 +1,4 @@
-local Player = {debug=false}
+local Player = {debug=true}
 
 local decX = 0
 local decY = -4
@@ -322,6 +322,11 @@ function Player.keypressed(k)
     Player.body:applyLinearImpulse( 0, -15 )
     Player.isOnGround = false
     Player.Anims:setAnim("Jump")
+  end
+  if Player.debug then
+    if k == "delete" then
+      Game.setWorldScene(HouseWorld, Game.levels.currentLevel, false, "out")
+    end
   end
 end
 --

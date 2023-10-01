@@ -19,7 +19,10 @@ function NavPlayer.beginContact(_fixture, Contact, navplayer, other)
     local nx, ny = Contact:getNormal()
     if ny == 1 then -- par dessus
       if Game.levels.house.status == "enter" then
-        Game.setWorldScene(SandBox, Game.levels.currentLevel)
+        --
+        Game.setWorldScene(SandBox, Game.levels.currentLevel, false, "enter")
+        Core.Sfx.play("PowerUp")
+        --
         NavPlayer.Anims:setAnim("Jump")
         NavPlayer.direction.vx = -1
         NavPlayer.y = NavPlayer.y - 1

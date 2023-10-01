@@ -60,6 +60,9 @@ Game.fading.noir=false
 Game.fading.blanc=false
 Game.fading.timer = {current=0, delai=15, speed=60}
 
+Game.score = 0
+Game.playerLife = 3
+
 function Game.setWorldScene(pWorld, Saison, FadeInOut, pEnterOut)
   Game.tempo = true
   Game.levels.house.status = pEnterOut or "enter"
@@ -81,7 +84,7 @@ end
 --
 
 function Game.fading.express()
-  Game.fading.reset(false, 120)
+  Game.fading.reset(false, 180)
   Game.fastTempo = true
 end
 --
@@ -186,6 +189,8 @@ end
 function Game.load()
   Game.tempo = false
   Game.fastTempo = false
+  Game.score = 0
+  Game.playerLife = 3
   Game.switchLevelFading = function() end
   --
   HouseWorld.load()

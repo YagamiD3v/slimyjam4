@@ -86,7 +86,9 @@ function TiledManager.newMap(pfile)
           )
         else
           if (item.isDone) then
-            love.graphics.print("done", item.x, item.y-40)
+            love.graphics.setColor(1,0,0)
+            love.graphics.print("Done!", item.x - 9, item.y-20)
+            love.graphics.setColor(1,1,1)
           end
           if item.type == 'plant' then
 

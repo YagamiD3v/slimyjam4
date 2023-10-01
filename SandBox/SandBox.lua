@@ -7,6 +7,7 @@ local Gui = require('../SandBox/Gui')
 MobMushroom = require("../Entity/MobMushroom")
 MobBee = require("../Entity/MobBee")
 Player = require("../Entity/Player")
+Pop = require("../Entity/Pop")
 
 
 function SandBox.newLevel(pLevel)
@@ -45,6 +46,7 @@ function SandBox.update(dt)
   Core.MapManager.current.world:update(dt)
   Gui.update(dt)
   --
+  Pop:updateAll(dt)
   Player.update(dt)
 end
 --
@@ -52,6 +54,7 @@ end
 
 function SandBox.draw()
   Core.MapManager.current.draw()
+  Pop:drawAll(dt)
   Player.draw()
 
   Gui.draw(dt)
@@ -64,9 +67,7 @@ function SandBox.keypressed(k)
 end
 --
 
-
 function SandBox.mousepressed(x,y,button)
 end
---
 
 return SandBox

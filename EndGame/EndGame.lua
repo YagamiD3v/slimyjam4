@@ -13,6 +13,9 @@ local drawSelect = true
 local background = love.graphics.newImage("Assets/EndGame/EndGame.png")
 
 local mouse = {x=Screen.ox, y=Screen.oy, w=1, h=1}
+
+local particules = nil
+
 function mouse.AABB()
   for n=1, #listButtons do
     local button = listButtons[n]
@@ -104,6 +107,8 @@ end
 
 function EndGame.load()
   EndGame.newButton(Screen.oy + 140, "Q U I T", function() love.event.quit() end)
+  --
+  particules = Core.Particules.new(Screen.cx, Screen.h)
 end
 --
 
@@ -113,6 +118,8 @@ function EndGame.update(dt)
   end
   --
   mouse.update(dt)
+  --
+  particules:update(dt)
 end
 --
 
@@ -133,6 +140,9 @@ function EndGame.draw()
     end
   end
   --
+  
+  particules:draw()
+  
   if EndGame.debug then
     love.graphics.print("Scene EndGame",10,10)
   end

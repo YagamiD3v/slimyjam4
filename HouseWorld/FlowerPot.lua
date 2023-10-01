@@ -29,6 +29,18 @@ local function generateText(pText)
   function text.update(dt)
     text.radian = text.radian + 30 * dt % math.rad(360)
     text.y = text.yDef + (math.sin(text.radian) * 2)
+    --
+    if text == nextSaison then
+      if Game.lstsaisons[Game.currentSaison+1] then
+        text.data:set("Go to "..Game.lstsaisons[Game.currentSaison+1].."\n".."\n"..">>        <<")
+      else
+        text.data:set("Congrats Go Here !".."\n".."\n"..">>        <<")
+      end
+    end
+    if text.particules then
+      text.particules:update(dt)
+    end
+    --
   end
 
   table.insert(listText, text)
@@ -58,8 +70,11 @@ end
 function FlowerPot.load()
 
   completed = generateText("! Succes !")
-  nextSaison = generateText("Go to next Saison".."\n".."\n"..">>        <<")
+  nextSaison = generateText("Go to ".."\n".."\n"..">>        <<")
   MissionText = generateText("     Enter To".."\n".."The Flower Pot")
+
+  nextSaison.particules = Core.Particules.new(80, Screen.h)
+  MissionText.particules = Core.Particules.new(550, Screen.h-imgH)
 
   lstFlowerPots = {}
 
@@ -102,8 +117,11 @@ function FlowerPot.draw()
     if pot.image == Happy then
       love.graphics.draw(completed.data, pot.x, (pot.y-(pot.h*1.5)) + completed.y, 0, 1, 1, completed.ox, completed.oy)
       love.graphics.draw(nextSaison.data, nextSaison.ox, (Screen.h - NavPlayer.h) + nextSaison.y, 0, 1, 1, nextSaison.ox, nextSaison.oy)
+      --
+      nextSaison.particules:draw()
     else
       love.graphics.draw(MissionText.data, pot.x, (pot.y-(pot.h*1.5)) + MissionText.y, 0, 1, 1, MissionText.ox, MissionText.oy)
+      MissionText.particules:draw()
     end
   end
 end

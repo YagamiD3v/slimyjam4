@@ -17,6 +17,11 @@ function TiledManager.newMap(pfile)
 
     for i=#self.listItems, 1, -1 do 
       local item = self.listItems[i]
+
+      if item.particules then
+        item.particules:update(dt)
+      end
+
       if not item.visible then
         table.remove(self.listItems, i)
         goto continue -- simulate continue
@@ -76,6 +81,11 @@ function TiledManager.newMap(pfile)
     -- Affichage des items
     for _, item in ipairs(map.listItems) do 
       --local item = map.listItems[i]
+      
+      if item.particules then
+        item.particules:draw()
+      end
+      
       if item.shapeType == "rectangle" and item.visible then
         if type(map.Animations[item.name]) == "table" then
           love.graphics.draw(
@@ -350,6 +360,10 @@ function TiledManager.loadMapItems(map)
           item.obj2 = object.properties['obj2']
         end
 
+        if object.name == "pot" or object.name == "mushroom" or object.name == "droplet" or object.name == "seed"then
+          item.particules = Core.Particules.new(object.x, object.y)
+        end
+
         if object.properties['type'] ~= nil then
           item.type = object.properties['type']
           if item.type == "plant" then
@@ -606,7 +620,7 @@ function TiledManager.loadMapEvents(map)
   -- kinematic bodies do not react to forces and only collide with dynamic bodies.
   -- use fixture:setSensor(true) for disable collisions
   -- for detect enter need CallBack functiosn of World. (look ClassWorld.lua)
-  
+
   for n=1, #map.objects do
     local object = map.objects[n]
     if object.layerName == "Events" then

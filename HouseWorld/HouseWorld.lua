@@ -32,7 +32,7 @@ function HouseWorld.update(dt)
         Game.setWorldScene(HouseWorld, Game.lstsaisons[ Game.currentSaison+1 ], false, "enter")
         Core.Sfx.play("PowerUp")
       else
-        Core.Scene.setScene(Menu)
+        Core.Scene.setScene(EndGame, true)
       end
     end
   end

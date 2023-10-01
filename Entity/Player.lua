@@ -112,6 +112,10 @@ function Player.beginContact(_fixture, Contact, player, other, map)
     end
 
     if other:getUserData().name == "mushroom" or other:getUserData().name == "droplet" or other:getUserData().name == "seed" then
+      if other:getUserData().particules then
+        other:getUserData().particules = nil
+      end
+      --
       Player.score = Player.score + other:getUserData().scorePoints
       table.insert(Player.inventory,other:getUserData())
       other:getUserData().visible = false
@@ -139,6 +143,11 @@ function Player.beginContact(_fixture, Contact, player, other, map)
             if inv.id == dep.id then
               o.isDone = true
               Pop:new(Player.x, Player.y - 30, 'Done!', 2)
+
+              if other:getUserData().particules then
+                other:getUserData().particules = nil
+              end
+
               table.remove(Player.inventory, i)
               break
             end
@@ -169,6 +178,11 @@ function Player.beginContact(_fixture, Contact, player, other, map)
 
         if o.canHarvest then -- le pot peut être récolté (automne)
           o.isDone = true
+
+          if other:getUserData().particules then
+            other:getUserData().particules = nil
+          end
+
           Pop:new(Player.x, Player.y - 30, 'Done!', 2)
           if o.obj0 ~= nil then
             local obj = Player.findItemId(o.obj0.id, map.listItems)

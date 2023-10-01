@@ -10,6 +10,7 @@ io.stdout:setvbuf("no")
 
 -- settings
 love.graphics.setDefaultFilter( 'nearest', 'nearest' )
+love.audio.setVolume(0.5)
 
 -- requires Core modules
 require("Core/loader")

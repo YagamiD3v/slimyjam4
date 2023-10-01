@@ -1,4 +1,4 @@
-local AnimPlayer = {debug=true}
+local AnimPlayer = {debug=false}
 
 function AnimPlayer.timerUpdate(self, dt)
   local anim = self[self.currentAnim]

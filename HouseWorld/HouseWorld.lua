@@ -1,4 +1,4 @@
-local HouseWorld = {debug=true}
+local HouseWorld = {debug=false}
 
 HouseWorld.World = Core.ClassWorld.new()
 

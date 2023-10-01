@@ -1,4 +1,4 @@
-local Ground = {debug=true}
+local Ground = {debug=false}
 
 local lstGround = {}
 

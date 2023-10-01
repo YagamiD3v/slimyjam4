@@ -1,4 +1,4 @@
-local Player = {debug=true}
+local Player = {debug=false}
 
 local decX = 0
 local decY = -4

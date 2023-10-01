@@ -16,6 +16,8 @@ require("Core/loader")
 
 -- Many Globals Scenes used (Intro/Menu/Game/etc.) :
 Menu = require("Menu/Menu")
+EndGame = require("EndGame/EndGame")
+GameOver = require("GameOver/GameOver")
 Game = require("Game/Game")
 SandBox = require("SandBox/SandBox")
 HouseWorld = require("HouseWorld/HouseWorld")
@@ -25,6 +27,8 @@ function love.load()
   Core.Scene.newScene(SandBox, "SandBox")
   Core.Scene.newScene(HouseWorld, "HouseWorld")
   Core.Scene.newScene(Menu, "Menu")
+  Core.Scene.newScene(EndGame, "EndGame")
+  Core.Scene.newScene(GameOver, "GameOver")
   --
   Core.Scene.setScene(Menu)
   --

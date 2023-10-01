@@ -10,7 +10,7 @@ return {
   tilewidth = 16,
   tileheight = 16,
   nextlayerid = 11,
-  nextobjectid = 138,
+  nextobjectid = 141,
   properties = {},
   tilesets = {
     {
@@ -181,7 +181,7 @@ return {
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 325, 326, 327, 325, 326, 327, 325, 326, 327, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 333, 334, 335, 333, 334, 335, 333, 334, 335, 0, 0, 0, 0, 0, 203, 205, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 341, 342, 343, 341, 342, 343, 341, 342, 343, 0, 0, 0, 203, 205, 217, 219, 68, 0, 0, 0,
-        0, 0, 0, 0, 0, 192, 193, 0, 0, 192, 193, 0, 0, 192, 193, 0, 0, 192, 193, 0, 0, 192, 193, 0, 0, 192, 193, 0, 930, 931, 205, 203, 204, 205, 203, 204, 205, 203, 204, 205, 203, 205, 1051, 1052, 231, 233, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 192, 193, 0, 0, 0, 0, 0, 0, 192, 193, 0, 0, 0, 0, 0, 0, 192, 193, 0, 0, 0, 0, 0, 930, 931, 205, 203, 204, 205, 203, 204, 205, 203, 204, 205, 203, 205, 1051, 1052, 231, 233, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 941, 942, 219, 217, 218, 219, 217, 218, 219, 217, 218, 219, 217, 219, 1020, 1031, 0, 0, 0, 0, 0, 208,
         133, 134, 135, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 912, 921, 1020, 231, 232, 233, 1031, 1018, 1019, 1031, 1029, 1030, 1018, 1019, 0, 0, 0, 0, 0, 0, 0, 0,
         147, 148, 149, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1020, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 138, 0,
@@ -376,7 +376,7 @@ return {
       id = 6,
       name = "ColliderShape",
       class = "",
-      visible = false,
+      visible = true,
       opacity = 1,
       offsetx = 0,
       offsety = 0,
@@ -787,22 +787,6 @@ return {
           }
         },
         {
-          id = 57,
-          name = "",
-          type = "",
-          shape = "rectangle",
-          x = 144,
-          y = 400,
-          width = 32,
-          height = 9,
-          rotation = 0,
-          visible = true,
-          properties = {
-            ["friction"] = 0.8,
-            ["isGround"] = true
-          }
-        },
-        {
           id = 58,
           name = "",
           type = "",
@@ -819,43 +803,11 @@ return {
           }
         },
         {
-          id = 59,
-          name = "",
-          type = "",
-          shape = "rectangle",
-          x = 272,
-          y = 400,
-          width = 32,
-          height = 9,
-          rotation = 0,
-          visible = true,
-          properties = {
-            ["friction"] = 0.8,
-            ["isGround"] = true
-          }
-        },
-        {
           id = 60,
           name = "",
           type = "",
           shape = "rectangle",
           x = 336,
-          y = 400,
-          width = 32,
-          height = 9,
-          rotation = 0,
-          visible = true,
-          properties = {
-            ["friction"] = 0.8,
-            ["isGround"] = true
-          }
-        },
-        {
-          id = 61,
-          name = "",
-          type = "",
-          shape = "rectangle",
-          x = 400,
           y = 400,
           width = 32,
           height = 9,
@@ -1130,6 +1082,38 @@ return {
           x = 480,
           y = 352,
           width = 144,
+          height = 16,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["friction"] = 0.8,
+            ["isGround"] = true
+          }
+        },
+        {
+          id = 138,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 368,
+          y = 96,
+          width = 32,
+          height = 16,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["friction"] = 0.8,
+            ["isGround"] = true
+          }
+        },
+        {
+          id = 139,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 368,
+          y = 80,
+          width = 16,
           height = 16,
           rotation = 0,
           visible = true,
@@ -1414,7 +1398,7 @@ return {
           name = "coin",
           type = "",
           shape = "rectangle",
-          x = 368,
+          x = 384,
           y = 368,
           width = 16,
           height = 16,
@@ -1431,7 +1415,7 @@ return {
           name = "coin",
           type = "",
           shape = "rectangle",
-          x = 384,
+          x = 400,
           y = 368,
           width = 16,
           height = 16,
@@ -1448,7 +1432,7 @@ return {
           name = "coin",
           type = "",
           shape = "rectangle",
-          x = 464,
+          x = 448,
           y = 384,
           width = 16,
           height = 16,

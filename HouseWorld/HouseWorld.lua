@@ -2,7 +2,12 @@ local HouseWorld = {debug=true}
 
 HouseWorld.World = Core.ClassWorld.new()
 
-local background = love.graphics.newImage("Assets/HouseWorld/background_game.png")
+--local background = love.graphics.newImage("Assets/HouseWorld/background_game.png")
+local bg={}
+bg.winter = love.graphics.newImage("Assets/HouseWorld/winter.png")
+bg.spring = love.graphics.newImage("Assets/HouseWorld/spring.png")
+bg.summer = love.graphics.newImage("Assets/HouseWorld/summer.png")
+bg.autumn = love.graphics.newImage("Assets/HouseWorld/autumn.png")
 
 NavPlayer = require("../Entity/NavPlayer")
 Ground = require("../HouseWorld/Ground")
@@ -43,7 +48,7 @@ end
 
 function HouseWorld.draw()
 
-  love.graphics.draw(background)
+  love.graphics.draw(bg[Game.levels.currentLevel])
   --
   Ground.draw()
   FlowerPot.draw()

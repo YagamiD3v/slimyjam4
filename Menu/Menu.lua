@@ -143,7 +143,7 @@ end
 --
 
 function Menu.keypressed(k)
-  if k == "w" or k == "up" then
+  if k == "z" or k == "w" or k == "up" then
     currentBox = currentBox - 1 
   elseif k == "s" or k == "down" then
     currentBox = currentBox + 1 

@@ -262,9 +262,12 @@ function Player.update(dt)
 
   Player.vx, Player.vy = Player.body:getLinearVelocity()
 
+  local left = love.keyboard.isDown("left") or love.keyboard.isDown("a") or love.keyboard.isDown("q")
+  local right = love.keyboard.isDown("right") or love.keyboard.isDown("d")
+
   if not Player.isDie then
     -- move
-    if love.keyboard.isDown("left") then
+    if left then
       if Player.vx > -Player.maxSpeed then
         Player.body:applyForce( -35, 0 )
         Player.direction.vx = -1
@@ -272,7 +275,7 @@ function Player.update(dt)
           Player.Anims:setAnim("Run")
         end
       end
-    elseif love.keyboard.isDown("right") then
+    elseif right then
       if Player.vx < Player.maxSpeed then
         Player.body:applyForce( 35, 0 )
         Player.direction.vx = 1
@@ -287,7 +290,7 @@ function Player.update(dt)
     end
 
     -- Si la touche de déplacement n'est pas enfoncée, arrêtez le deplacement
-    if not (love.keyboard.isDown("right") or love.keyboard.isDown("left")) then
+    if not (left or right) then
       local x, y = Player.body:getLinearVelocity()
       Player.body:setLinearVelocity(x/1.01, y)
     end
@@ -337,7 +340,7 @@ end
 --
 
 function Player.keypressed(k)
-  if k == "up" and Player.isOnGround then
+  if (k == "up" or k == "w" or k == "z") and Player.isOnGround then
     Player.body:applyLinearImpulse( 0, -15 )
     Player.isOnGround = false
     Player.Anims:setAnim("Jump")

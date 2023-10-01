@@ -7,6 +7,24 @@ local NoHappy = love.graphics.newImage("Assets/HouseWorld/FlowerPot_NoHappy.png"
 local imgW, imgH = Happy:getDimensions()
 local imgOx, imgOy = imgW/2, imgH/2
 
+local flower={}
+flower.winter = {
+  enter=love.graphics.newImage("Assets/HouseWorld/flower_winter_enter.png"),
+  out=love.graphics.newImage("Assets/HouseWorld/flower_winter_out.png")
+  }
+flower.spring = {
+  enter=love.graphics.newImage("Assets/HouseWorld/flower_spring_enter.png"),
+  out=love.graphics.newImage("Assets/HouseWorld/flower_spring_out.png")
+  }
+flower.summer = {
+  enter=love.graphics.newImage("Assets/HouseWorld/flower_summer_enter.png"),
+  out=love.graphics.newImage("Assets/HouseWorld/flower_summer_out.png")
+  }
+flower.autumn = {
+  enter=love.graphics.newImage("Assets/HouseWorld/flower_autumn_enter.png"),
+  out=love.graphics.newImage("Assets/HouseWorld/flower_autumn_out.png")
+  }
+
 local font = love.graphics.newFont(28)
 
 local listText = {}
@@ -114,15 +132,19 @@ function FlowerPot.draw()
     end
     --
     love.graphics.draw(pot.image, pot.x, pot.y, 0, 1, 1, pot.ox, pot.oy)
+    local flowerdraw = flower[Game.levels.currentLevel][Game.levels.house.status]
+    love.graphics.draw(flowerdraw, pot.x, pot.y-flowerdraw:getHeight(), 0, 1, 1, pot.ox, pot.oy)
+    --
     if pot.image == Happy then
-      love.graphics.draw(completed.data, pot.x, (pot.y-(pot.h*1.5)) + completed.y, 0, 1, 1, completed.ox, completed.oy)
+      love.graphics.draw(completed.data, pot.x, (pot.y-(flowerdraw:getHeight() + completed.h)) + completed.y, 0, 1, 1, completed.ox, completed.oy)
       love.graphics.draw(nextSaison.data, nextSaison.ox, (Screen.h - NavPlayer.h) + nextSaison.y, 0, 1, 1, nextSaison.ox, nextSaison.oy)
       --
       nextSaison.particules:draw()
     else
-      love.graphics.draw(MissionText.data, pot.x, (pot.y-(pot.h*1.5)) + MissionText.y, 0, 1, 1, MissionText.ox, MissionText.oy)
+      love.graphics.draw(MissionText.data, pot.x, (pot.y-(flowerdraw:getHeight() + MissionText.h)) + MissionText.y, 0, 1, 1, MissionText.ox, MissionText.oy)
       MissionText.particules:draw()
     end
+    
   end
 end
 --

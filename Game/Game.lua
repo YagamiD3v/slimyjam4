@@ -76,7 +76,7 @@ function Game.setWorldScene(pWorld, Saison, FadeInOut, pEnterOut)
 end
 --
 
-function Game.fading.reset(FadeInOut)
+function Game.fading.reset(FadeInOut, pSpeed)
   Game.fading.timer.current = 0
   --
   if not FadeInOut then
@@ -90,7 +90,7 @@ function Game.fading.reset(FadeInOut)
     Game.fading.noir=true
     Game.fading.blanc=false
   end
-  Game.fading.speed = 2
+  Game.fading.speed = pSpeed
 end
 --
 

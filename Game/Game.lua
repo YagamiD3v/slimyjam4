@@ -51,73 +51,130 @@ Game.WorldCurrent = nil
 Game.WorldLast = nil
 
 Game.fading = {0,0,0,0}
-Game.fadeSens = 1
+Game.fading.sens = 1
+Game.fading.noir=false
+Game.fading.blanc=false
+Game.fading.timer = {current=0, delai=15, speed=60}
 
-function Game.setWorldScene(pWorld, Saison, pEnterOut)
+function Game.setWorldScene(pWorld, Saison, FadeInOut, pEnterOut)
   Game.tempo = true
   Game.levels.house.status = pEnterOut or "enter"
   --
   Game.WorldLast = Game.WorldCurrent or HouseWorld
+  Game.WorldCurrent = pWorld
+  --
   Game.levels.nextLevel = Saison
   --
-  if Game.levels.house.status == "enter" then 
-    Game.fading = {0,0,0,0}
-  else
-    Game.fading = {0,0,0,0}
-  end
+  Game.fading.reset(FadeInOut)
   --
-  Game.action = function(dt)
-    Game.WorldCurrent = pWorld
-    Game.tempo = false
+  Game.switchLevelFading = function(dt)
     Game.levels.currentLevel = Game.levels.nextLevel
     if pWorld == SandBox then
-      SandBox.setLevel(Saison)
+      SandBox.setLevel(Game.levels.nextLevel)
     end
   end
 end
 --
 
-function Game.fadingDraw(x,y)
-  love.graphics.setColor(Game.fading)
+function Game.fading.reset(FadeInOut)
+  Game.fading.timer.current = 0
+  --
+  if not FadeInOut then
+    Game.fading.color = {0,0,0,0}
+    Game.fading.sens = 1
+    Game.fading.noir=false
+    Game.fading.blanc=false
+  else
+    Game.fading.color = {0,0,0,1}
+    Game.fading.sens = -1
+    Game.fading.noir=true
+    Game.fading.blanc=false
+  end
+  Game.fading.speed = 2
+end
+--
+
+function Game.fading.timer.update(dt)
+  local t = Game.fading.timer
+  --
+  t.current = t.current + (t.speed * dt)
+  if t.current >= t.delai then
+    return true
+  end
+  return false
+end
+--
+
+function Game.fading.alphaUpdate(dt)
+  -- alpha fading :
+  Game.fading.color[4] = Game.fading.color[4] + (Game.fading.speed * Game.fading.sens * dt)
+  if Game.fading.color[4] < 0 then Game.fading.color[4] = 0 end
+  if Game.fading.color[4] > 1 then Game.fading.color[4] = 1 end
+end
+--
+
+function Game.fading.update(dt)
+  --[[
+      start to : 
+      Game.fading = {0,0,0,0}
+      Game.fadeSens = 1
+      ]]--
+
+  if not Game.fading.noir then
+    Game.fading.alphaUpdate(dt)
+    if Game.fading.color[4] == 1 then
+      Game.fading.noir = true
+      Game.fading.sens = -Game.fading.sens
+      Game.switchLevelFading()
+    end
+  end
+
+  if Game.fading.noir then
+    if Game.fading.timer.update(dt) then
+      Game.fading.alphaUpdate(dt)
+      if not Game.fading.blanc then
+        if Game.fading.color[4] == 0 then
+          Game.fading.blanc = true
+        end
+      end
+
+      if Game.fading.blanc and Game.fading.noir then
+        Game.tempo = false
+      end
+
+    end
+  end
+
+end
+--
+
+function Game.fading.draw()
+  if Game.fading.noir then
+    Game.WorldCurrent.draw()
+  else
+    Game.WorldLast.draw()
+  end
+
+  love.graphics.setColor(Game.fading.color)
   love.graphics.rectangle("fill", 0, 0, Screen.w, Screen.h)
-  love.graphics.setColor(1,1,1,1)    
+  love.graphics.setColor(1,1,1,1)  
 end
 --
 
 function Game.load()
   Game.tempo = false
-  Game.action = function() end
-  Game.animTimer = {
-    current=0,
-    delai=50,
-    speed=60,
-    update=function(self,dt)
-      self.current = self.current + (self.speed * dt)
-      if self.current >= self.delai and Game.fading[4] == 1 then
-        self.current = 0
-        Game.action()
-      end
-
-    end
-  }
+  Game.switchLevelFading = function() end
   --
   HouseWorld.load()
   SandBox.load()
   --
-  Game.setWorldScene(HouseWorld, "winter")
+  Game.setWorldScene(HouseWorld, "winter", "SkipBlack")
 end
 --
 
 function Game.update(dt)
   if Game.tempo then
-
-    Game.animTimer:update(dt)
-
-    -- alpha fading :
-    Game.fading[4] = Game.fading[4] + (2 * Game.fadeSens * dt)
-    if Game.fading[4] < 0 then Game.fading[4] = 0 end
-    if Game.fading[4] > 1 then Game.fading[4] = 1 end
-
+    Game.fading.update(dt)
   else
     Game.WorldCurrent.update(dt)
   end
@@ -127,8 +184,7 @@ end
 function Game.draw()
 
   if Game.tempo then
-    Game.WorldLast.draw()
-    Game.fadingDraw()
+    Game.fading.draw()
   else
     Game.WorldCurrent.draw()
   end

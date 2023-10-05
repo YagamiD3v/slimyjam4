@@ -36,6 +36,7 @@ end
 
 function Scene.loadScene()
   Screen.load()
+  --
   if currentScene.load then
     currentScene.load()
   end
@@ -43,6 +44,10 @@ end
 --
 
 function Scene.update(dt)
+  if Core.Controller then
+    Core.Controller.update(dt)
+  end
+  --
   if currentScene.update then
     currentScene.update(dt)
   end
@@ -53,11 +58,16 @@ end
 --
 
 function Scene.draw()
+  --
   if currentScene.draw then
     currentScene.draw()
   end
   if Scene.debug then
-    love.graphics.print("Scene : "..Scene.current,350,10)
+    love.graphics.print("Scene : "..Scene.current,Screen.ox-10,10)
+  end
+  --
+  if Core.Controller then
+    Core.Controller.draw()
   end
 end
 --
@@ -65,6 +75,28 @@ end
 function Scene.keypressed(key)
   if currentScene.keypressed then
     currentScene.keypressed(key)
+  end
+end
+--
+
+function Scene.keyreleased(key)
+  if currentScene.keypressed then
+    currentScene.keypressed(key)
+  end
+end
+--
+
+function Scene.gamepadpressed( joystick, button )
+  if currentScene.gamepadpressed then
+    currentScene.gamepadpressed( joystick, button )
+  end
+end
+--
+
+
+function Scene.gamepadreleased( joystick, button )
+  if currentScene.gamepadreleased then
+    currentScene.gamepadreleased( joystick, button )
   end
 end
 --

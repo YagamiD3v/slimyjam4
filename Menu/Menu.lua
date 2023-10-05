@@ -143,9 +143,9 @@ end
 --
 
 function Menu.keypressed(k)
-  if k == "z" or k == "w" or k == "up" then
+  if Core.Controller.isKeyBoardPressed("nav_up", k) then
     currentBox = currentBox - 1 
-  elseif k == "s" or k == "down" then
+  elseif Core.Controller.isKeyBoardPressed("nav_down", k) then
     currentBox = currentBox + 1 
   end
   --
@@ -155,12 +155,33 @@ function Menu.keypressed(k)
     currentBox = #listButtons
   end
   --
-  if k == "return" then
+  if Core.Controller.isKeyBoardPressed("nav_valid", k) then 
     if listButtons[currentBox] then
       listButtons[currentBox].action()
     end
   end
 
+end
+--
+
+function Menu.gamepadpressed(joystik, button)
+  if Core.Controller.isGamePadPressed("nav_up", button) then
+    currentBox = currentBox - 1 
+  elseif Core.Controller.isGamePadPressed("nav_down", button) then
+    currentBox = currentBox + 1 
+  end
+  --
+  if currentBox > #listButtons then
+    currentBox = 1
+  elseif currentBox < 1 then
+    currentBox = #listButtons
+  end
+  --
+  if Core.Controller.isGamePadPressed("nav_valid", button) then 
+    if listButtons[currentBox] then
+      listButtons[currentBox].action()
+    end
+  end
 end
 --
 

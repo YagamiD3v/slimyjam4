@@ -258,7 +258,19 @@ function Game.keypressed(k)
 end
 --
 
+function Game.gamepadpressed(joystick, button)
+  if not Game.tempo then
+    if Game.WorldCurrent.gamepadpressed then
+      Game.WorldCurrent.gamepadpressed(joystick, button)
+    end
+  end
+end
+--
+
 function Game.mousepressed(x,y,button)
+  if Game.WorldCurrent.mousepressed then
+    Game.WorldCurrent.mousepressed(x,y,button)
+  end
 end
 --
 

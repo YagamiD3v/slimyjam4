@@ -14,6 +14,15 @@ function NavPlayer.reload()
 end
 --
 
+function NavPlayer.Jump()
+  if NavPlayer.isOnGround then
+    NavPlayer.body:applyLinearImpulse( 0, -15 )
+    NavPlayer.isOnGround = false
+    NavPlayer.Anims:setAnim("Jump")
+  end
+end
+--
+
 function NavPlayer.beginContact(_fixture, Contact, navplayer, other)
   if other:getUserData().name == "FlowerPot" then
     local nx, ny = Contact:getNormal()
@@ -69,9 +78,9 @@ function NavPlayer.update(dt)
   NavPlayer.body:setAngle(0)
 
   NavPlayer.vx, NavPlayer.vy = NavPlayer.body:getLinearVelocity()
-  
-  local left = love.keyboard.isDown("left") or love.keyboard.isDown("a") or love.keyboard.isDown("q")
-  local right = love.keyboard.isDown("right") or love.keyboard.isDown("d")
+
+  local left = Core.Controller.isDown("left")
+  local right = Core.Controller.isDown("right")
 
   -- move
   if left then
@@ -131,15 +140,15 @@ end
 --
 
 function NavPlayer.keypressed(k)
-  if (k == "up" or k == "w" or k == "z") and NavPlayer.isOnGround then
-    NavPlayer.body:applyLinearImpulse( 0, -15 )
-    NavPlayer.isOnGround = false
-    NavPlayer.Anims:setAnim("Jump")
+  if Core.Controller.isKeyBoardPressed("jump", k) then
+    NavPlayer.Jump()
   end
-  if NavPlayer.debug then
-    if k == "down" and NavPlayer.isOnGround then
-      NavPlayer.Anims:setAnim("Hurt")
-    end
+end
+--
+
+function NavPlayer.gamepadpressed(joystick, button)
+  if Core.Controller.isGamePadPressed("jump", button) then
+    NavPlayer.Jump()
   end
 end
 --

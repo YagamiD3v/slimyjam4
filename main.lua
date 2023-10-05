@@ -41,7 +41,7 @@ function love.load()
   --
 --  love.window.setFullscreen(true)
   love.window.maximize()
-
+  
   love.mouse.setVisible(false)
 end
 --
@@ -65,21 +65,12 @@ end
 
 function love.keypressed(key)
   Core.Scene.keypressed(key)
+  if key == "escape" then
+    love.event.quit()
+  end
 end
 --
 
 function love.mousepressed(x,y,button)
   Core.Scene.mousepressed(x,y,button)
 end
---
-
-function love.gamepadpressed( joystick, button )
-  Core.Scene.gamepadpressed( joystick, button )
-end
---
-
-
-function love.gamepadreleased( joystick, button )
-  Core.Scene.gamepadreleased( joystick, button )
-end
---

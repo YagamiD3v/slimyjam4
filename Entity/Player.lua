@@ -69,7 +69,6 @@ function Player.powerUp()
   Player.lives = Player.lives + 1
   Core.Sfx.play("PowerUp")
 end
---
 
 function Player.changeLevelIfAllPotAreDone(listItem)
   for _, item in ipairs(listItem) do
@@ -81,7 +80,6 @@ function Player.changeLevelIfAllPotAreDone(listItem)
   -- All pots are done
   Game.setWorldScene(HouseWorld, Game.levels.currentLevel, false, "out")
 end
---
 
 function Player.findItemId(idItem, listItem)
   for _, item in ipairs(listItem) do
@@ -89,129 +87,6 @@ function Player.findItemId(idItem, listItem)
   end
 end
 --
-
-function Player.Jump()
-  if Player.isOnGround then
-    Player.body:applyLinearImpulse( 0, -15 )
-    Player.isOnGround = false
-    Player.Anims:setAnim("Jump")
-  end
-end
---
-
-function Player.update(dt)
-  Game.score = Player.score
-  Game.playerLife = Player.lives
-
-  if Player.isDie and love.timer.getTime() - Player.deathTime > Player.respawnDelay then
-    if Player.lives == 0 then
-      Core.Scene.setScene(Menu)
-    else
-      Game.fading.express() -- le fading quand le joueur est touché
-      Player.reload()
-    end
-  end
-
-
-  Player.Anims:update(dt)
-  --
-
-  Player.body:setAngle(0)
-
-  Player.vx, Player.vy = Player.body:getLinearVelocity()
-
-  local left = Core.Controller.isDown("left")
-  local right = Core.Controller.isDown("right")
-
-  if not Player.isDie then
-    -- move
-    if left then
-      if Player.vx > -Player.maxSpeed then
-        Player.body:applyForce( -35, 0 )
-        Player.direction.vx = -1
-        if Player.Anims.currentAnim ~= "Run" and Player.Anims.currentAnim ~= "Jump"  then
-          Player.Anims:setAnim("Run")
-        end
-      end
-    elseif right then
-      if Player.vx < Player.maxSpeed then
-        Player.body:applyForce( 35, 0 )
-        Player.direction.vx = 1
-        if Player.Anims.currentAnim ~= "Run" and Player.Anims.currentAnim ~= "Jump" then
-          Player.Anims:setAnim("Run")
-        end
-      end
-    else
-      if Player.Anims.currentAnim == "Run" then
-        Player.Anims:setAnim("Idle")
-      end
-    end
-
-    -- Si la touche de déplacement n'est pas enfoncée, arrêtez le deplacement
-    if not (left or right) then
-      local x, y = Player.body:getLinearVelocity()
-      Player.body:setLinearVelocity(x/1.01, y)
-    end
-  end
-
-
-  Player.x, Player.y = Player.body:getPosition()
-  Player.x = Player.x + decX
-  Player.y = Player.y + decY
-
-
-end
---
-
-function Player.draw()
-
-  if Player.debug then
-    love.graphics.setColor( 1,0,0 )
-    love.graphics.print("isOnGround : " .. tostring(Player.isOnGround), 10,10)
-    love.graphics.print("Velocity Y : " .. tostring(math.floor(Player.vy)), 10,30)
-    love.graphics.print("Mass (kg) : " .. tostring(Player.body:getMass()), 10,50)
-    love.graphics.print("Score : " .. tostring(Player.score), 10,70)
-    local inv=''
-    for i, entry in ipairs(Player.inventory) do
-      inv = inv .. "{id=" .. entry.id .. ", color='" .. tostring(entry.color) .. "'}"
-      if i < #Player.inventory then
-        inv = inv .. ","
-      end
-    end
-    love.graphics.print("Inventory : " .. inv, 10,90)
-    love.graphics.setColor( 1,1,1 )
-
-    -- les 4 points du rectangle
-    local points = {Player.shape:getPoints()}
-    for n=1, #points, 2 do
-      points[n], points[n+1] = Player.body:getWorldPoint( points[n], points[n+1] )
-    end
-
-    love.graphics.polygon("fill", points)
-
-  end
-
-
-  Player.Anims:draw(Player)
-
-end
---
-
-function Player.keypressed(k)
-  if Core.Controller.isKeyBoardPressed("jump") then
-    Player.Jump()
-  end
-end
---
-
-
-function Player.gamepadpressed(joystick, button)
-  if Core.Controller.isGamePadPressed("jump", button) then
-    Player.Jump()
-  end
-end
---
-
 
 function Player.beginContact(_fixture, Contact, player, other, map)
   local event = nil
@@ -362,6 +237,119 @@ function Player.beginContact(_fixture, Contact, player, other, map)
     end
   end
 
+end
+--
+
+
+function Player.update(dt)
+  Game.score = Player.score
+  Game.playerLife = Player.lives
+
+  if Player.isDie and love.timer.getTime() - Player.deathTime > Player.respawnDelay then
+    if Player.lives == 0 then
+      Core.Scene.setScene(Menu)
+    else
+      Game.fading.express() -- le fading quand le joueur est touché
+      Player.reload()
+    end
+  end
+
+
+  Player.Anims:update(dt)
+  --
+
+  Player.body:setAngle(0)
+
+  Player.vx, Player.vy = Player.body:getLinearVelocity()
+
+  local left = love.keyboard.isDown("left") or love.keyboard.isDown("a") or love.keyboard.isDown("q")
+  local right = love.keyboard.isDown("right") or love.keyboard.isDown("d")
+
+  if not Player.isDie then
+    -- move
+    if left then
+      if Player.vx > -Player.maxSpeed then
+        Player.body:applyForce( -35, 0 )
+        Player.direction.vx = -1
+        if Player.Anims.currentAnim ~= "Run" and Player.Anims.currentAnim ~= "Jump"  then
+          Player.Anims:setAnim("Run")
+        end
+      end
+    elseif right then
+      if Player.vx < Player.maxSpeed then
+        Player.body:applyForce( 35, 0 )
+        Player.direction.vx = 1
+        if Player.Anims.currentAnim ~= "Run" and Player.Anims.currentAnim ~= "Jump" then
+          Player.Anims:setAnim("Run")
+        end
+      end
+    else
+      if Player.Anims.currentAnim == "Run" then
+        Player.Anims:setAnim("Idle")
+      end
+    end
+
+    -- Si la touche de déplacement n'est pas enfoncée, arrêtez le deplacement
+    if not (left or right) then
+      local x, y = Player.body:getLinearVelocity()
+      Player.body:setLinearVelocity(x/1.01, y)
+    end
+  end
+
+
+  Player.x, Player.y = Player.body:getPosition()
+  Player.x = Player.x + decX
+  Player.y = Player.y + decY
+
+
+end
+--
+
+function Player.draw()
+
+  if Player.debug then
+    love.graphics.setColor( 1,0,0 )
+    love.graphics.print("isOnGround : " .. tostring(Player.isOnGround), 10,10)
+    love.graphics.print("Velocity Y : " .. tostring(math.floor(Player.vy)), 10,30)
+    love.graphics.print("Mass (kg) : " .. tostring(Player.body:getMass()), 10,50)
+    love.graphics.print("Score : " .. tostring(Player.score), 10,70)
+    local inv=''
+    for i, entry in ipairs(Player.inventory) do
+      inv = inv .. "{id=" .. entry.id .. ", color='" .. tostring(entry.color) .. "'}"
+      if i < #Player.inventory then
+        inv = inv .. ","
+      end
+    end
+    love.graphics.print("Inventory : " .. inv, 10,90)
+    love.graphics.setColor( 1,1,1 )
+
+    -- les 4 points du rectangle
+    local points = {Player.shape:getPoints()}
+    for n=1, #points, 2 do
+      points[n], points[n+1] = Player.body:getWorldPoint( points[n], points[n+1] )
+    end
+
+    love.graphics.polygon("fill", points)
+
+  end
+
+
+  Player.Anims:draw(Player)
+
+end
+--
+
+function Player.keypressed(k)
+  if (k == "up" or k == "w" or k == "z") and Player.isOnGround then
+    Player.body:applyLinearImpulse( 0, -15 )
+    Player.isOnGround = false
+    Player.Anims:setAnim("Jump")
+  end
+  if Player.debug then
+    if k == "delete" then
+      Game.setWorldScene(HouseWorld, Game.levels.currentLevel, false, "out")
+    end
+  end
 end
 --
 

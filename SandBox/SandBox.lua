@@ -36,7 +36,7 @@ function SandBox.load()
   SandBox.newLevel("spring")
   SandBox.newLevel("summer")
   SandBox.newLevel("winter")
-
+  
   --
   SandBox.setLevel("winter")
 
@@ -71,13 +71,7 @@ function SandBox.keypressed(k)
 end
 --
 
-function SandBox.gamepadpressed(joystick, button)
-  Player.gamepadpressed(joystick, button)
-end
---
-
 function SandBox.mousepressed(x,y,button)
 end
---
 
 return SandBox

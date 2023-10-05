@@ -16,7 +16,6 @@ function Loader:load()
   Core.Sfx = require(dirpath.."Sfx")
   Core.Music = require(dirpath.."Music")
   Core.Particules = require(dirpath.."Particules")
-  Core.Controller = require(dirpath.."Controller")
 
   -- Prio order require for work
   Core.Scene = require(dirpath.."SceneManager")

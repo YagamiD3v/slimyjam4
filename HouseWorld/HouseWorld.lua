@@ -73,11 +73,6 @@ function HouseWorld.keypressed(k)
 end
 --
 
-function HouseWorld.gamepadpressed(joystick, button)
-  NavPlayer.gamepadpressed(joystick, button)
-end
---
-
 function HouseWorld.mousepressed(x,y,button)
 end
 --
